@@ -7,15 +7,34 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var ref: FIRDatabaseReference!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FIRApp.configure()
+        
+        ref = FIRDatabase.database().reference()
+        ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            // get how many replies there are
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
+                print("index:" + String(index)) // indexes of the posts
+                
+                // appends all the text in post replies to 'replies' array
+                self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
+                    print(snapshot.value!) // get text
+                    replies.append(snapshot.value! as! String)
+                    print(replies)
+                })
+            }
+            
+        }
+        
         return true
     }
 
