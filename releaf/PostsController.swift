@@ -10,8 +10,7 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-var animals: [String] = ["Name1", "Name2", "Name3", "Name4", "Name5", "Name6"]
-var troll: [Int] = [6505754922, 6505754922, 6505754922, 6505754922, 6505754922, 6505754922, 6505754922]
+var troll: [Int] = [65, 62, 622, 42, 2, 6502, 65]
 
 // post stats
 var posts: [String] = ["asdf"] // store all the posts
@@ -72,7 +71,6 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         super.viewDidLoad()
         
         ref = FIRDatabase.database().reference()
-        
         ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             // get how many replies there are
             for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
@@ -82,11 +80,11 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                 self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
                     print(snapshot.value!) // get text
                     replies.append(snapshot.value! as! String)
-                    print(replies)
                 })
             }
             
         }
+        print(replies)
         
         
         // Do any additional setup after loading the view, typically from a nib.
