@@ -15,6 +15,7 @@
 		A150BC9B1E7DC90500A4175F /* PromptTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A150BC9A1E7DC90500A4175F /* PromptTableViewCell.swift */; };
 		A1A9FA7B1E86788700CD31CD /* NewPostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A9FA7A1E86788700CD31CD /* NewPostController.swift */; };
 		A1A9FA7E1E86794800CD31CD /* ReplyPromptTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A9FA7D1E86794800CD31CD /* ReplyPromptTableCell.swift */; };
+		A1A9FA801E87142A00CD31CD /* CreatePostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A9FA7F1E87142A00CD31CD /* CreatePostController.swift */; };
 		A1B02F281E7474EF0002151D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B02F271E7474EF0002151D /* AppDelegate.swift */; };
 		A1B02F2A1E7474EF0002151D /* PostsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B02F291E7474EF0002151D /* PostsController.swift */; };
 		A1B02F2C1E7474EF0002151D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B02F2B1E7474EF0002151D /* LoginController.swift */; };
@@ -54,6 +55,7 @@
 		A150BC9A1E7DC90500A4175F /* PromptTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromptTableViewCell.swift; sourceTree = "<group>"; };
 		A1A9FA7A1E86788700CD31CD /* NewPostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostController.swift; sourceTree = "<group>"; };
 		A1A9FA7D1E86794800CD31CD /* ReplyPromptTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyPromptTableCell.swift; sourceTree = "<group>"; };
+		A1A9FA7F1E87142A00CD31CD /* CreatePostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostController.swift; sourceTree = "<group>"; };
 		A1B02F241E7474EF0002151D /* releaf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = releaf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B02F271E7474EF0002151D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1B02F291E7474EF0002151D /* PostsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsController.swift; sourceTree = "<group>"; };
@@ -142,6 +144,14 @@
 			name = Replying;
 			sourceTree = "<group>";
 		};
+		A1A9FA811E87143C00CD31CD /* New Post */ = {
+			isa = PBXGroup;
+			children = (
+				A1A9FA7F1E87142A00CD31CD /* CreatePostController.swift */,
+			);
+			name = "New Post";
+			sourceTree = "<group>";
+		};
 		A1B02F1B1E7474EE0002151D = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				A1B02F271E7474EF0002151D /* AppDelegate.swift */,
+				A1A9FA811E87143C00CD31CD /* New Post */,
 				A1A9FA7C1E8678A300CD31CD /* Replying */,
 				A150BC991E7DC8B300A4175F /* Post Scroller */,
 				A1B02F2B1E7474EF0002151D /* LoginController.swift */,
@@ -487,6 +498,7 @@
 				A150BC9B1E7DC90500A4175F /* PromptTableViewCell.swift in Sources */,
 				A1B02F2C1E7474EF0002151D /* LoginController.swift in Sources */,
 				A1A9FA7B1E86788700CD31CD /* NewPostController.swift in Sources */,
+				A1A9FA801E87142A00CD31CD /* CreatePostController.swift in Sources */,
 				A1B02F281E7474EF0002151D /* AppDelegate.swift in Sources */,
 				A1B02F2A1E7474EF0002151D /* PostsController.swift in Sources */,
 				A150BC961E7DA3F800A4175F /* SignUpController.swift in Sources */,

@@ -20,7 +20,13 @@ var leaves: [Int] = [] // temp store leaves for everything
 var currentIndex = 0
 
 class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSource {
-
+    
+    // CHANGE TO NOT REPEAT ALL THE ELEMENTS TO THE ORIGINAL ARRAY
+    // CHANGE TO CORRECT NUMBER OF LEAVES
+    // ADD ACTUAL POST CONTENT
+    // ADD ME TOO AND HUGS FUNCTIONALITY
+    // ADD NEXT RELOADING ENTIRE THING SO IT GOES TO A DIFFERENT POST JUST SWITCH CURRENT INDEX SAME
+    
     var ref:FIRDatabaseReference!
     
     @IBAction func nextPost_isPressed(_ sender: Any) {
@@ -114,8 +120,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
-        
-        
+        // ADD ONE TO LEAF COUNT
     }
     
     // this method handles row deletion
