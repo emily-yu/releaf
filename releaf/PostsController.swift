@@ -28,11 +28,43 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     // ADD NEXT RELOADING ENTIRE THING SO IT GOES TO A DIFFERENT POST JUST SWITCH CURRENT INDEX SAME
     
     var ref:FIRDatabaseReference!
+    @IBOutlet var postText: UILabel!
+    
+    // enumeration
+    func loadData(){
+        
+//        replies.removeAll()
+        
+        ref = FIRDatabase.database().reference()
+        ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            // get how many replies there are
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
+                print("index:" + String(index)) // indexes of the posts
+                
+                // appends all the text in post replies to 'replies' array
+                self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
+                    print(snapshot.value!) // get text
+                    replies.append(snapshot.value! as! String)
+                })
+            }
+        }
+        print(replies)
+        
+        ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            self.postText.text = String(describing: snapshot.value!)
+        }
+
+        
+        
+        // Do any additional setup after loading the view, typically from a nib.
+        let cellReuseIdentifier = "cell"
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+    }
     
     @IBAction func nextPost_isPressed(_ sender: Any) {
-//        let randomNum:UInt32 = arc4random_uniform(100) // range is 0 to 99
-//        print(randomNum)
-        
         ref = FIRDatabase.database().reference()
         ref.child("post").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
 
@@ -41,6 +73,11 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
             print(randomNum)
             currentIndex = Int(randomNum) // set currentIndex to be this value
         }
+        
+        // HAVE IT CLEAR ALL THE DATA FROM PREVIOUS CELLS
+//        replies.removeAll()
+        self.tableView.reloadData()
+        loadData()
 
     }
     @IBOutlet var tableView: UITableView!
@@ -72,32 +109,9 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        ref = FIRDatabase.database().reference()
-        ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            // get how many replies there are
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
-                print("index:" + String(index)) // indexes of the posts
-                
-                // appends all the text in post replies to 'replies' array
-                self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-                    print(snapshot.value!) // get text
-                    replies.append(snapshot.value! as! String)
-                })
-            }
-            
-        }
-        print(replies)
-        
-        
-        // Do any additional setup after loading the view, typically from a nib.
-        let cellReuseIdentifier = "cell"
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        tableView.delegate = self
-        tableView.dataSource = self
+        loadData()
     }
 
     // number of rows in table view

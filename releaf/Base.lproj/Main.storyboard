@@ -148,6 +148,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Challenge" image="second" id="acW-dT-cKf"/>
                     <connections>
+                        <outlet property="postText" destination="T8a-Sv-UWK" id="v3f-xr-BpX"/>
                         <outlet property="tableView" destination="pID-it-TMq" id="143-WQ-cyY"/>
                     </connections>
                 </viewController>
@@ -180,7 +181,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Reply" id="pe0-Iy-FY7">
-                                        <barButtonItem key="leftBarButtonItem" title="Back" id="Cbg-kW-jBK"/>
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="Cbg-kW-jBK">
+                                            <connections>
+                                                <segue destination="49e-Tb-3d3" kind="show" id="0BY-Dh-iHu"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
