@@ -35,7 +35,8 @@ class SignUpController: UIViewController {
 //                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
 //                    self.present(vc!, animated: true, completion: nil)
                     
-                } else {
+                }
+                else {
                     let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
                     
                     let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)

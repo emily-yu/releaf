@@ -13,6 +13,10 @@
 		A150BC961E7DA3F800A4175F /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A150BC951E7DA3F800A4175F /* SignUpController.swift */; };
 		A150BC981E7DA47A00A4175F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A150BC971E7DA47A00A4175F /* GoogleService-Info.plist */; };
 		A150BC9B1E7DC90500A4175F /* PromptTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A150BC9A1E7DC90500A4175F /* PromptTableViewCell.swift */; };
+		A197DA4F1E8B8FD10064903B /* MyPostsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A197DA4E1E8B8FD00064903B /* MyPostsController.swift */; };
+		A197DA521E8B90A40064903B /* MyPostsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A197DA511E8B90A40064903B /* MyPostsTableViewCell.swift */; };
+		A197DA541E8B92250064903B /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A197DA531E8B92250064903B /* GroupTableViewCell.swift */; };
+		A197DA571E8B92430064903B /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A197DA561E8B92430064903B /* GroupViewController.swift */; };
 		A1A9FA7B1E86788700CD31CD /* NewPostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A9FA7A1E86788700CD31CD /* NewPostController.swift */; };
 		A1A9FA7E1E86794800CD31CD /* ReplyPromptTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A9FA7D1E86794800CD31CD /* ReplyPromptTableCell.swift */; };
 		A1A9FA801E87142A00CD31CD /* CreatePostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A9FA7F1E87142A00CD31CD /* CreatePostController.swift */; };
@@ -53,6 +57,10 @@
 		A150BC951E7DA3F800A4175F /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		A150BC971E7DA47A00A4175F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A150BC9A1E7DC90500A4175F /* PromptTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromptTableViewCell.swift; sourceTree = "<group>"; };
+		A197DA4E1E8B8FD00064903B /* MyPostsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPostsController.swift; sourceTree = "<group>"; };
+		A197DA511E8B90A40064903B /* MyPostsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPostsTableViewCell.swift; sourceTree = "<group>"; };
+		A197DA531E8B92250064903B /* GroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
+		A197DA561E8B92430064903B /* GroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
 		A1A9FA7A1E86788700CD31CD /* NewPostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostController.swift; sourceTree = "<group>"; };
 		A1A9FA7D1E86794800CD31CD /* ReplyPromptTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyPromptTableCell.swift; sourceTree = "<group>"; };
 		A1A9FA7F1E87142A00CD31CD /* CreatePostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostController.swift; sourceTree = "<group>"; };
@@ -135,6 +143,24 @@
 			name = "Post Scroller";
 			sourceTree = "<group>";
 		};
+		A197DA501E8B908C0064903B /* My Posts */ = {
+			isa = PBXGroup;
+			children = (
+				A197DA4E1E8B8FD00064903B /* MyPostsController.swift */,
+				A197DA511E8B90A40064903B /* MyPostsTableViewCell.swift */,
+			);
+			name = "My Posts";
+			sourceTree = "<group>";
+		};
+		A197DA551E8B92340064903B /* Profile: Groups */ = {
+			isa = PBXGroup;
+			children = (
+				A197DA561E8B92430064903B /* GroupViewController.swift */,
+				A197DA531E8B92250064903B /* GroupTableViewCell.swift */,
+			);
+			name = "Profile: Groups";
+			sourceTree = "<group>";
+		};
 		A1A9FA7C1E8678A300CD31CD /* Replying */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,12 +204,14 @@
 			isa = PBXGroup;
 			children = (
 				A1B02F271E7474EF0002151D /* AppDelegate.swift */,
+				A197DA501E8B908C0064903B /* My Posts */,
 				A1A9FA811E87143C00CD31CD /* New Post */,
 				A1A9FA7C1E8678A300CD31CD /* Replying */,
 				A150BC991E7DC8B300A4175F /* Post Scroller */,
 				A1B02F2B1E7474EF0002151D /* LoginController.swift */,
 				A150BC951E7DA3F800A4175F /* SignUpController.swift */,
 				A1B02F2D1E7474EF0002151D /* Main.storyboard */,
+				A197DA551E8B92340064903B /* Profile: Groups */,
 				A1B02F301E7474EF0002151D /* Assets.xcassets */,
 				A1B02F321E7474EF0002151D /* LaunchScreen.storyboard */,
 				A1B02F351E7474EF0002151D /* Info.plist */,
@@ -495,10 +523,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A197DA571E8B92430064903B /* GroupViewController.swift in Sources */,
 				A150BC9B1E7DC90500A4175F /* PromptTableViewCell.swift in Sources */,
 				A1B02F2C1E7474EF0002151D /* LoginController.swift in Sources */,
 				A1A9FA7B1E86788700CD31CD /* NewPostController.swift in Sources */,
+				A197DA4F1E8B8FD10064903B /* MyPostsController.swift in Sources */,
+				A197DA541E8B92250064903B /* GroupTableViewCell.swift in Sources */,
 				A1A9FA801E87142A00CD31CD /* CreatePostController.swift in Sources */,
+				A197DA521E8B90A40064903B /* MyPostsTableViewCell.swift in Sources */,
 				A1B02F281E7474EF0002151D /* AppDelegate.swift in Sources */,
 				A1B02F2A1E7474EF0002151D /* PostsController.swift in Sources */,
 				A150BC961E7DA3F800A4175F /* SignUpController.swift in Sources */,
