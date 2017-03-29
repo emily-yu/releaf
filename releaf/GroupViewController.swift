@@ -31,9 +31,9 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell:MyPostsTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "MyPostsTableViewCell") as! MyPostsTableViewCell
+        var cell:GroupTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "GroupTableViewCell") as! GroupTableViewCell
         //        cell.prompt.text = String(replies[indexPath.row])
-        cell.postText.text = String(troll[indexPath.row])
+        cell.groupText.text = String(troll[indexPath.row])
         
         return cell
     }

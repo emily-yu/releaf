@@ -10,5 +10,6 @@ import Foundation
 import UIKit
 
 class GroupTableViewCell: UITableViewCell {
+    @IBOutlet var groupText: UILabel!
 }
     
