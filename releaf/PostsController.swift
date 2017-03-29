@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-var troll: [Int] = [65, 62, 622, 42, 2, 6502, 65]
+var troll: [Int] = [65, 62, 622, 42, 2, 6502, 65, 65, 62, 622, 42, 2, 6502, 65, 65, 62, 622, 42, 2, 6502, 65, 65, 62, 622, 42, 2, 6502, 65, 65, 62, 622, 42, 2, 6502, 65, 65, 62, 622, 42, 2, 6502, 65, 65, 62, 622, 42, 2, 6502, 65]
 
 // post stats
 var posts: [String] = ["asdf"] // store all the posts
@@ -23,12 +23,11 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     
     // CHANGE TO NOT REPEAT ALL THE ELEMENTS TO THE ORIGINAL ARRAY
     // CHANGE TO CORRECT NUMBER OF LEAVES
-    // ADD ACTUAL POST CONTENT
     // ADD ME TOO AND HUGS FUNCTIONALITY
-    // ADD NEXT RELOADING ENTIRE THING SO IT GOES TO A DIFFERENT POST JUST SWITCH CURRENT INDEX SAME
+    // CLEAR REPLIES ARRAY SO IT DOESN'T APPEND LIKE 200 TIMES
     
     var ref:FIRDatabaseReference!
-    @IBOutlet var postText: UILabel!
+    @IBOutlet var staticPostText: UITextView!
     
     // enumeration
     func loadData(){
@@ -39,19 +38,18 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             // get how many replies there are
             for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
-                print("index:" + String(index)) // indexes of the posts
                 
                 // appends all the text in post replies to 'replies' array
                 self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-                    print(snapshot.value!) // get text
+//                    print(snapshot.value!)
                     replies.append(snapshot.value! as! String)
                 })
             }
         }
-        print(replies)
+//        print(replies)
         
         ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            self.postText.text = String(describing: snapshot.value!)
+            self.staticPostText.text = String(describing: snapshot.value!)
         }
 
         
@@ -70,12 +68,12 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
 
             // post index to address
             let randomNum = arc4random_uniform(UInt32(((snapshot.value!) as AnyObject).count)) // range is 0 to 99
-            print(randomNum)
+//            print(randomNum)
             currentIndex = Int(randomNum) // set currentIndex to be this value
+            print(currentIndex)
         }
         
         // HAVE IT CLEAR ALL THE DATA FROM PREVIOUS CELLS
-//        replies.removeAll()
         self.tableView.reloadData()
         loadData()
 
@@ -117,7 +115,6 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print(replies.count)
-        print("sakefjalsdfjkladsf")
         return replies.count
     }
     

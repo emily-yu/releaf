@@ -92,13 +92,6 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="POSTasdfdsafsadfdsaf" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T8a-Sv-UWK">
-                                <rect key="frame" x="32" y="79" width="300" height="103"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pID-it-TMq">
                                 <rect key="frame" x="28" y="218" width="318" height="333"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -168,12 +161,21 @@
                                     <segue destination="cTr-XA-nzs" kind="show" id="BAw-Zg-uCi"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kCx-Ch-sOY">
+                                <rect key="frame" x="28" y="79" width="318" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.65284383300000004" green="0.79280853269999996" blue="0.34900054339999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.65284383296966553" green="0.79280853271484375" blue="0.34900054335594177" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Challenge" image="second" id="acW-dT-cKf"/>
                     <connections>
-                        <outlet property="postText" destination="T8a-Sv-UWK" id="v3f-xr-BpX"/>
+                        <outlet property="staticPostText" destination="kCx-Ch-sOY" id="sz2-Qu-1vu"/>
                         <outlet property="tableView" destination="pID-it-TMq" id="143-WQ-cyY"/>
                     </connections>
                 </viewController>
@@ -350,6 +352,9 @@
                                 <state key="normal" title="Create Group">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <segue destination="IXA-cr-R0C" kind="show" id="PA8-H3-ENh"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xs2-FD-DAK">
                                 <rect key="frame" x="63" y="543" width="119" height="30"/>
@@ -358,6 +363,9 @@
                                 <state key="normal" title="Join Group">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <segue destination="Qgd-LN-jWp" kind="show" id="zv8-Ti-9hE"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.65284383300000004" green="0.79280853269999996" blue="0.34900054339999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -370,6 +378,60 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ou9-3F-1Uw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="749.60000000000002" y="1115.8920539730136"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="EL5-2p-wMB">
+            <objects>
+                <viewController id="IXA-cr-R0C" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gnb-ex-pOh"/>
+                        <viewControllerLayoutGuide type="bottom" id="UvR-V5-tog"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gqG-eZ-aVr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7jp-cK-O7g">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Create New Group" id="VVa-jS-auZ"/>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MHW-Vj-jWB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="750" y="1843"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="sDn-7s-yWe">
+            <objects>
+                <viewController id="Qgd-LN-jWp" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Xpg-8a-LY0"/>
+                        <viewControllerLayoutGuide type="bottom" id="sB5-f1-viN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lpE-jr-5Ev">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9K5-cl-oUv">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Join Group" id="dt1-5c-afZ"/>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Asx-tR-GYo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1634" y="1116"/>
         </scene>
         <!--New Post-->
         <scene sceneID="TMC-9N-nw9">
@@ -397,6 +459,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="CHC-Ke-quZ">
+                                <rect key="frame" x="34" y="507" width="300" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <segments>
+                                    <segment title="Full Anonymous"/>
+                                    <segment title="Part Anonymous"/>
+                                </segments>
+                                <color key="tintColor" red="0.19667351250000001" green="0.50664824249999996" blue="0.21007725599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </segmentedControl>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Z0M-OT-8VZ">
                                 <rect key="frame" x="34" y="158" width="307" height="333"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -416,21 +488,12 @@
                                     <action selector="postButton:" destination="UtM-pr-CQM" eventType="touchUpInside" id="Tou-lo-5q1"/>
                                 </connections>
                             </button>
-                            <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="CHC-Ke-quZ">
-                                <rect key="frame" x="34" y="507" width="300" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <segments>
-                                    <segment title="Full Anonymous"/>
-                                    <segment title="Part Anonymous"/>
-                                </segments>
-                                <color key="tintColor" red="0.19667351250000001" green="0.50664824249999996" blue="0.21007725599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" red="0.65284383300000004" green="0.79280853269999996" blue="0.34900054339999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="New Post" id="IBD-rj-XRv"/>
                     <connections>
+                        <outlet property="anonControl" destination="CHC-Ke-quZ" id="He2-Jy-lAE"/>
                         <outlet property="body" destination="Z0M-OT-8VZ" id="xjU-13-2AX"/>
                         <outlet property="header" destination="RXn-zu-neg" id="tfU-gn-w1D"/>
                         <outlet property="segmentedView" destination="CHC-Ke-quZ" id="yxK-8W-L0X"/>

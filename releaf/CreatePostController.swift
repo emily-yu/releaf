@@ -18,6 +18,7 @@ class CreatePostController: UIViewController {
     @IBOutlet var header: UITextField!
     @IBOutlet var body: UITextView!
     @IBOutlet var segmentedView: UISegmentedControl!
+    @IBOutlet var anonControl: UISegmentedControl!
     
     @IBAction func postButton(_ sender: Any) {
         newPost()
@@ -46,9 +47,21 @@ class CreatePostController: UIViewController {
                 self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/leaves").setValue(self.header.text!)
                 self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/text").setValue(self.body.text!)
                 self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/user").setValue("Username")
-                // ADD BLANK FOR REPLIES
+                // ADJUST THING TO READ REPLIES STARTING AT 1 SINCE ZERO IS EMPTY
+                self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/reply/0/text").setValue("reply text")
+                self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/reply/0/user").setValue("usernmae")
             
-            //Go to the HomeViewController if the login is sucessful
+            // anonymous control
+            if (self.anonControl.selectedSegmentIndex == 0){
+                print("fullanon")
+                self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/status").setValue("fullanon")
+            }
+            else {
+                print("partanon")
+                self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/status").setValue("partanon")
+            }
+            
+            //Go to home if the login is sucessful
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
             self.present(vc!, animated: true, completion: nil)
         }
