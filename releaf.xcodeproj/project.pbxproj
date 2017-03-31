@@ -134,6 +134,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A1378B241E8C98D60086C507 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				A150BC951E7DA3F800A4175F /* SignUpController.swift */,
+				A1B02F2B1E7474EF0002151D /* LoginController.swift */,
+			);
+			name = Auth;
+			sourceTree = "<group>";
+		};
 		A150BC991E7DC8B300A4175F /* Post Scroller */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,10 +217,9 @@
 				A1A9FA811E87143C00CD31CD /* New Post */,
 				A1A9FA7C1E8678A300CD31CD /* Replying */,
 				A150BC991E7DC8B300A4175F /* Post Scroller */,
-				A1B02F2B1E7474EF0002151D /* LoginController.swift */,
-				A150BC951E7DA3F800A4175F /* SignUpController.swift */,
-				A1B02F2D1E7474EF0002151D /* Main.storyboard */,
 				A197DA551E8B92340064903B /* Profile: Groups */,
+				A1378B241E8C98D60086C507 /* Auth */,
+				A1B02F2D1E7474EF0002151D /* Main.storyboard */,
 				A1B02F301E7474EF0002151D /* Assets.xcassets */,
 				A1B02F321E7474EF0002151D /* LaunchScreen.storyboard */,
 				A1B02F351E7474EF0002151D /* Info.plist */,

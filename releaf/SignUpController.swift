@@ -9,8 +9,11 @@
 import Foundation
 import UIKit
 import Firebase
+import GoogleSignIn
 
 class SignUpController: UIViewController {
+    
+    var ref:FIRDatabaseReference!
     
     @IBOutlet var firstNameField: UITextField!
     @IBOutlet var lastNameField: UITextField!
@@ -18,7 +21,8 @@ class SignUpController: UIViewController {
     @IBOutlet var passwordField: UITextField!
     
     @IBAction func createAccount(_ sender: Any) {
-        if emailField.text == "" {
+        self.ref = FIRDatabase.database().reference()
+        if emailField.text! == "" || passwordField.text! == "" {
             let alertController = UIAlertController(title: "Error", message: "Please enter your email and password", preferredStyle: .alert)
             
             let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -30,10 +34,25 @@ class SignUpController: UIViewController {
             FIRAuth.auth()?.createUser(withEmail: emailField.text!, password: passwordField.text!) { (user, error) in
                 
                 if error == nil {
+                    // set user details
+                    self.ref.child("users").child((user?.uid)!).setValue([
+                        "firsasdfadsftName": self.firstNameField.text!,
+                        "lastName": self.lastNameField.text!,
+                        "profilePic": "encoded picture", // encode profile pictures
+                        "impactPoints": 0,
+                        "revealPoints": 0,
+                        "groups": [
+                            "0": "Global Community"
+                        ]
+                    ])
+                    print("asdfasdf")
                     print("You have successfully signed up")
-                    //Goes to the Setup page which lets the user take a photo for their profile picture and also chose a username
-//                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
-//                    self.present(vc!, animated: true, completion: nil)
+                    
+                    //login w/ new account
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
+                    self.present(vc!, animated: true, completion: nil)
+                    print((user?.uid)!)
+                    
                     
                 }
                 else {

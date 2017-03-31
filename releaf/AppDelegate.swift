@@ -9,7 +9,16 @@
 // TODO: 
 import UIKit
 import Firebase
+import GoogleSignIn
 
+/*
+ left to do: 
+ - saved posts
+ - my posts
+ - add save function in post scroller
+ - profile details
+ - basic groups
+*/
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
