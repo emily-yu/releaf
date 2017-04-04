@@ -43,6 +43,12 @@ class SignUpController: UIViewController {
                         "revealPoints": 0,
                         "groups": [
                             "0": "Global Community"
+                        ],
+                        "metoo": [
+                            "0": ""
+                        ],
+                        "hugs": [
+                            "0": ""
                         ]
                     ])
                     print("asdfasdf")

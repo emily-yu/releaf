@@ -8,31 +8,78 @@
 
 import Foundation
 import UIKit
+import Firebase
 
-class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSource {
+var myposts: [Int] = [] //indexes of posts
+var myPostsText: [String] = []
+
+class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSource
+{
     @IBOutlet var tableView: UITableView!
+    var ref: FIRDatabaseReference!
+    let userID = FIRAuth.auth()!.currentUser!.uid
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let cellReuseIdentifier = "cell"
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        tableView.delegate = self
-        tableView.dataSource = self
+        
+        ref = FIRDatabase.database().reference()
+        
+        // append all the posts to myposts, then transfer to array
+        ref.child("users").child(userID).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            // get how many posts you have
+            for index in 0...(((snapshot.value!) as AnyObject).count) {
+                
+                // appends all the text in post replies to 'replies' array
+            self.ref.child("users").child(self.userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+//                    myposts.append(snapshot.value! as! String) // this line fkut ups
+//                    print(myposts)
+//                    self.ref.child("users").child(self.userID).child("weight").observeSingleEvent(of: .value, with: { (snapshot) in
+                    if var same:Int = (snapshot.value! as? Int) {
+                        myposts.append(same)
+                        print(myposts)
+                        // acceses right posts and puts indexs in array
+                        // use array posts to same
+                            for index2 in myposts {
+//                                self.ref.child("users").child(self.userID).child("groups").child(String(index2)).observeSingleEvent(of: .value, with: { (snapshot) in
+//                                    print(snapshot.value!)
+//                                })
+                                self.ref.child("post").child(String(index2)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
+                                    let int = snapshot.value!
+                                    print(int)
+                                    myPostsText.append(int as! String)
+                                    print(myPostsText)
+                                    
+                                    // set up tableview
+                                    let cellReuseIdentifier = "cell"
+                                    self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+                                    self.tableView.delegate = self
+                                    self.tableView.dataSource = self
+                                    
+                                })
+                            }
+                    }
+                        // end getting info
+                })
+                
+            
+                }
+            }
+        
     }
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(replies.count)
+        print(myPostsText.count)
         print("sakefjalsdfjkladsf")
-        return replies.count
+        return myPostsText.count
     }
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell:MyPostsTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "MyPostsTableViewCell") as! MyPostsTableViewCell
 //        cell.prompt.text = String(replies[indexPath.row])
-        cell.postText.text = String(troll[indexPath.row])
+        cell.postText.text = String(myPostsText[indexPath.row])
         
         return cell
     }

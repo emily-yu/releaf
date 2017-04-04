@@ -161,13 +161,13 @@
 			name = "My Posts";
 			sourceTree = "<group>";
 		};
-		A197DA551E8B92340064903B /* Profile: Groups */ = {
+		A197DA551E8B92340064903B /* Profile */ = {
 			isa = PBXGroup;
 			children = (
 				A197DA561E8B92430064903B /* GroupViewController.swift */,
 				A197DA531E8B92250064903B /* GroupTableViewCell.swift */,
 			);
-			name = "Profile: Groups";
+			name = Profile;
 			sourceTree = "<group>";
 		};
 		A1A9FA7C1E8678A300CD31CD /* Replying */ = {
@@ -217,7 +217,7 @@
 				A1A9FA811E87143C00CD31CD /* New Post */,
 				A1A9FA7C1E8678A300CD31CD /* Replying */,
 				A150BC991E7DC8B300A4175F /* Post Scroller */,
-				A197DA551E8B92340064903B /* Profile: Groups */,
+				A197DA551E8B92340064903B /* Profile */,
 				A1378B241E8C98D60086C507 /* Auth */,
 				A1B02F2D1E7474EF0002151D /* Main.storyboard */,
 				A1B02F301E7474EF0002151D /* Assets.xcassets */,

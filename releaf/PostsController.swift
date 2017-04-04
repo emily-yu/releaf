@@ -46,13 +46,10 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                 })
             }
         }
-//        print(replies)
         
         ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             self.staticPostText.text = String(describing: snapshot.value!)
         }
-
-        
         
         // Do any additional setup after loading the view, typically from a nib.
         let cellReuseIdentifier = "cell"
@@ -81,7 +78,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     @IBOutlet var tableView: UITableView!
     @IBAction func meToo_isPressed(_ sender: Any) {
         print("same")
-
+// CHANGED STRUCTURE FOR THIS
         
         // set this to replies instead
         // gets indexes of posts

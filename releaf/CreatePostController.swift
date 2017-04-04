@@ -13,7 +13,8 @@ import Firebase
 // FINISHED
 class CreatePostController: UIViewController {
 
-    var ref: FIRDatabaseReference!
+    let userID = FIRAuth.auth()!.currentUser!.uid
+    var ref:FIRDatabaseReference!
     
     @IBOutlet var header: UITextField!
     @IBOutlet var body: UITextView!
@@ -44,13 +45,22 @@ class CreatePostController: UIViewController {
         else {
             ref = FIRDatabase.database().reference()
             ref.child("post").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                
+                // setting attributes for one post
                 self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/leaves").setValue(self.header.text!)
                 self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/text").setValue(self.body.text!)
-                self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/user").setValue("Username")
+                self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/user").setValue(self.userID)
                 // ADJUST THING TO READ REPLIES STARTING AT 1 SINCE ZERO IS EMPTY
                 self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/reply/0/text").setValue("reply text")
-                self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/reply/0/user").setValue("usernmae")
-            
+                self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/reply/0/user").setValue(self.userID) // base response for init
+                var baseValue = String(((snapshot.value!) as AnyObject).count)
+                
+                // creating post under that person's account
+                self.ref.child("post").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                    var string = String((((snapshot.value!) as AnyObject).count) + 1) // amount of posts there are + 1 to create new post
+                    self.ref.child(self.userID).child("myPosts").setValue([string:baseValue])
+                }
+                
             // anonymous control
             if (self.anonControl.selectedSegmentIndex == 0){
                 print("fullanon")
@@ -61,7 +71,7 @@ class CreatePostController: UIViewController {
                 self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/status").setValue("partanon")
             }
             
-            //Go to home if the login is sucessful
+            //navigate back to home screen
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
             self.present(vc!, animated: true, completion: nil)
         }

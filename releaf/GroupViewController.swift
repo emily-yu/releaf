@@ -8,32 +8,90 @@
 
 import Foundation
 import UIKit
+import Firebase
+
+var restaurantNames = [String]() // lul groups
+
+// TODO: join groups, create groups
 
 class GroupViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
 
+    @IBOutlet var nameField: UILabel!
+    var tempFirst = ""
+    var tempLast = ""
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var impactPoints: UILabel!
+    @IBOutlet var revealPoints: UILabel!
+    
+    var ref:FIRDatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let cellReuseIdentifier = "cell"
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        tableView.delegate = self
-        tableView.dataSource = self
+        ref = FIRDatabase.database().reference()
+        
+        let userID = FIRAuth.auth()!.currentUser!.uid
+        
+        // set name
+    self.ref.child("users").child(userID).child("firsasdfadsftName").observeSingleEvent(of: .value, with: { (snapshot) in
+            self.tempFirst = String(describing: snapshot.value!)
+            print(snapshot.value!)
+        })
+        self.ref.child("users").child(userID).child("lastName").observeSingleEvent(of: .value, with: { (snapshot) in
+            self.tempLast = String(describing: snapshot.value!)
+            print(snapshot.value!)
+            self.nameField.text = self.tempFirst + " " + self.tempLast
+        })
+        
+        // set impact points
+        self.ref.child("users").child(userID).child("impactPoints").observeSingleEvent(of: .value, with: { (snapshot) in
+            self.tempFirst = String(describing: snapshot.value!)
+            print(snapshot.value!)
+            self.impactPoints.text = "IMPACT POINTS: \(snapshot.value!)"
+        })
+        
+        // set reveal points
+        self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot.value!)
+            self.revealPoints.text = "REVEAL POINTS: \(snapshot.value!)"
+        })
+        
+        // set groups array
+        //lest try this again
+        ref = FIRDatabase.database().reference()
+        
+        ref.child("users").child(userID).child("groups").observe(.value, with: {
+            snapshot in
+            for restaurant in snapshot.children {
+                restaurantNames.append((restaurant as AnyObject).value!)
+            }
+            print(restaurantNames)
+            let cellReuseIdentifier = "cell"
+            self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+            self.tableView.delegate = self
+            self.tableView.dataSource = self
+        })
+        
+//        let cellReuseIdentifier = "cell"
+//        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+//        tableView.delegate = self
+//        tableView.dataSource = self
+        
+//        print(groups.count)
+        
+
     }
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(replies.count)
-        print("sakefjalsdfjkladsf")
-        return replies.count
+        return restaurantNames.count
     }
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell:GroupTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "GroupTableViewCell") as! GroupTableViewCell
-        //        cell.prompt.text = String(replies[indexPath.row])
-        cell.groupText.text = String(troll[indexPath.row])
+        //        cell.prompt.text = String(groups[indexPath.row])
+        cell.groupText.text = String(restaurantNames[indexPath.row])
         
         return cell
     }
