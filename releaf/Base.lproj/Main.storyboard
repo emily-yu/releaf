@@ -568,14 +568,6 @@
                                     <segue destination="WhZ-PI-HbL" kind="show" id="ZfL-lK-PLZ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DFW-2I-X0Y">
-                                <rect key="frame" x="190" y="466" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="49e-Tb-3d3" kind="show" id="1GW-nb-Jkg"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.50196081400000003" green="1" blue="0.0" alpha="0.39723351883561642" colorSpace="calibratedRGB"/>
                     </view>
@@ -727,6 +719,6 @@
         <image name="tempbackground" width="3000" height="3000"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Hlt-nB-4bg"/>
+        <segue reference="p1Q-bZ-GPY"/>
     </inferredMetricsTieBreakers>
 </document>

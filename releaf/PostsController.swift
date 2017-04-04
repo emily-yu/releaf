@@ -15,24 +15,20 @@ var troll: [Int] = [65, 62, 622, 42, 2, 6502, 65, 65, 62, 622, 42, 2, 6502, 65, 
 // post stats
 var posts: [String] = ["asdf"] // store all the posts
 var replies: [String] = [] // temp store replies for certain post
-var leaves: [Int] = [] // temp store leaves for everything
+var leaves: [Int] = [] // temp store LIKES for everything replies
+var tempLikes: [Int] = []
 
 var currentIndex = 0
 
 class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSource {
     
-    // CHANGE TO NOT REPEAT ALL THE ELEMENTS TO THE ORIGINAL ARRAY
-    // CHANGE TO CORRECT NUMBER OF LEAVES
     // ADD ME TOO AND HUGS FUNCTIONALITY
-    // CLEAR REPLIES ARRAY SO IT DOESN'T APPEND LIKE 200 TIMES
     
     var ref:FIRDatabaseReference!
     @IBOutlet var staticPostText: UITextView!
     
     // enumeration
     func loadData(){
-        
-//        replies.removeAll()
         
         ref = FIRDatabase.database().reference()
         ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
@@ -44,18 +40,34 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
 //                    print(snapshot.value!)
                     replies.append(snapshot.value! as! String)
                 })
+                
+                // appends all the likes in post replies to 'replies' array
+                self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("likes").observeSingleEvent(of: .value, with: { (snapshot) in
+                    //                    print(snapshot.value!)
+                    leaves.append(snapshot.value! as! Int)
+                    print(leaves)
+                    print(snapshot.value!)
+                    
+                    // Do any additional setup after loading the view, typically from a nib.
+                    let cellReuseIdentifier = "cell"
+                    self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+                    self.tableView.delegate = self
+                    self.tableView.dataSource = self
+                })
             }
         }
+        
+        
         
         ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             self.staticPostText.text = String(describing: snapshot.value!)
         }
         
-        // Do any additional setup after loading the view, typically from a nib.
-        let cellReuseIdentifier = "cell"
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        tableView.delegate = self
-        tableView.dataSource = self
+//        // Do any additional setup after loading the view, typically from a nib.
+//        let cellReuseIdentifier = "cell"
+//        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+//        tableView.delegate = self
+//        tableView.dataSource = self
         
     }
     
@@ -70,8 +82,11 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
             print(currentIndex)
         }
         
-        // HAVE IT CLEAR ALL THE DATA FROM PREVIOUS CELLS
-        self.tableView.reloadData()
+        // clear previous cells data
+        replies.removeAll()
+        leaves.removeAll()
+        
+//        self.tableView.reloadData()
         loadData()
 
     }
@@ -111,8 +126,8 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
 
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(replies.count)
-        return replies.count
+//        print(replies.count)
+        return leaves.count
     }
     
     // create a cell for each table view row
@@ -120,7 +135,8 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         var cell:PromptTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "PromptTableViewCell") as! PromptTableViewCell
         
         cell.prompt.text = String(replies[indexPath.row])
-        cell.leaves.text = String(troll[indexPath.row])
+        cell.leaves.text = String(leaves[indexPath.row])
+        print(leaves)
         
         return cell
     }
