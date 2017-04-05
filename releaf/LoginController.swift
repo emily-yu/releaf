@@ -9,9 +9,14 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import GoogleSignIn
 
-class LoginController: UIViewController {
+class LoginController: UIViewController, GIDSignInUIDelegate {
 
+    @IBAction func googleSignIn(_ sender: Any) {
+        
+                GIDSignIn.sharedInstance().signIn()
+    }
     @IBOutlet var usernameField: UITextField!
     @IBOutlet var passwordField: UITextField!
     @IBAction func loginButton(_ sender: Any) {
@@ -56,6 +61,12 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        // delegate gsignin
+        GIDSignIn.sharedInstance().uiDelegate = self
+        
+        // TODO(developer) Configure the sign-in button look/feel
+        // ...
     }
 
     override func didReceiveMemoryWarning() {

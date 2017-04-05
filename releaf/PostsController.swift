@@ -33,6 +33,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         ref = FIRDatabase.database().reference()
         ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             // get how many replies there are
+            
             for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
                 
                 // appends all the text in post replies to 'replies' array
@@ -48,11 +49,12 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                     print(leaves)
                     print(snapshot.value!)
                     
-                    // Do any additional setup after loading the view, typically from a nib.
-                    let cellReuseIdentifier = "cell"
-                    self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-                    self.tableView.delegate = self
-                    self.tableView.dataSource = self
+                        // set up the tableView
+                        let cellReuseIdentifier = "cell"
+                        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+                        self.tableView.delegate = self
+                        self.tableView.dataSource = self
+
                 })
             }
         }

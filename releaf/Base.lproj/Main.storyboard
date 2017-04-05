@@ -568,6 +568,14 @@
                                     <segue destination="WhZ-PI-HbL" kind="show" id="ZfL-lK-PLZ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ufo-7S-13d">
+                                <rect key="frame" x="139" y="192" width="28" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="google"/>
+                                <connections>
+                                    <action selector="googleSignIn:" destination="jcg-Cy-xGw" eventType="touchUpInside" id="WqK-YZ-eiV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.50196081400000003" green="1" blue="0.0" alpha="0.39723351883561642" colorSpace="calibratedRGB"/>
                     </view>
@@ -578,7 +586,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bj1-bT-jtv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-999" y="68"/>
+            <point key="canvasLocation" x="-999.20000000000005" y="67.916041979010501"/>
         </scene>
         <!--Sign Up Controller-->
         <scene sceneID="7TX-u8-1Ao">
@@ -605,10 +613,6 @@
                             </label>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="second" translatesAutoresizingMaskIntoConstraints="NO" id="vdm-OD-Dua">
                                 <rect key="frame" x="172" y="222" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                            </imageView>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="second" translatesAutoresizingMaskIntoConstraints="NO" id="FnT-Kw-ooi">
-                                <rect key="frame" x="134" y="222" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="second" translatesAutoresizingMaskIntoConstraints="NO" id="98S-LN-twX">
@@ -676,6 +680,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GPc-ki-hTV">
+                                <rect key="frame" x="134" y="192" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="google"/>
+                                <connections>
+                                    <action selector="googleSignIn:" destination="WhZ-PI-HbL" eventType="touchUpInside" id="XAY-Vw-B2f"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -713,6 +725,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="google" width="25" height="25"/>
         <image name="guy" width="80" height="80"/>
         <image name="leaf" width="25" height="25"/>
         <image name="second" width="30" height="30"/>
