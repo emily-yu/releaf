@@ -11,4 +11,5 @@ import UIKit
 class PromptTableViewCell: UITableViewCell {
     @IBOutlet var prompt: UILabel!
     @IBOutlet var leaves: UILabel!
+    @IBOutlet var username: UILabel!
 }

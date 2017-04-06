@@ -95,30 +95,102 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     @IBOutlet var tableView: UITableView!
     @IBAction func meToo_isPressed(_ sender: Any) {
         print("same")
-// CHANGED STRUCTURE FOR THIS
+
+    }
+    
+    // revealing user identities
+    @IBAction func userReveal(_ sender: Any) {
+        // Alert Prompt
+        let alert = UIAlertController(title: "Reveal User", message: "You are about to use one reveal point to see the user of this post.",preferredStyle: .alert)
+        let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
+            var indexPath: IndexPath!
+            if let button = sender as? UIButton {
+                if let superview = button.superview {
+                    if let cell = superview.superview as? PromptTableViewCell {
+                        indexPath = self.tableView.indexPath(for: cell) as IndexPath!
+                        self.ref = FIRDatabase.database().reference()
+                    self.ref.child("post").child(String(currentIndex)).child("reply").child(String(indexPath.row)).child("user").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                            // get how many replies there are
+                            print(snapshot.value!)
+                            var newstring = String(describing: snapshot.value!)
+                        
+                        
+                            // subtract one from reveal points
+                                let userID = FIRAuth.auth()!.currentUser!.uid
+                            self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                print(snapshot.value!)
+                                if let int = snapshot.value{
+                                    if (int as! Int > 0) {
+                                        var same = (int as! Int)-1;// subtract one reveal point
+                                        self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
+                                        cell.username.text = newstring // change text
+                                    }
+                                    else {
+                                        let alertController = UIAlertController(title: "Error", message: "Not enough reveal points.", preferredStyle: .alert)
+                                        
+                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                                        alertController.addAction(defaultAction)
+                                        
+                                        self.present(alertController, animated: true, completion: nil)
+                                    }
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+            }
+        })
+        let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
         
-        // set this to replies instead
-        // gets indexes of posts
-//        ref.child("post").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-//            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
-//                print("index:" + String(index)) // indexes of the posts
-//                
-//               
-//                self.ref.child("post").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-//                    print(snapshot.value!)
-//                    posts.append(snapshot.value! as! String)
-//                    print(posts)
-//                })
+        alert.addAction(cancel)
+        alert.addAction(submitAction)
+        present(alert, animated: true, completion: nil)
+        
+        
+        
+
+//        ref = FIRDatabase.database().reference()
+//        ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+//            // get how many replies there are
 //            
-//                self.ref.child("post").child(String(index)).child("leaves").observeSingleEvent(of: .value, with: { (snapshot) in
-//                    print(snapshot.value!)
+//            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
+//                
+//                // appends all the likes in post replies to 'replies' array
+//                self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("likes").observeSingleEvent(of: .value, with: { (snapshot) in
+//                    //                    print(snapshot.value!)
 //                    leaves.append(snapshot.value! as! Int)
 //                    print(leaves)
+//                    print(snapshot.value!)
 //                })
-//                
 //            }
 //        }
+    }
+    
+    func revealUsernane() {
+    }
+    
+    
+    // not connected to anything
+    @IBAction func metooReveal(_ sender: Any) {
         
+        // to see all people that said me too
+        ref.child("post").child(String(currentIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            // get how many me too gais there are
+            
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
+                
+                // appends all the text in post replies to 'replies' array
+                self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    //                        print(snapshot.value!)
+                    if let int = snapshot.value{
+                        var same = int as! String;
+                        print(same) // gets all the names who said me too
+                    }
+                })
+            }
+        }
     }
     
     override func viewDidLoad() {

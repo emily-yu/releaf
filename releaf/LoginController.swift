@@ -14,8 +14,7 @@ import GoogleSignIn
 class LoginController: UIViewController, GIDSignInUIDelegate {
 
     @IBAction func googleSignIn(_ sender: Any) {
-        
-                GIDSignIn.sharedInstance().signIn()
+        GIDSignIn.sharedInstance().signIn()
     }
     @IBOutlet var usernameField: UITextField!
     @IBOutlet var passwordField: UITextField!
