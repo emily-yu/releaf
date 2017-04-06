@@ -6,7 +6,6 @@
 //  Copyright © 2017 Emily. All rights reserved.
 //
 
-// TODO: 
 import UIKit
 import Firebase
 import FirebaseAuth
@@ -14,9 +13,20 @@ import GoogleSignIn
 
 
 /*
- left to do: 
- - saved posts
- - add save function in post scroller
+ high priority:
+  - tab icons
+  - join and create groups
+ 
+ low priority:
+  - fix broken replies table thing
+  - adjust groups so people only see from a specific group
+ 
+ extra things:
+  - add save function in post scroller
+  - saved posts
+  - profile picture
+  - facebook login
+  - twitter login
 */
 
 @UIApplicationMain

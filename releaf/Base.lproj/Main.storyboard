@@ -58,7 +58,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.65284383296966553" green="0.79280853271484375" blue="0.34900054335594177" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Posts" id="CPC-jw-eQs"/>
+                    <tabBarItem key="tabBarItem" title="Posts" image="arrow" id="CPC-jw-eQs"/>
                     <connections>
                         <outlet property="tableView" destination="F0z-c2-3Wg" id="8ko-cr-J9O"/>
                     </connections>
@@ -104,11 +104,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="318" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="leaf" translatesAutoresizingMaskIntoConstraints="NO" id="pCK-u4-Gcx">
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="loveicon" translatesAutoresizingMaskIntoConstraints="NO" id="pCK-u4-Gcx">
                                                     <rect key="frame" x="285" y="9" width="25" height="25"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Leaves" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOz-Fm-0SM">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Love" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOz-Fm-0SM">
                                                     <rect key="frame" x="180" y="11" width="97" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -189,7 +189,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.65284383296966553" green="0.79280853271484375" blue="0.34900054335594177" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Challenge" image="second" id="acW-dT-cKf"/>
+                    <tabBarItem key="tabBarItem" title="Challenge" image="leafag" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="staticPostText" destination="kCx-Ch-sOY" id="sz2-Qu-1vu"/>
                         <outlet property="tableView" destination="pID-it-TMq" id="143-WQ-cyY"/>
@@ -386,7 +386,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.65284383300000004" green="0.79280853269999996" blue="0.34900054339999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Profile" id="dLs-mJ-p3V"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile" id="dLs-mJ-p3V"/>
                     <connections>
                         <outlet property="impactPoints" destination="iRg-2z-ZF6" id="aAp-wv-1pk"/>
                         <outlet property="nameField" destination="qe9-0V-qu4" id="OrX-hY-o5Z"/>
@@ -510,7 +510,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.65284383300000004" green="0.79280853269999996" blue="0.34900054339999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="New Post" id="IBD-rj-XRv"/>
+                    <tabBarItem key="tabBarItem" title="New Post" image="plus" id="IBD-rj-XRv"/>
                     <connections>
                         <outlet property="anonControl" destination="CHC-Ke-quZ" id="He2-Jy-lAE"/>
                         <outlet property="body" destination="Z0M-OT-8VZ" id="xjU-13-2AX"/>
@@ -733,11 +733,14 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow" width="25" height="25"/>
         <image name="eyeag" width="39" height="25"/>
         <image name="google" width="25" height="25"/>
         <image name="guy" width="80" height="80"/>
-        <image name="leaf" width="25" height="25"/>
-        <image name="second" width="30" height="30"/>
+        <image name="leafag" width="25" height="25"/>
+        <image name="loveicon" width="25" height="25"/>
+        <image name="plus" width="25" height="25"/>
+        <image name="profile" width="25" height="25"/>
         <image name="tempbackground" width="3000" height="3000"/>
     </resources>
     <inferredMetricsTieBreakers>
