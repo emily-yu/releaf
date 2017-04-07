@@ -14,8 +14,27 @@ import GoogleSignIn
 
 /*
  high priority:
-  - tab icons
+ 
+ bugs
+  - tableview isn't going bakc to home controller
+ 
+ 
+  - if 3 of facebook/gmail friends are part of a group - gives suggestions if they want to join groups 
+     - put how many friends are in group next to group list
+  - api to retrieve facebook friends
+  - switching posts ensure doesn't land on same post
+  - me too / hugs reveal from my posts pages
+  - unjoin groups
+ - interact with a post you earn a point (response, me too, hug) and if posting something
+ - reveal uses the impact points
+ 
+ - impact and reveal same thign
+- click to expand?
+ 
   - join and create groups
+ - lcik on post go to it
+  - when reclicking on the groups section, it reloads and reappends
+  - add when clicking on cell it likes it, adds user so you can't relike it - if you reclick it removes your uid
  
  low priority:
   - fix broken replies table thing
@@ -27,6 +46,7 @@ import GoogleSignIn
   - profile picture
   - facebook login
   - twitter login
+  - edit profile details
 */
 
 @UIApplicationMain

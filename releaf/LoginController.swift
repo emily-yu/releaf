@@ -30,6 +30,8 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
             
             self.present(alertController, animated: true, completion: nil)
             
+            
+            
         } else {
             
             FIRAuth.auth()?.signIn(withEmail: self.usernameField.text!, password: self.passwordField.text!) { (user, error) in
@@ -40,8 +42,14 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
                     print("You have successfully logged in")
                     
                     //Go to the HomeViewController if the login is sucessful
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
-                    self.present(vc!, animated: true, completion: nil)
+//                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
+//                    self.present(vc!, animated: true, completion: nil)
+//                    
+                    var storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    var ivc = storyboard.instantiateViewController(withIdentifier: "Home")
+                    ivc.modalPresentationStyle = .custom
+                    ivc.modalTransitionStyle = .crossDissolve
+                    self.present(ivc, animated: true, completion: { _ in })
                     
                 } else {
                     
@@ -75,4 +83,21 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
 
 
 }
+
+extension UIView {
+    
+    
+    func fadeIn(duration: TimeInterval = 1.0, delay: TimeInterval = 0.0, completion: @escaping ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
+        UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseIn, animations: {
+            self.alpha = 1.0
+        }, completion: completion)  }
+    
+    func fadeOut(duration: TimeInterval = 1.0, delay: TimeInterval = 3.0, completion: @escaping (Bool) -> Void = {(finished: Bool) -> Void in}) {
+        UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseIn, animations: {
+            self.alpha = 0.0
+        }, completion: completion)
+    }
+    
+}
+
 

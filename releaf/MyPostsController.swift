@@ -28,7 +28,7 @@ class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSo
         // append all the posts to myposts, then transfer to array
         ref.child("users").child(userID).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             // get how many posts you have
-            for index in 0...(((snapshot.value!) as AnyObject).count) {
+            for index in 0...(((snapshot.value!) as AnyObject).count) { // NULL WHEN NO POSTS - NULL ON 
                 
                 // appends all the text in post replies to 'replies' array
             self.ref.child("users").child(self.userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
