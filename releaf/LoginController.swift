@@ -18,6 +18,13 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
     }
     @IBOutlet var usernameField: UITextField!
     @IBOutlet var passwordField: UITextField!
+    @IBAction func createAccount(_ sender: Any) {
+        var storyboard = UIStoryboard(name: "Main", bundle: nil)
+        var ivc = storyboard.instantiateViewController(withIdentifier: "signup")
+        ivc.modalPresentationStyle = .custom
+        ivc.modalTransitionStyle = .crossDissolve
+        self.present(ivc, animated: true, completion: { _ in })
+    }
     @IBAction func loginButton(_ sender: Any) {
         if self.usernameField.text == "" || self.passwordField.text == "" {
             
