@@ -151,15 +151,17 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        loadData()
-        
+        if (replies.count > 0){
+            print("not first load")
+        }
+        else {
+            loadData()
+        }
         // set up the tableView
         let cellReuseIdentifier = "cell"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
     }
 
     // number of rows in table view
