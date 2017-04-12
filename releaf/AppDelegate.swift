@@ -18,14 +18,13 @@ import GoogleSignIn
  bugs
   - tableview isn't going bakc to home controller
  
- 
   - if 3 of facebook/gmail friends are part of a group - gives suggestions if they want to join groups 
      - put how many friends are in group next to group list
-  - api to retrieve facebook friends
-  - switching posts ensure doesn't land on same post
-  - me too / hugs reveal from my posts pages
-  - unjoin groups
- - interact with a post you earn a point (response, me too, hug) and if posting something
+- api to retrieve facebook friends
+- switching posts ensure doesn't land on same post
+- me too / hugs reveal from my posts pages
+- unjoin groups
+- interact with a post you earn a point (response, me too, hug) and if posting something
  - reveal uses the impact points
  
  - impact and reveal same thign
@@ -67,9 +66,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 
                 // appends all the text in post replies to 'replies' array
                 self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-                    print(snapshot.value!) // get text
-                    replies.append(snapshot.value! as! String)
-                    print(replies)
+//                    print(snapshot.value!) // get text
+//                    replies.append(snapshot.value! as! String)
+//                    print(replies)
                 })
             }
             

@@ -27,19 +27,19 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     var ref:FIRDatabaseReference!
     @IBOutlet var staticPostText: UITextView!
     
-    // enumeration
+    // broken
     func loadData(){
         
         ref = FIRDatabase.database().reference()
         ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            // get how many replies there are
             
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {             // get how many replies there are
                 
                 // appends all the text in post replies to 'replies' array
                 self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
 //                    print(snapshot.value!)
                     replies.append(snapshot.value! as! String)
+                    print(replies)
                 })
                 
                 // appends all the likes in post replies to 'replies' array
@@ -47,14 +47,10 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                     //                    print(snapshot.value!)
                     leaves.append(snapshot.value! as! Int)
                     print(leaves)
-                    print(snapshot.value!)
-                    
-                        // set up the tableView
-                        let cellReuseIdentifier = "cell"
-                        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-                        self.tableView.delegate = self
-                        self.tableView.dataSource = self
-
+//                    print(snapshot.value!)
+            
+        self.tableView.reloadData()
+                    print("reloaded")
                 })
             }
         }
@@ -81,16 +77,34 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
             let randomNum = arc4random_uniform(UInt32(((snapshot.value!) as AnyObject).count)) // range is 0 to 99
 //            print(randomNum)
             currentIndex = Int(randomNum) // set currentIndex to be this value
-            print(currentIndex)
+//            print(currentIndex)
         }
         
+        // steps
+            // clear replies array
+            // loadData
+            // refresh table cells with new array values
+        
         // clear previous cells data
+//        replies.removeAll()
+//        leaves.removeAll()
+//        replies = ["HAHAHAHAHAHAHAHG OT CHUSADDERE", "asdkljfsadkljfjadklsfklasfkjldas", "ASdfjklsadfjkldsfjiOWJEF89J2IOSDKF"]
+//        leaves = [3, 4, 4]
+//        print(replies)
         replies.removeAll()
         leaves.removeAll()
-        
-//        self.tableView.reloadData()
+//        print(replies)
         loadData()
-
+//        print(replies)
+        self.tableView.reloadData()
+        
+        // set up the tableView
+        let cellReuseIdentifier = "cell"
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
+        print(replies)
     }
     @IBOutlet var tableView: UITableView!
     @IBAction func meToo_isPressed(_ sender: Any) {
@@ -109,7 +123,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                     if let cell = superview.superview as? PromptTableViewCell {
                         indexPath = self.tableView.indexPath(for: cell) as IndexPath!
                         self.ref = FIRDatabase.database().reference()
-                    self.ref.child("post").child(String(currentIndex)).child("reply").child(String(indexPath.row)).child("user").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                        self.ref.child("post").child(String(currentIndex)).child("reply").child(String(indexPath.row)).child("user").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             // get how many replies there are
                             print(snapshot.value!)
                             var newstring = String(describing: snapshot.value!)
@@ -195,7 +209,15 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         loadData()
+        
+        // set up the tableView
+        let cellReuseIdentifier = "cell"
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
     }
 
     // number of rows in table view
