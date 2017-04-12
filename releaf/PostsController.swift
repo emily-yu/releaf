@@ -23,50 +23,31 @@ var currentIndex = 0
 class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSource {
     
     // ADD ME TOO AND HUGS FUNCTIONALITY
-    
+    let userID = FIRAuth.auth()!.currentUser!.uid
     var ref:FIRDatabaseReference!
     @IBOutlet var staticPostText: UITextView!
     
-    // broken
     func loadData(){
-        
         ref = FIRDatabase.database().reference()
         ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            
             for index in 0...(((snapshot.value!) as AnyObject).count - 1) {             // get how many replies there are
-                
+
                 // appends all the text in post replies to 'replies' array
                 self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-//                    print(snapshot.value!)
                     replies.append(snapshot.value! as! String)
-                    print(replies)
                 })
                 
                 // appends all the likes in post replies to 'replies' array
                 self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("likes").observeSingleEvent(of: .value, with: { (snapshot) in
-                    //                    print(snapshot.value!)
                     leaves.append(snapshot.value! as! Int)
-                    print(leaves)
-//                    print(snapshot.value!)
-            
-        self.tableView.reloadData()
-                    print("reloaded")
+                    self.tableView.reloadData()
                 })
             }
         }
         
-        
-        
         ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             self.staticPostText.text = String(describing: snapshot.value!)
         }
-        
-//        // Do any additional setup after loading the view, typically from a nib.
-//        let cellReuseIdentifier = "cell"
-//        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-//        tableView.delegate = self
-//        tableView.dataSource = self
-        
     }
     
     @IBAction func nextPost_isPressed(_ sender: Any) {
@@ -75,27 +56,12 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
 
             // post index to address
             let randomNum = arc4random_uniform(UInt32(((snapshot.value!) as AnyObject).count)) // range is 0 to 99
-//            print(randomNum)
             currentIndex = Int(randomNum) // set currentIndex to be this value
-//            print(currentIndex)
         }
         
-        // steps
-            // clear replies array
-            // loadData
-            // refresh table cells with new array values
-        
-        // clear previous cells data
-//        replies.removeAll()
-//        leaves.removeAll()
-//        replies = ["HAHAHAHAHAHAHAHG OT CHUSADDERE", "asdkljfsadkljfjadklsfklasfkjldas", "ASdfjklsadfjkldsfjiOWJEF89J2IOSDKF"]
-//        leaves = [3, 4, 4]
-//        print(replies)
         replies.removeAll()
         leaves.removeAll()
-//        print(replies)
         loadData()
-//        print(replies)
         self.tableView.reloadData()
         
         // set up the tableView
@@ -130,13 +96,12 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                         
                         
                             // subtract one from reveal points
-                                let userID = FIRAuth.auth()!.currentUser!.uid
-                            self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                            self.ref.child("users").child(self.userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                 print(snapshot.value!)
                                 if let int = snapshot.value{
                                     if (int as! Int > 0) {
                                         var same = (int as! Int)-1;// subtract one reveal point
-                                        self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
+                                        self.ref.child("users").child(self.userID).child("revealPoints").setValue(same) // set new value
                                         cell.username.text = newstring // change text
                                     }
                                     else {
@@ -161,30 +126,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         alert.addAction(cancel)
         alert.addAction(submitAction)
         present(alert, animated: true, completion: nil)
-        
-        
-        
-
-//        ref = FIRDatabase.database().reference()
-//        ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-//            // get how many replies there are
-//            
-//            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
-//                
-//                // appends all the likes in post replies to 'replies' array
-//                self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("likes").observeSingleEvent(of: .value, with: { (snapshot) in
-//                    //                    print(snapshot.value!)
-//                    leaves.append(snapshot.value! as! Int)
-//                    print(leaves)
-//                    print(snapshot.value!)
-//                })
-//            }
-//        }
     }
-    
-    func revealUsernane() {
-    }
-    
     
     // not connected to anything
     @IBAction func metooReveal(_ sender: Any) {
@@ -222,7 +164,6 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
 
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        print(replies.count)
         return leaves.count
     }
     
@@ -240,8 +181,24 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
+        
+        // like a post
         // ADD ONE TO LEAF COUNT
+        // add a point
+        
     }
+    
+    // add one reveal point - CHECK IF UID IS ALREADY THERE
+    func incrementPoints() {
+        self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            print(snapshot.value!)
+            if let int = snapshot.value{
+                var same = (int as! Int)+1;// add one reveal point
+                self.ref.child("users").child(self.userID).child("revealPoints").setValue(same) // set new value
+            }
+        }
+    }
+    
     
     // this method handles row deletion
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

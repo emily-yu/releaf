@@ -56,26 +56,11 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
             self.revealPoints.text = "REVEAL POINTS: \(snapshot.value!)"
         })
         
-        // set groups array
-        //lest try this again
-        ref = FIRDatabase.database().reference()
         
-        ref.child("users").child(userID).child("groups").observe(.value, with: {
-            snapshot in
-            for restaurant in snapshot.children {
-                restaurantNames.append((restaurant as AnyObject).value!)
-            }
-            print(restaurantNames)
-            let cellReuseIdentifier = "cell"
-            self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-            self.tableView.delegate = self
-            self.tableView.dataSource = self
-        })
-        
-//        let cellReuseIdentifier = "cell"
-//        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-//        tableView.delegate = self
-//        tableView.dataSource = self
+        let cellReuseIdentifier = "cell"
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        tableView.delegate = self
+        tableView.dataSource = self
         
 //        print(groups.count)
         

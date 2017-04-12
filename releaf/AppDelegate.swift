@@ -17,16 +17,12 @@ import GoogleSignIn
  
  bugs
   - tableview isn't going bakc to home controller
- 
-  - if 3 of facebook/gmail friends are part of a group - gives suggestions if they want to join groups 
-     - put how many friends are in group next to group list
-- api to retrieve facebook friends
+
 - switching posts ensure doesn't land on same post
 - me too / hugs reveal from my posts pages
 - unjoin groups
 - interact with a post you earn a point (response, me too, hug) and if posting something
- - reveal uses the impact points
- 
+
  - impact and reveal same thign
 - click to expand?
  
@@ -36,7 +32,6 @@ import GoogleSignIn
   - add when clicking on cell it likes it, adds user so you can't relike it - if you reclick it removes your uid
  
  low priority:
-  - fix broken replies table thing
   - adjust groups so people only see from a specific group
  
  extra things:
@@ -46,6 +41,10 @@ import GoogleSignIn
   - facebook login
   - twitter login
   - edit profile details
+ 
+ - if 3 of facebook/gmail friends are part of a group - gives suggestions if they want to join groups
+ - put how many friends are in group next to group list
+ - api to retrieve facebook friends
 */
 
 @UIApplicationMain
@@ -73,6 +72,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             }
             
         }
+        
+        
+        var userID: String = FIRAuth.auth()!.currentUser!.uid
+        // set groups array
+        ref = FIRDatabase.database().reference()
+        
+        ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observe(.value, with: {
+            snapshot in
+            for restaurant in snapshot.children {
+                restaurantNames.append((restaurant as AnyObject).value!)
+            }
+            print(restaurantNames)
+        })
+        
+        // append all the posts to myposts, then transfer to array
+        ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            // get how many posts you have
+            for index in 0...(((snapshot.value!) as AnyObject).count) { // NULL WHEN NO POSTS - NULL ON
+                
+                // appends all the text in post replies to 'replies' array
+                self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    if var same:Int = (snapshot.value! as? Int) {
+                        myposts.append(same)
+                        print(myposts)
+                        // acceses right posts and puts indexs in array
+                        // use array posts to same
+                        for index2 in myposts {
+                            self.ref.child("post").child(String(index2)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
+                                let int = snapshot.value!
+                                print(int)
+                                myPostsText.append(int as! String)
+                            })
+                        }
+                    }
+                })
+            }
+        }
+        
+        // set allgroups array
+        ref.child("groups").observe(.value, with: {
+            snapshot in
+            for restaurant in snapshot.children {
+                allgroups.append((restaurant as AnyObject).value!)
+            }
+            print(allgroups)
+        })
+    
         
         // Google Sign In
         GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
