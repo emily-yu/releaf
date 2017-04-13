@@ -58,27 +58,27 @@ class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSour
     }
     
     func loadData() {
-        ref = FIRDatabase.database().reference()
-        // to see all people that said me too
-        ref.child("post").child(String(describing: clickedIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            // get how many me too gais there are
-            print(((snapshot.value!) as AnyObject).count - 1)
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
-                
-                // appends all the text in post replies to 'replies' array
-                self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let int = snapshot.value{
-                        var same = int as! String;
-                        print(same) // gets all the names who said me too
-                        metoo.append(same)
-                        print("METOO ARRAY")
-                        print(metoo)
-                        
-                        self.tableView.reloadData()
-                    }
-                })
-            }
-        }
+//        ref = FIRDatabase.database().reference()
+//        // to see all people that said me too
+//        ref.child("post").child(String(describing: clickedIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+//            // get how many me too gais there are
+//            print(((snapshot.value!) as AnyObject).count - 1)
+//            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
+//                
+//                // appends all the text in post replies to 'replies' array
+//                self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+//                    if let int = snapshot.value{
+//                        var same = int as! String;
+//                        print(same) // gets all the names who said me too
+//                        metoo.append(same)
+//                        print("METOO ARRAY")
+//                        print(metoo)
+//                        
+//                        self.tableView.reloadData()
+//                    }
+//                })
+//            }
+//        }
     }
 }
 
@@ -95,13 +95,42 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        ref = FIRDatabase.database().reference()
+//        // to see all people that said me too
+//        print(String(describing: clickedIndex))
+//        
+//        // fix this shiiiiiit i hope its just internet but it isn't FUCKING LOADING
+//        ref.child("post").child(String(clickedIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+//            print(snapshot.childrenCount) // get the number of children
+//            // get how many me too gais there are
+////            print(((snapshot.value!) as AnyObject).count - 1)
+//            for index in 0...(snapshot.childrenCount - 1) {
+//                // appends all the text in post replies to 'replies' array
+//                print(index)
+//                self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+//                    print(snapshot.value)
+//                    if let int = snapshot.value{
+//                        var same = int as! String;
+//                        print(same) // gets all the names who said me too
+//                        metoo.append(same)
+//                        print("METOO ARRAY")
+//                        print(metoo)
+//                        
+//                        self.tableView.reloadData()
+//                        print("reloaded")
+//                    }
+//                })
+//            }
+//        }
+        
+        loadData()
+        self.tableView.reloadData()
+        
+        
         let cellReuseIdentifier = "cell"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
-        
-        loadData()
-        
         
     }
     
@@ -122,23 +151,27 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     func loadData() {
         ref = FIRDatabase.database().reference()
         // to see all people that said me too
-        ref.child("post").child(String(currentIndex)).child("hugs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
-                
+        print(String(describing: clickedIndex))
+        ref.child("post").child(String(clickedIndex)).child("hugs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            print(snapshot.childrenCount) // get the number of children
+            // get how many me too gais there are
+            //            print(((snapshot.value!) as AnyObject).count - 1)
+            for index in 0...(snapshot.childrenCount - 1) {
                 // appends all the text in post replies to 'replies' array
+                print(index)
                 self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    print(snapshot.value)
                     if let int = snapshot.value{
                         var same = int as! String;
+                        print(same) // gets all the names who said me too
                         hugs.append(same)
-                        
                         self.tableView.reloadData()
+                        print("reloaded")
                     }
                 })
             }
         }
     }
-
 }
 
 class HugsTableViewCell: UITableViewCell {
