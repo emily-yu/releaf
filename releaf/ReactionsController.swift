@@ -8,34 +8,77 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 // Post Reactions
 var metoo: [String] = []
+var previousIndex: Int = -1 // track whether the index has changed
+
 class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSource {
-    
+        var ref: FIRDatabaseReference!
     @IBOutlet var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // handle changing posts - not working
+        if (previousIndex == -1) {
+            previousIndex = clickedIndex!
+            loadData()
+            self.tableView.reloadData()
+        }
+        else {
+            if (previousIndex == clickedIndex) {
+                print("index didn't change")
+            }
+            else {
+                loadData()
+                self.tableView.reloadData()
+            }
+        }
         
         let cellReuseIdentifier = "cell"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
-        
+
     }
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return restaurantNames.count
+        return metoo.count
     }
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell:MeTooTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "MeTooTableViewCell") as! MeTooTableViewCell
         //        cell.prompt.text = String(groups[indexPath.row])
-        cell.username.text = String(restaurantNames[indexPath.row])
+        cell.username.text = String(metoo[indexPath.row])
         
         return cell
+    }
+    
+    func loadData() {
+        ref = FIRDatabase.database().reference()
+        // to see all people that said me too
+        ref.child("post").child(String(describing: clickedIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            // get how many me too gais there are
+            print(((snapshot.value!) as AnyObject).count - 1)
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
+                
+                // appends all the text in post replies to 'replies' array
+                self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let int = snapshot.value{
+                        var same = int as! String;
+                        print(same) // gets all the names who said me too
+                        metoo.append(same)
+                        print("METOO ARRAY")
+                        print(metoo)
+                        
+                        self.tableView.reloadData()
+                    }
+                })
+            }
+        }
     }
 }
 
@@ -46,6 +89,8 @@ class MeTooTableViewCell: UITableViewCell {
 var hugs: [String] = []
 class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSource {
     
+    var ref: FIRDatabaseReference!
+    
     @IBOutlet var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,20 +100,43 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         tableView.delegate = self
         tableView.dataSource = self
         
+        loadData()
+        
+        
     }
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return restaurantNames.count
+        return hugs.count
     }
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell:HugsTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "HugsTableViewCell") as! HugsTableViewCell
         //        cell.prompt.text = String(groups[indexPath.row])
-        cell.username.text = String(restaurantNames[indexPath.row])
+        cell.username.text = String(hugs[indexPath.row])
         
         return cell
+    }
+    
+    func loadData() {
+        ref = FIRDatabase.database().reference()
+        // to see all people that said me too
+        ref.child("post").child(String(currentIndex)).child("hugs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
+                
+                // appends all the text in post replies to 'replies' array
+                self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let int = snapshot.value{
+                        var same = int as! String;
+                        hugs.append(same)
+                        
+                        self.tableView.reloadData()
+                    }
+                })
+            }
+        }
     }
 
 }

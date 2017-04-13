@@ -352,7 +352,6 @@
                                 <rect key="frame" x="28" y="79" width="318" height="84"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.65284383300000004" green="0.79280853269999996" blue="0.34900054339999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -675,9 +674,12 @@
                                 <rect key="frame" x="40" y="601" width="298" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.28214988112449646" green="0.500815749168396" blue="0.24711169302463531" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal" title="Button">
+                                <state key="normal" title="Create Group">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="createGroup:" destination="IXA-cr-R0C" eventType="touchUpInside" id="0Il-Uf-HCi"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.65284383296966553" green="0.79280853271484375" blue="0.34900054335594177" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -742,10 +744,6 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U7I-wy-HTl">
-                                                    <rect key="frame" x="260" y="4" width="40" height="36"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
@@ -873,7 +871,7 @@
                                 <color key="backgroundColor" red="0.69602417945861816" green="0.81615543365478516" blue="0.4117564857006073" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dhP-Cb-GEv">
                                 <rect key="frame" x="89" y="336" width="196" height="30"/>
@@ -1061,7 +1059,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="5Sm-1B-pUW"/>
         <segue reference="hi3-fG-Bcn"/>
-        <segue reference="1Qq-PL-uo0"/>
-        <segue reference="Hlt-nB-4bg"/>
+        <segue reference="fhL-fS-K4x"/>
+        <segue reference="p1Q-bZ-GPY"/>
     </inferredMetricsTieBreakers>
 </document>

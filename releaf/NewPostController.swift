@@ -31,16 +31,26 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     @IBAction func post(_ sender: Any) {
         ref = FIRDatabase.database().reference()
+        ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
 
-        // things to set for new posts
-//        self.ref.child("post/1/leaves").setValue(3)
-//        self.ref.child("post/1/text").setValue("ReplyText")
-//        self.ref.child("post/1/user").setValue("Username")
-        
-        print()
-//        self.ref.child("post/1/leaves").setValue(3)
-//        self.ref.child("post/1/leaves").setValue(3)
+            var replyIndex = String((((snapshot.value!) as AnyObject).count))
+            self.ref.child("post").child(String(currentIndex)).child("reply").child(replyIndex).setValue([
+                "likes": 0,
+                "text": self.userText.text!,
+                "user": FIRAuth.auth()!.currentUser!.uid
+            ])
+            
+//            // setting attributes for one post
+//            self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/leaves").setValue(0)
+//        // things to set for new posts
 
+//        self.ref.child("post/1/leaves").setValue(0)
+//        self.ref.child("post/1/text").setValue(self.userText.text)
+//        self.ref.child("post/1/user").setValue(FIRAuth.auth()!.currentUser!.uid)
+//
+//        self.ref.child("post/1/leaves").setValue(3)
+//        self.ref.child("post/1/leaves").setValue(3)
+        }
     }
     
     // number of rows in table view

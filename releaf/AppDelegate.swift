@@ -18,21 +18,21 @@ import GoogleSignIn
  bugs
   - tableview isn't going bakc to home controller
 
-- switching posts ensure doesn't land on same post
-- me too / hugs reveal from my posts pages
-- unjoin groups
-- interact with a post you earn a point (response, me too, hug) and if posting something
-
+ - me too / hugs reveal from my posts pages
+ - unjoin groups
+ - interact with a post you earn a point (response, me too, hug) and if posting something
  - impact and reveal same thign
-- click to expand?
- 
-  - join and create groups
- - lcik on post go to it
+- lcik on post go to it
   - when reclicking on the groups section, it reloads and reappends
   - add when clicking on cell it likes it, adds user so you can't relike it - if you reclick it removes your uid
+  - problem with repeating first post in MYPOSTS adn GROUPS
  
  low priority:
   - adjust groups so people only see from a specific group
+ - click to expand?
+ - switching posts ensure doesn't land on same post
+ - rejoin group twice
+ - refresh table when create new groups
  
  extra things:
   - add save function in post scroller
@@ -65,9 +65,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 
                 // appends all the text in post replies to 'replies' array
                 self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-//                    print(snapshot.value!) // get text
-//                    replies.append(snapshot.value! as! String)
-//                    print(replies)
                 })
             }
             
@@ -110,16 +107,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             }
         }
         
-        // set allgroups array
-        ref.child("groups").observe(.value, with: {
-            snapshot in
-            for restaurant in snapshot.children {
-                allgroups.append((restaurant as AnyObject).value!)
+        // NOT DONE
+        // append all the posts to myposts, then transfer to array
+        ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+                self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
+                    if var same:String = (snapshot.value! as? String) {
+                        groupDescription.append(same)
+                    }
+                })
+                self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
+                    if var same:String = (snapshot.value! as? String) {
+                        allgroups.append(same)
+                    }
+                })
             }
-            print(allgroups)
-        })
-    
-        
+        }
+
         // Google Sign In
         GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self

@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import Firebase
 
-// FINISHED
 class CreatePostController: UIViewController {
 
     let userID = FIRAuth.auth()!.currentUser!.uid
@@ -30,54 +29,66 @@ class CreatePostController: UIViewController {
     }
     
     func newPost() {
-        
-        // if element is missing
         if self.header.text == "" || self.body.text == "" {
-
             let alertController = UIAlertController(title: "Error", message: "Please enter a header and body.", preferredStyle: .alert)
-            
             let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             alertController.addAction(defaultAction)
             
             self.present(alertController, animated: true, completion: nil)
-            
         }
         else {
             ref = FIRDatabase.database().reference()
-            ref.child("post").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            self.ref.child("post").observeSingleEvent(of: .value, with: { (snapshot) in
                 
-                // setting attributes for one post
-                self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/leaves").setValue(self.header.text!)
-                self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/text").setValue(self.body.text!)
-                self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/user").setValue(self.userID)
-                // ADJUST THING TO READ REPLIES STARTING AT 1 SINCE ZERO IS EMPTY
-                self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/reply/0/text").setValue("reply text")
-                self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/reply/0/user").setValue(self.userID) // base response for init
-                var baseValue = String(((snapshot.value!) as AnyObject).count)
-                
-                // creating post under that person's account
-                self.ref.child("post").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                    var string = String((((snapshot.value!) as AnyObject).count) + 1) // amount of posts there are + 1 to create new post
-                    self.ref.child(self.userID).child("myPosts").setValue([string:baseValue])
+                // anonymous control
+                var anonStatus: String!
+                if (self.anonControl.selectedSegmentIndex == 0){
+                    print("fullanon")
+                    self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/status").setValue("fullanon")
+                    anonStatus = "fullanon"
+                }
+                else {
+                    print("partanon")
+                    self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/status").setValue("partanon")
+                    anonStatus = "partanon"
                 }
                 
-            // anonymous control
-            if (self.anonControl.selectedSegmentIndex == 0){
-                print("fullanon")
-                self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/status").setValue("fullanon")
-            }
-            else {
-                print("partanon")
-                self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/status").setValue("partanon")
-            }
-            
-            //navigate back to home screen
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
-            self.present(vc!, animated: true, completion: nil)
-        }
-
-    
+                if let int = (snapshot.value) {
+                    var same = (String((int as AnyObject).count)) as String!
+                    print("then goes in here?")
+                    self.ref.child("post").child(same!).setValue([
+                        "reply": [
+                            "0": [
+                                "likes": 0,
+                                "text": "reply text",
+                                "user": "default uid"
+                            ]
+                        ],
+                        "user": self.userID,
+                        "text": self.body.text!,
+                        "leaves": 0,
+                        "hugs": [
+                            "0": "sadjkl"
+                        ],
+                        "metoo": [
+                            "0": "asdklfj2"
+                        ],
+                        "status": anonStatus,
+                        ] as NSDictionary)
+                    
+                    var baseValue = String(((snapshot.value!) as AnyObject).count)
+                    
+                    // creating post under that person's account
+                    self.ref.child("post").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                        var string = String((((snapshot.value!) as AnyObject).count) + 1) // amount of posts there are + 1 to create new post
+                        self.ref.child(self.userID).child("myPosts").setValue([string:baseValue])
+                    }
+                    
+                    //navigate back to home screen
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
+                    self.present(vc!, animated: true, completion: nil)
+                }
+            })
         }
     }
-    
 }

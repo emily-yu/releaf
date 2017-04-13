@@ -12,6 +12,7 @@ import Firebase
 
 var myposts: [Int] = [] //indexes of posts
 var myPostsText: [String] = []
+var clickedIndex: Int?
 
 class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSource
 {
@@ -51,6 +52,8 @@ class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSo
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
+        
+        clickedIndex = indexPath.row
         
         var storyboard = UIStoryboard(name: "Main", bundle: nil)
         var ivc = storyboard.instantiateViewController(withIdentifier: "postInfo")

@@ -70,12 +70,9 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        print(replies)
     }
     @IBOutlet var tableView: UITableView!
     @IBAction func meToo_isPressed(_ sender: Any) {
-        print("same")
-
     }
     
     // revealing user identities
@@ -91,13 +88,11 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                         self.ref = FIRDatabase.database().reference()
                         self.ref.child("post").child(String(currentIndex)).child("reply").child(String(indexPath.row)).child("user").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             // get how many replies there are
-                            print(snapshot.value!)
                             var newstring = String(describing: snapshot.value!)
                         
                         
                             // subtract one from reveal points
                             self.ref.child("users").child(self.userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                                print(snapshot.value!)
                                 if let int = snapshot.value{
                                     if (int as! Int > 0) {
                                         var same = (int as! Int)-1;// subtract one reveal point
@@ -139,7 +134,6 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                 
                 // appends all the text in post replies to 'replies' array
                 self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-                    //                        print(snapshot.value!)
                     if let int = snapshot.value{
                         var same = int as! String;
                         print(same) // gets all the names who said me too
@@ -175,7 +169,6 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         
         cell.prompt.text = String(replies[indexPath.row])
         cell.leaves.text = String(leaves[indexPath.row])
-        print(leaves)
         
         return cell
     }
@@ -193,7 +186,6 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     // add one reveal point - CHECK IF UID IS ALREADY THERE
     func incrementPoints() {
         self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            print(snapshot.value!)
             if let int = snapshot.value{
                 var same = (int as! Int)+1;// add one reveal point
                 self.ref.child("users").child(self.userID).child("revealPoints").setValue(same) // set new value
