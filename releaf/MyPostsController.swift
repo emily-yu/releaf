@@ -90,4 +90,26 @@ class MyPostsTableViewCell: UITableViewCell {
     @IBOutlet var postText: UILabel!
 }
 
+class PostDetailsController: UIViewController {
+    
+    var ref: FIRDatabaseReference!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        
+        ref = FIRDatabase.database().reference()
+        
+    }
+    // switches to profile tab
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "myPostsSegue"){
+            if let tabVC = segue.destination as? UITabBarController{
+                tabVC.selectedIndex = 2
+                print("called")
+            }
+        }
+    }
+}
+
 

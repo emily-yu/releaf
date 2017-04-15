@@ -20,7 +20,6 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     var tempFirst = ""
     var tempLast = ""
     @IBOutlet var tableView: UITableView!
-    @IBOutlet var impactPoints: UILabel!
     @IBOutlet var revealPoints: UILabel!
     
     var ref:FIRDatabaseReference!
@@ -42,18 +41,11 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
             print(snapshot.value!)
             self.nameField.text = self.tempFirst + " " + self.tempLast
         })
-        
-        // set impact points
-        self.ref.child("users").child(userID).child("impactPoints").observeSingleEvent(of: .value, with: { (snapshot) in
-            self.tempFirst = String(describing: snapshot.value!)
-            print(snapshot.value!)
-            self.impactPoints.text = "IMPACT POINTS: \(snapshot.value!)"
-        })
-        
+
         // set reveal points
         self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value, with: { (snapshot) in
             print(snapshot.value!)
-            self.revealPoints.text = "REVEAL POINTS: \(snapshot.value!)"
+            self.revealPoints.text = "IMPACTS POINTS: \(snapshot.value!)"
         })
         
         

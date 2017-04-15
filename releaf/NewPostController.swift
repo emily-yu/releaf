@@ -86,4 +86,14 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         
     }
+    
+    // switches to profile tab
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "postControllerSegue"){
+            if let tabVC = segue.destination as? UITabBarController{
+                tabVC.selectedIndex = 0
+                print("called")
+            }
+        }
+    }
 }

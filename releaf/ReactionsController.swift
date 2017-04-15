@@ -57,28 +57,30 @@ class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSour
         return cell
     }
     
+    // right now this is not using the index number of the post that's being clicked, but the index of the cell
     func loadData() {
-//        ref = FIRDatabase.database().reference()
-//        // to see all people that said me too
-//        ref.child("post").child(String(describing: clickedIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-//            // get how many me too gais there are
-//            print(((snapshot.value!) as AnyObject).count - 1)
-//            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
-//                
-//                // appends all the text in post replies to 'replies' array
-//                self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-//                    if let int = snapshot.value{
-//                        var same = int as! String;
-//                        print(same) // gets all the names who said me too
-//                        metoo.append(same)
-//                        print("METOO ARRAY")
-//                        print(metoo)
-//                        
-//                        self.tableView.reloadData()
-//                    }
-//                })
-//            }
-//        }
+        ref = FIRDatabase.database().reference()
+        print(String(describing: clickedIndex))
+        ref.child("post").child(String(clickedIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            print(snapshot.childrenCount) // get the number of children
+            var indexesss: [Int] = []
+            for index in 0...(snapshot.childrenCount - 1) {
+                print("INDEX:\(index)")
+                // changed that to clickedIndex
+                self.ref.child("post").child(String(clickedIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    print(snapshot.value)
+                    print(index)
+                    if let int = snapshot.value{
+                        var same = int as! String;
+                        print(same) // gets all the names who said me too
+                        metoo.append(same)
+                        print(metoo)
+                        self.tableView.reloadData()
+                        print("reloaded")
+                    }
+                })
+            }
+        }
     }
 }
 

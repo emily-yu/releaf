@@ -55,11 +55,21 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
             
             //navigate back to home screen
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
+            
             self.present(vc!, animated: true, completion: nil)
         }
         
     }
-//
+// switches to profile tab
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "profileSegue"){
+            if let tabVC = segue.destination as? UITabBarController{
+                tabVC.selectedIndex = 3
+                        print("called")
+            }
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -102,6 +112,16 @@ class CreateGroupController: UIViewController {
                 self.present(vc!, animated: true, completion: nil)
             }
         })
+    }
+    
+    // switches to profile tab
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "profileSegue"){
+            if let tabVC = segue.destination as? UITabBarController{
+                tabVC.selectedIndex = 3
+                print("called")
+            }
+        }
     }
     
     override func viewDidLoad() {

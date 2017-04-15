@@ -51,7 +51,6 @@ class SignUpController: UIViewController, GIDSignInUIDelegate {
                         "firsasdfadsftName": self.firstNameField.text!,
                         "lastName": self.lastNameField.text!,
                         "profilePic": "encoded picture", // encode profile pictures
-                        "impactPoints": 0,
                         "revealPoints": 0,
                         "groups": [
                             "0": "Global Community"

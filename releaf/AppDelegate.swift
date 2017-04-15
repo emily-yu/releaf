@@ -16,19 +16,14 @@ import GoogleSignIn
  high priority:
  
  bugs
-  - tableview isn't going bakc to home controller
-
- - me too / hugs reveal from my posts pages
- - unjoin groups
  - interact with a post you earn a point (response, me too, hug) and if posting something
- - impact and reveal same thign
-- lcik on post go to it
-  - when reclicking on the groups section, it reloads and reappends
-  - add when clicking on cell it likes it, adds user so you can't relike it - if you reclick it removes your uid
-  - problem with repeating first post in MYPOSTS adn GROUPS
+ - lcik on post go to it
+ - add when clicking on cell it likes it, adds user so you can't relike it - if you reclick it removes your uid
+ - problem with repeating first post in MYPOSTS
  
  low priority:
-  - adjust groups so people only see from a specific group
+  - unjoin groups
+- adjust groups so people only see from a specific group
  - click to expand?
  - switching posts ensure doesn't land on same post
  - rejoin group twice
