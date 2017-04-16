@@ -60,17 +60,14 @@ class SignUpController: UIViewController, GIDSignInUIDelegate {
                         ],
                         "hugs": [
                             "0": ""
-                        ]
+                        ],
+                        "base64string": "default"
                     ])
-                    print("asdfasdf")
-                    print("You have successfully signed up")
                     
                     //login w/ new account
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
                     self.present(vc!, animated: true, completion: nil)
-                    print((user?.uid)!)
-                    
-                    
+
                 }
                 else {
                     let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)

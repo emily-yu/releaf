@@ -37,7 +37,10 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
             self.ref.child("post").child(String(currentIndex)).child("reply").child(replyIndex).setValue([
                 "likes": 0,
                 "text": self.userText.text!,
-                "user": FIRAuth.auth()!.currentUser!.uid
+                "user": FIRAuth.auth()!.currentUser!.uid,
+                "uid": [
+                    "0": "deafult"
+                ]
             ])
             
 //            // setting attributes for one post

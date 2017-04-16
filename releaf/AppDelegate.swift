@@ -14,12 +14,13 @@ import GoogleSignIn
 
 /*
  high priority:
- 
- bugs
+ - ADD ME TOO AND HUGS FUNCTIONALITY
  - interact with a post you earn a point (response, me too, hug) and if posting something
  - lcik on post go to it
  - add when clicking on cell it likes it, adds user so you can't relike it - if you reclick it removes your uid
  - problem with repeating first post in MYPOSTS
+ - problem with decoding image - unsure whats going on
+ - camera function untested - test when get USB c
  
  low priority:
   - unjoin groups
@@ -42,6 +43,8 @@ import GoogleSignIn
  - api to retrieve facebook friends
 */
 
+var uid:[String] = []
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
@@ -56,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             // get how many replies there are
             for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
-                print("index:" + String(index)) // indexes of the posts
+//                print("index:" + String(index)) // indexes of the posts
                 
                 // appends all the text in post replies to 'replies' array
                 self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -75,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             for restaurant in snapshot.children {
                 restaurantNames.append((restaurant as AnyObject).value!)
             }
-            print(restaurantNames)
+//            print(restaurantNames)
         })
         
         // append all the posts to myposts, then transfer to array
@@ -87,13 +90,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     if var same:Int = (snapshot.value! as? Int) {
                         myposts.append(same)
-                        print(myposts)
+//                        print(myposts)
                         // acceses right posts and puts indexs in array
                         // use array posts to same
                         for index2 in myposts {
                             self.ref.child("post").child(String(index2)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
                                 let int = snapshot.value!
-                                print(int)
+//                                print(int)
                                 myPostsText.append(int as! String)
                             })
                         }
@@ -119,6 +122,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             }
         }
 
+        self.ref = FIRDatabase.database().reference()
+        
+        
+//        ref.child("post").child("4").child("reply").child("0").child("uid").observeSingleEvent(of: .value, with: { (snapshot) in
+//            print(snapshot.value!)
+//            if snapshot.hasChild("ajskdlf"){
+//                
+//                print("true rooms exist")
+//                
+//            }else{
+//                
+//                print("false room doesn't exist")
+//            }
+//        })
+        
+        // viewdidload for each post
+        // when click to reveal, check if userID is in it
+
+//        ref.child("post").child("5").child("reply").child("0").child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+//            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+//                self.ref.child("post").child("5").child("reply").child("0").child("uid").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+//                    if var same:String = (snapshot.value! as? String) {
+//                        uid.append(same)
+//                        print(uid)
+//                    }
+//                })
+//            }
+//        }
+//        
+
+        
         // Google Sign In
         GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self

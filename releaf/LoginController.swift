@@ -44,14 +44,6 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
             FIRAuth.auth()?.signIn(withEmail: self.usernameField.text!, password: self.passwordField.text!) { (user, error) in
                 
                 if error == nil {
-                    
-                    //Print into the console if successfully logged in
-                    print("You have successfully logged in")
-                    
-                    //Go to the HomeViewController if the login is sucessful
-//                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
-//                    self.present(vc!, animated: true, completion: nil)
-//                    
                     var storyboard = UIStoryboard(name: "Main", bundle: nil)
                     var ivc = storyboard.instantiateViewController(withIdentifier: "Home")
                     ivc.modalPresentationStyle = .custom
@@ -71,40 +63,15 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
             }
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        // delegate gsignin
         GIDSignIn.sharedInstance().uiDelegate = self
-        
-        // TODO(developer) Configure the sign-in button look/feel
-        // ...
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
-
-extension UIView {
-    
-    
-    func fadeIn(duration: TimeInterval = 1.0, delay: TimeInterval = 0.0, completion: @escaping ((Bool) -> Void) = {(finished: Bool) -> Void in}) {
-        UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseIn, animations: {
-            self.alpha = 1.0
-        }, completion: completion)  }
-    
-    func fadeOut(duration: TimeInterval = 1.0, delay: TimeInterval = 3.0, completion: @escaping (Bool) -> Void = {(finished: Bool) -> Void in}) {
-        UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseIn, animations: {
-            self.alpha = 0.0
-        }, completion: completion)
-    }
-    
-}
-
-

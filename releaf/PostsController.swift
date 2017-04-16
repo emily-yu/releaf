@@ -19,10 +19,10 @@ var leaves: [Int] = [] // temp store LIKES for everything replies
 var tempLikes: [Int] = []
 
 var currentIndex = 0
+    var asdf = false
 
 class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSource {
     
-    // ADD ME TOO AND HUGS FUNCTIONALITY
     let userID = FIRAuth.auth()!.currentUser!.uid
     var ref:FIRDatabaseReference!
     @IBOutlet var staticPostText: UITextView!
@@ -53,7 +53,6 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     @IBAction func nextPost_isPressed(_ sender: Any) {
         ref = FIRDatabase.database().reference()
         ref.child("post").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-
             // post index to address
             let randomNum = arc4random_uniform(UInt32(((snapshot.value!) as AnyObject).count)) // range is 0 to 99
             currentIndex = Int(randomNum) // set currentIndex to be this value
@@ -88,59 +87,37 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                         self.ref = FIRDatabase.database().reference()
                         self.ref.child("post").child(String(currentIndex)).child("reply").child(String(indexPath.row)).child("user").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             // get how many replies there are
-                            var newstring = String(describing: snapshot.value!)
+                        var newstring = String(describing: snapshot.value!)
                         
-                        
-                            // subtract one from reveal points
-                            self.ref.child("users").child(self.userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                                if let int = snapshot.value{
-                                    if (int as! Int > 0) {
-                                        var same = (int as! Int)-1;// subtract one reveal point
-                                        self.ref.child("users").child(self.userID).child("revealPoints").setValue(same) // set new value
-                                        cell.username.text = newstring // change text
-                                    }
-                                    else {
-                                        let alertController = UIAlertController(title: "Error", message: "Not enough reveal points.", preferredStyle: .alert)
-                                        
-                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                                        alertController.addAction(defaultAction)
-                                        
-                                        self.present(alertController, animated: true, completion: nil)
-                                    }
+                        // subtract one from reveal points
+                        self.ref.child("users").child(self.userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                            if let int = snapshot.value{
+                                if (int as! Int > 0) {
+                                    var same = (int as! Int)-1;// subtract one reveal point
+                                    self.ref.child("users").child(self.userID).child("revealPoints").setValue(same) // set new value
+                                    cell.username.text = newstring // change text
                                 }
-
+                                else {
+                                    let alertController = UIAlertController(title: "Error", message: "Not enough reveal points.", preferredStyle: .alert)
+                                    
+                                    let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                                    alertController.addAction(defaultAction)
+                                    
+                                    self.present(alertController, animated: true, completion: nil)
+                                }
                             }
-
                         }
+
                     }
                 }
             }
+        }
         })
         let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
         
         alert.addAction(cancel)
         alert.addAction(submitAction)
         present(alert, animated: true, completion: nil)
-    }
-    
-    // not connected to anything
-    @IBAction func metooReveal(_ sender: Any) {
-        
-        // to see all people that said me too
-        ref.child("post").child(String(currentIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            // get how many me too gais there are
-            
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
-                
-                // appends all the text in post replies to 'replies' array
-                self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let int = snapshot.value{
-                        var same = int as! String;
-                        print(same) // gets all the names who said me too
-                    }
-                })
-            }
-        }
     }
     
     override func viewDidLoad() {
@@ -156,8 +133,34 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
     }
 
+    // checks to see if user is listed under the reply uid's
+    func checkArray(index:Int) {
+        // set uid array - change reply/0 --> reply/clickedIndex
+        ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+                self.ref.child("post").child("5").child("reply").child("0").child("uid").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    if var same:String = (snapshot.value! as? String) {
+                        uid.append(same)
+                        print(uid)
+                        if uid.contains(FIRAuth.auth()!.currentUser!.uid) {
+                            print("its dere plus 1 bb")
+//                            return true
+                            asdf = true
+                        }
+                        else {
+//                            return false
+                            print("not there")
+                            asdf = false
+                        }
+                    }
+                })
+            }
+        }
+    }
+    
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return leaves.count
@@ -227,12 +230,10 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         return [editAction, deleteAction]
     }
 
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 
 }
 
