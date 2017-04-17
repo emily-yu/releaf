@@ -21,6 +21,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="tempbackground" translatesAutoresizingMaskIntoConstraints="NO" id="5YD-Hx-Byr">
+                                <rect key="frame" x="-157" y="0.0" width="682" height="678"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z7x-mN-Dfm">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -29,7 +33,7 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="F0z-c2-3Wg">
-                                <rect key="frame" x="34" y="79" width="306" height="524"/>
+                                <rect key="frame" x="34" y="91" width="306" height="492"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -56,7 +60,6 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.65284383296966553" green="0.79280853271484375" blue="0.34900054335594177" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Posts" image="arrow" id="CPC-jw-eQs"/>
                     <connections>
@@ -79,6 +82,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="tempbackground" translatesAutoresizingMaskIntoConstraints="NO" id="RHg-ED-gsz">
+                                <rect key="frame" x="-157" y="0.0" width="682" height="678"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YPl-c9-Pbi">
                                 <rect key="frame" x="45" y="122" width="283" height="134"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -97,7 +104,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCM-cI-yCJ">
                                 <rect key="frame" x="45" y="588" width="131" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.19667351250000001" green="0.50664824249999996" blue="0.21007725599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.57454901930000002" green="0.72993499039999998" blue="0.2784076929" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Me Too ">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -108,7 +115,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V5J-DN-NkT">
                                 <rect key="frame" x="184" y="588" width="144" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.19667351250000001" green="0.50664824249999996" blue="0.21007725599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.57454901930000002" green="0.72993499039999998" blue="0.2784076929" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Hugs">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -152,7 +159,6 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.65284383300000004" green="0.79280853269999996" blue="0.34900054339999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qzA-ie-Pvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -171,6 +177,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="tempbackground" translatesAutoresizingMaskIntoConstraints="NO" id="neL-0G-2Un">
+                                <rect key="frame" x="-157" y="0.0" width="682" height="678"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Ay-gy-A5W">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -212,7 +222,6 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.65284383300000004" green="0.79280853269999996" blue="0.34900054339999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="us8-uy-GT8" id="lUH-sa-Yb9"/>
@@ -234,6 +243,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="tempbackground" translatesAutoresizingMaskIntoConstraints="NO" id="Fyb-qa-BEI">
+                                <rect key="frame" x="-157" y="0.0" width="682" height="678"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QaF-Dh-wKG">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -305,7 +318,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2y-2c-MUA">
                                 <rect key="frame" x="28" y="177" width="154" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.19667351250000001" green="0.50664824249999996" blue="0.21007725599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.57454901930000002" green="0.72993499039999998" blue="0.2784076929" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="ME TOO">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -316,7 +329,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PnM-FY-2lz">
                                 <rect key="frame" x="196" y="177" width="150" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.19667351250000001" green="0.50664824249999996" blue="0.21007725599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.57454901930000002" green="0.72993499039999998" blue="0.2784076929" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="HUGS">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -324,7 +337,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l2m-8v-u9z">
                                 <rect key="frame" x="28" y="567" width="318" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.19667351250000001" green="0.50664824249999996" blue="0.21007725599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.57454901933670044" green="0.72993499040603638" blue="0.27840769290924072" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="REPLY">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -335,13 +348,11 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kCx-Ch-sOY">
                                 <rect key="frame" x="28" y="79" width="318" height="84"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.65284383300000004" green="0.79280853269999996" blue="0.34900054339999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" red="0.65284383296966553" green="0.79280853271484375" blue="0.34900054335594177" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Challenge" image="leafag" id="acW-dT-cKf"/>
                     <connections>
@@ -351,7 +362,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="749.60000000000002" y="-320.68965517241384"/>
+            <point key="canvasLocation" x="750" y="-322"/>
         </scene>
         <!--New Post Controller-->
         <scene sceneID="FgF-GT-6Qh">
@@ -365,6 +376,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="tempbackground" translatesAutoresizingMaskIntoConstraints="NO" id="mKF-Q6-r9x">
+                                <rect key="frame" x="-157" y="0.0" width="682" height="678"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="AEp-ew-2xC">
                                 <rect key="frame" x="28" y="329" width="318" height="242"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -416,7 +431,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IMl-uN-afO">
                                 <rect key="frame" x="28" y="589" width="318" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.19667351250000001" green="0.50664824249999996" blue="0.21007725599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.57454901930000002" green="0.72993499039999998" blue="0.2784076929" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="POST">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -426,7 +441,6 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.65284383300000004" green="0.79280853269999996" blue="0.34900054339999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="Vr6-fb-Dik" id="EQY-Ok-SLe"/>
@@ -449,6 +463,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="tempbackground" translatesAutoresizingMaskIntoConstraints="NO" id="ocO-H9-2C3">
+                                <rect key="frame" x="-157" y="0.0" width="682" height="678"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZJ7-Sl-RTN">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -490,7 +508,6 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.65284383300000004" green="0.79280853269999996" blue="0.34900054339999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="Bqm-4l-IQn" id="G5U-ge-yri"/>
@@ -512,6 +529,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="tempbackground" translatesAutoresizingMaskIntoConstraints="NO" id="MGy-xd-eP8">
+                                <rect key="frame" x="-157" y="0.0" width="682" height="678"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DPq-aD-l7l">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -560,7 +581,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yJj-bI-HyY">
                                 <rect key="frame" x="190" y="543" width="123" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.19667351250000001" green="0.50664824249999996" blue="0.21007725599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.57454901930000002" green="0.72993499039999998" blue="0.2784076929" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Create Group">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -571,7 +592,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xs2-FD-DAK">
                                 <rect key="frame" x="63" y="543" width="119" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.19667351250000001" green="0.50664824249999996" blue="0.21007725599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.57454901930000002" green="0.72993499039999998" blue="0.2784076929" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Join Group">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -582,7 +603,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ALl-wf-cQc">
                                 <rect key="frame" x="134" y="150" width="94" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.19667351250000001" green="0.50664824249999996" blue="0.21007725599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.57454901930000002" green="0.72993499039999998" blue="0.2784076929" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="Edit Photo">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -606,7 +627,6 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.65284383300000004" green="0.79280853269999996" blue="0.34900054339999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" image="profile" id="dLs-mJ-p3V"/>
                     <connections>
@@ -632,6 +652,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="tempbackground" translatesAutoresizingMaskIntoConstraints="NO" id="XjM-9a-bQ0">
+                                <rect key="frame" x="-157" y="0.0" width="682" height="678"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7jp-cK-O7g">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -662,7 +686,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mVh-Wf-9jn">
                                 <rect key="frame" x="40" y="601" width="298" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.28214988112449646" green="0.500815749168396" blue="0.24711169302463531" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.57454901930000002" green="0.72993499039999998" blue="0.2784076929" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Create Group">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -671,7 +695,6 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.65284383296966553" green="0.79280853271484375" blue="0.34900054335594177" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <connections>
                         <outlet property="groupDescription" destination="vV5-x9-rW9" id="gNH-P8-QcY"/>
@@ -694,6 +717,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="tempbackground" translatesAutoresizingMaskIntoConstraints="NO" id="W6t-be-ekb">
+                                <rect key="frame" x="-157" y="0.0" width="682" height="678"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9K5-cl-oUv">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -743,7 +770,6 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.65284383296966553" green="0.79280853271484375" blue="0.34900054335594177" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="Qwe-3h-QYq" id="ifa-bT-7xK"/>
@@ -765,6 +791,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="tempbackground" translatesAutoresizingMaskIntoConstraints="NO" id="0xU-Lz-S0x">
+                                <rect key="frame" x="-157" y="0.0" width="682" height="678"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u9d-xR-6fB">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -787,7 +817,7 @@
                                     <segment title="Full Anonymous"/>
                                     <segment title="Part Anonymous"/>
                                 </segments>
-                                <color key="tintColor" red="0.19667351250000001" green="0.50664824249999996" blue="0.21007725599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.57454901930000002" green="0.72993499039999998" blue="0.2784076929" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </segmentedControl>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Z0M-OT-8VZ">
                                 <rect key="frame" x="34" y="158" width="307" height="333"/>
@@ -800,7 +830,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mjV-dZ-cwx">
                                 <rect key="frame" x="34" y="552" width="300" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.19667351250000001" green="0.50664824249999996" blue="0.21007725599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.57454901930000002" green="0.72993499039999998" blue="0.2784076929" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Post">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -809,7 +839,6 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.65284383300000004" green="0.79280853269999996" blue="0.34900054339999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="New Post" image="plus" id="IBD-rj-XRv"/>
                     <connections>
@@ -1046,7 +1075,7 @@
         <image name="tempbackground" width="3000" height="3000"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3wo-8Z-Ffc"/>
-        <segue reference="n13-l3-cWC"/>
+        <segue reference="YSY-Om-AoY"/>
+        <segue reference="5Sm-1B-pUW"/>
     </inferredMetricsTieBreakers>
 </document>

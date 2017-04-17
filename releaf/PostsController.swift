@@ -119,7 +119,16 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadData()
+        if (replies.count > 0){
+            print("not first load")
+            ref = FIRDatabase.database().reference()
+            ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                self.staticPostText.text = String(describing: snapshot.value!)
+            }
+        }
+        else {
+            loadData()
+        }
     
         // set up the tableView
         let cellReuseIdentifier = "cell"
