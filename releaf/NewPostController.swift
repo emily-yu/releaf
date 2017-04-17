@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Firebase
 
-var replies2: [String] = ["First Prompt", "Second Prompt", "Third Prompt", "Fourth Prompt"]
+var replies2: [String] = ["Look at the progress you've made.", "What is within your control?", "Would it still matter 5 years later?", "Is your problem actionable?", "Write your personal mission statement.", "What is the smallest step you can take?", "Create a routine to prevent it from happening again.", "Write down when and where you will be solving this problem.", "Create a prototype to test your assumptions.", "Do something in the next hour to answer a question you have.", "Express your emotions to others.", "Who can you collaborate on this?", "Talk to a mentor.", "Name 5 people you admire.", "Build a supportive community.", "Explore something new.", "Take 5 minutes to do something you find interesting.", "How can you approach this differently?", "Have a beginner's mindset!", "What are new opportunities?", "What are you grateful for now?", "Take 3 deep breaths.", "Look at what is going on with kindness.", "What do you value in this experience?", "What have you learned in this experience?"]
 
 class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -42,17 +42,14 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
                     "0": "deafult"
                 ]
             ])
-            
-//            // setting attributes for one post
-//            self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/leaves").setValue(0)
-//        // things to set for new posts
-
-//        self.ref.child("post/1/leaves").setValue(0)
-//        self.ref.child("post/1/text").setValue(self.userText.text)
-//        self.ref.child("post/1/user").setValue(FIRAuth.auth()!.currentUser!.uid)
-//
-//        self.ref.child("post/1/leaves").setValue(3)
-//        self.ref.child("post/1/leaves").setValue(3)
+        }
+        
+        // add a point to user points
+        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            if let int = snapshot.value{
+                var same = (int as! Int)+1;// add one reveal point
+                self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("revealPoints").setValue(same) // set new value
+            }
         }
     }
     
@@ -75,19 +72,7 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
-        switch (indexPath.row) {
-        case 0:
-            userText.text = "First Prompt"
-        case 1:
-            userText.text = "Second Prompt"
-        case 2:
-            userText.text = "Third Prompt"
-        case 3:
-            userText.text = "Fourth Prompt"
-        default:
-            print("asdf")
-        }
-        
+        userText.text = replies2[indexPath.row]
     }
     
     // switches to profile tab

@@ -55,7 +55,6 @@ class CreatePostController: UIViewController {
                 
                 if let int = (snapshot.value) {
                     var same = (String((int as AnyObject).count)) as String!
-                    print("then goes in here?")
                     self.ref.child("post").child(same!).setValue([
                         "reply": [
                             "0": [
@@ -84,11 +83,23 @@ class CreatePostController: UIViewController {
                         self.ref.child(self.userID).child("myPosts").setValue([string:baseValue])
                     }
                     
+                    // add a point to eh persons account
+                    self.incrementPoints()
+                    
                     //navigate back to home screen
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
                     self.present(vc!, animated: true, completion: nil)
                 }
             })
+        }
+    }
+    
+    func incrementPoints() {
+        self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            if let int = snapshot.value{
+                var same = (int as! Int)+1;// add one reveal point
+                self.ref.child("users").child(self.userID).child("revealPoints").setValue(same) // set new value
+            }
         }
     }
 }
