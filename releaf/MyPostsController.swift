@@ -18,10 +18,11 @@ class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSo
 {
     @IBOutlet var tableView: UITableView!
     var ref: FIRDatabaseReference!
-    let userID = FIRAuth.auth()!.currentUser!.uid
+//    let userID = FIRAuth.auth()!.currentUser!.uid
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround() 
         // Do any additional setup after loading the view, typically from a nib.
         
         ref = FIRDatabase.database().reference()

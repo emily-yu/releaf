@@ -12,7 +12,8 @@ import FirebaseAuth
 import GoogleSignIn
 
 class LoginController: UIViewController, GIDSignInUIDelegate {
-
+    var ref: FIRDatabaseReference!
+    
     @IBAction func googleSignIn(_ sender: Any) {
         GIDSignIn.sharedInstance().signIn()
     }
@@ -44,6 +45,42 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
             FIRAuth.auth()?.signIn(withEmail: self.usernameField.text!, password: self.passwordField.text!) { (user, error) in
                 
                 if error == nil {
+                    
+                    userID  = FIRAuth.auth()!.currentUser!.uid
+                    // set groups array
+                    self.ref = FIRDatabase.database().reference()
+                    
+                    self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observe(.value, with: {
+                        snapshot in
+                        for restaurant in snapshot.children {
+                            restaurantNames.append((restaurant as AnyObject).value!)
+                        }
+                        //            print(restaurantNames)
+                    })
+                    
+                    // append all the posts to myposts, then transfer to array
+                self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                        // get how many posts you have
+                        for index in 0...(((snapshot.value!) as AnyObject).count) { // NULL WHEN NO POSTS - NULL ON
+                            
+                            // appends all the text in post replies to 'replies' array
+                            self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                                if var same:Int = (snapshot.value! as? Int) {
+                                    myposts.append(same)
+                                    // acceses right posts and puts indexs in array
+                                    // use array posts to same
+                                    for index2 in myposts {
+                                        self.ref.child("post").child(String(index2)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
+                                            let int = snapshot.value!
+                                            myPostsText.append(int as! String)
+                                        })
+                                    }
+                                }
+                            })
+                        }
+                    }
+
+                    
                     var storyboard = UIStoryboard(name: "Main", bundle: nil)
                     var ivc = storyboard.instantiateViewController(withIdentifier: "Home")
                     ivc.modalPresentationStyle = .custom
@@ -66,6 +103,7 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         // Do any additional setup after loading the view, typically from a nib.
         GIDSignIn.sharedInstance().uiDelegate = self
     }

@@ -22,6 +22,24 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         ref = FIRDatabase.database().reference()
+        
+        allgroups.removeAll()
+        groupDescription2.removeAll()
+        self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+                self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
+                    if var same:String = (snapshot.value! as? String) {
+                        groupDescription2.append(same)
+                    }
+                })
+                self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
+                    if var same:String = (snapshot.value! as? String) {
+                        allgroups.append(same)
+                    }
+                })
+            }
+        }
+        
         let cellReuseIdentifier = "cell"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         tableView.delegate = self
@@ -114,6 +132,7 @@ class CreateGroupController: UIViewController {
                 }
                 
                 allgroups.removeAll()
+                groupDescription2.removeAll()
                 self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                     for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
                         self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -148,6 +167,7 @@ class CreateGroupController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         ref = FIRDatabase.database().reference()
         
     }

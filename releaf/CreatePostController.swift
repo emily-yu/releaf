@@ -12,7 +12,7 @@ import Firebase
 
 class CreatePostController: UIViewController {
 
-    let userID = FIRAuth.auth()!.currentUser!.uid
+//    let userID = FIRAuth.auth()!.currentUser!.uid
     var ref:FIRDatabaseReference!
     
     @IBOutlet var header: UITextField!
@@ -26,6 +26,7 @@ class CreatePostController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround() 
     }
     
     func newPost() {
@@ -63,7 +64,7 @@ class CreatePostController: UIViewController {
                                 "user": "default uid"
                             ]
                         ],
-                        "user": self.userID,
+                        "user": userID,
                         "text": self.body.text!,
                         "leaves": 0,
                         "hugs": [
@@ -79,7 +80,7 @@ class CreatePostController: UIViewController {
                     // creating post under that person's account
                     self.ref.child("post").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                         var string = String((((snapshot.value!) as AnyObject).count) + 1) // amount of posts there are + 1 to create new post
-                        self.ref.child(self.userID).child("myPosts").setValue([string:baseValue])
+                        self.ref.child(userID).child("myPosts").setValue([string:baseValue])
                     }
                     
                     // add a point to eh persons account
@@ -97,7 +98,7 @@ class CreatePostController: UIViewController {
         self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             if let int = snapshot.value{
                 var same = (int as! Int)+1;// add one reveal point
-                self.ref.child("users").child(self.userID).child("revealPoints").setValue(same) // set new value
+                self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
             }
         }
     }

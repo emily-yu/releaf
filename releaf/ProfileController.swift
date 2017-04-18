@@ -70,10 +70,11 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround() 
         // Do any additional setup after loading the view, typically from a nib.
         ref = FIRDatabase.database().reference()
         
-        let userID = FIRAuth.auth()!.currentUser!.uid
+//        let userID = FIRAuth.auth()!.currentUser!.uid
         
         // set name
         self.ref.child("users").child(userID).child("firsasdfadsftName").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -209,3 +210,8 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     }
     
 }
+
+class GroupTableViewCell: UITableViewCell {
+    @IBOutlet var groupText: UILabel!
+}
+

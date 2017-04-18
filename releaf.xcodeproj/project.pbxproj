@@ -12,17 +12,14 @@
 		5B95CFC774BF6A7DF71C6EAF /* Pods_releafTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA8596CB3CE77749A45D75EB /* Pods_releafTests.framework */; };
 		A150BC961E7DA3F800A4175F /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A150BC951E7DA3F800A4175F /* SignUpController.swift */; };
 		A150BC981E7DA47A00A4175F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A150BC971E7DA47A00A4175F /* GoogleService-Info.plist */; };
-		A150BC9B1E7DC90500A4175F /* PromptTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A150BC9A1E7DC90500A4175F /* PromptTableViewCell.swift */; };
 		A1805EA41E9DA8D40043CB85 /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1805EA31E9DA8D40043CB85 /* GroupController.swift */; };
 		A1805EA61E9DBF870043CB85 /* ReactionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1805EA51E9DBF870043CB85 /* ReactionsController.swift */; };
 		A197DA4F1E8B8FD10064903B /* MyPostsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A197DA4E1E8B8FD00064903B /* MyPostsController.swift */; };
-		A197DA541E8B92250064903B /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A197DA531E8B92250064903B /* GroupTableViewCell.swift */; };
-		A197DA571E8B92430064903B /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A197DA561E8B92430064903B /* GroupViewController.swift */; };
-		A1A9FA7B1E86788700CD31CD /* NewPostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A9FA7A1E86788700CD31CD /* NewPostController.swift */; };
-		A1A9FA7E1E86794800CD31CD /* ReplyPromptTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A9FA7D1E86794800CD31CD /* ReplyPromptTableCell.swift */; };
+		A197DA571E8B92430064903B /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A197DA561E8B92430064903B /* ProfileController.swift */; };
+		A1A9FA7B1E86788700CD31CD /* ReplyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A9FA7A1E86788700CD31CD /* ReplyController.swift */; };
 		A1A9FA801E87142A00CD31CD /* CreatePostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A9FA7F1E87142A00CD31CD /* CreatePostController.swift */; };
 		A1B02F281E7474EF0002151D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B02F271E7474EF0002151D /* AppDelegate.swift */; };
-		A1B02F2A1E7474EF0002151D /* PostsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B02F291E7474EF0002151D /* PostsController.swift */; };
+		A1B02F2A1E7474EF0002151D /* PostScrollerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B02F291E7474EF0002151D /* PostScrollerController.swift */; };
 		A1B02F2C1E7474EF0002151D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B02F2B1E7474EF0002151D /* LoginController.swift */; };
 		A1B02F2F1E7474EF0002151D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1B02F2D1E7474EF0002151D /* Main.storyboard */; };
 		A1B02F311E7474EF0002151D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1B02F301E7474EF0002151D /* Assets.xcassets */; };
@@ -57,18 +54,15 @@
 		99233D825F7E2F24F749D7BD /* Pods-releaf.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-releaf.debug.xcconfig"; path = "Pods/Target Support Files/Pods-releaf/Pods-releaf.debug.xcconfig"; sourceTree = "<group>"; };
 		A150BC951E7DA3F800A4175F /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		A150BC971E7DA47A00A4175F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		A150BC9A1E7DC90500A4175F /* PromptTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromptTableViewCell.swift; sourceTree = "<group>"; };
 		A1805EA31E9DA8D40043CB85 /* GroupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
 		A1805EA51E9DBF870043CB85 /* ReactionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionsController.swift; sourceTree = "<group>"; };
 		A197DA4E1E8B8FD00064903B /* MyPostsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPostsController.swift; sourceTree = "<group>"; };
-		A197DA531E8B92250064903B /* GroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
-		A197DA561E8B92430064903B /* GroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
-		A1A9FA7A1E86788700CD31CD /* NewPostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostController.swift; sourceTree = "<group>"; };
-		A1A9FA7D1E86794800CD31CD /* ReplyPromptTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyPromptTableCell.swift; sourceTree = "<group>"; };
+		A197DA561E8B92430064903B /* ProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
+		A1A9FA7A1E86788700CD31CD /* ReplyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyController.swift; sourceTree = "<group>"; };
 		A1A9FA7F1E87142A00CD31CD /* CreatePostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostController.swift; sourceTree = "<group>"; };
 		A1B02F241E7474EF0002151D /* releaf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = releaf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B02F271E7474EF0002151D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A1B02F291E7474EF0002151D /* PostsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsController.swift; sourceTree = "<group>"; };
+		A1B02F291E7474EF0002151D /* PostScrollerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostScrollerController.swift; sourceTree = "<group>"; };
 		A1B02F2B1E7474EF0002151D /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		A1B02F2E1E7474EF0002151D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A1B02F301E7474EF0002151D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -136,42 +130,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A1378B241E8C98D60086C507 /* Auth */ = {
-			isa = PBXGroup;
-			children = (
-				A150BC951E7DA3F800A4175F /* SignUpController.swift */,
-				A1B02F2B1E7474EF0002151D /* LoginController.swift */,
-			);
-			name = Auth;
-			sourceTree = "<group>";
-		};
-		A150BC991E7DC8B300A4175F /* Post Scroller */ = {
-			isa = PBXGroup;
-			children = (
-				A1B02F291E7474EF0002151D /* PostsController.swift */,
-				A150BC9A1E7DC90500A4175F /* PromptTableViewCell.swift */,
-			);
-			name = "Post Scroller";
-			sourceTree = "<group>";
-		};
-		A197DA551E8B92340064903B /* Profile */ = {
-			isa = PBXGroup;
-			children = (
-				A197DA561E8B92430064903B /* GroupViewController.swift */,
-				A197DA531E8B92250064903B /* GroupTableViewCell.swift */,
-			);
-			name = Profile;
-			sourceTree = "<group>";
-		};
-		A1A9FA7C1E8678A300CD31CD /* Replying */ = {
-			isa = PBXGroup;
-			children = (
-				A1A9FA7A1E86788700CD31CD /* NewPostController.swift */,
-				A1A9FA7D1E86794800CD31CD /* ReplyPromptTableCell.swift */,
-			);
-			name = Replying;
-			sourceTree = "<group>";
-		};
 		A1B02F1B1E7474EE0002151D = {
 			isa = PBXGroup;
 			children = (
@@ -202,10 +160,11 @@
 				A197DA4E1E8B8FD00064903B /* MyPostsController.swift */,
 				A1A9FA7F1E87142A00CD31CD /* CreatePostController.swift */,
 				A1805EA51E9DBF870043CB85 /* ReactionsController.swift */,
-				A1A9FA7C1E8678A300CD31CD /* Replying */,
-				A150BC991E7DC8B300A4175F /* Post Scroller */,
-				A197DA551E8B92340064903B /* Profile */,
-				A1378B241E8C98D60086C507 /* Auth */,
+				A1A9FA7A1E86788700CD31CD /* ReplyController.swift */,
+				A1B02F291E7474EF0002151D /* PostScrollerController.swift */,
+				A197DA561E8B92430064903B /* ProfileController.swift */,
+				A150BC951E7DA3F800A4175F /* SignUpController.swift */,
+				A1B02F2B1E7474EF0002151D /* LoginController.swift */,
 				A1B02F2D1E7474EF0002151D /* Main.storyboard */,
 				A1B02F301E7474EF0002151D /* Assets.xcassets */,
 				A1B02F321E7474EF0002151D /* LaunchScreen.storyboard */,
@@ -519,18 +478,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1805EA41E9DA8D40043CB85 /* GroupController.swift in Sources */,
-				A197DA571E8B92430064903B /* GroupViewController.swift in Sources */,
-				A150BC9B1E7DC90500A4175F /* PromptTableViewCell.swift in Sources */,
+				A197DA571E8B92430064903B /* ProfileController.swift in Sources */,
 				A1B02F2C1E7474EF0002151D /* LoginController.swift in Sources */,
-				A1A9FA7B1E86788700CD31CD /* NewPostController.swift in Sources */,
+				A1A9FA7B1E86788700CD31CD /* ReplyController.swift in Sources */,
 				A197DA4F1E8B8FD10064903B /* MyPostsController.swift in Sources */,
-				A197DA541E8B92250064903B /* GroupTableViewCell.swift in Sources */,
 				A1A9FA801E87142A00CD31CD /* CreatePostController.swift in Sources */,
 				A1B02F281E7474EF0002151D /* AppDelegate.swift in Sources */,
-				A1B02F2A1E7474EF0002151D /* PostsController.swift in Sources */,
+				A1B02F2A1E7474EF0002151D /* PostScrollerController.swift in Sources */,
 				A1805EA61E9DBF870043CB85 /* ReactionsController.swift in Sources */,
 				A150BC961E7DA3F800A4175F /* SignUpController.swift in Sources */,
-				A1A9FA7E1E86794800CD31CD /* ReplyPromptTableCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

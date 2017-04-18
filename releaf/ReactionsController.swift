@@ -19,7 +19,7 @@ class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSour
     @IBOutlet var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.hideKeyboardWhenTappedAround() 
         // handle changing posts - not working
         if (previousIndex == -1) {
             previousIndex = clickedIndex!

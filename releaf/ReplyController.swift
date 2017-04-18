@@ -46,6 +46,7 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         
         // Do any additional setup after loading the view, typically from a nib.
         let cellReuseIdentifier = "cell"
@@ -109,4 +110,8 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
             }
         }
     }
+}
+
+class ReplyPromptTableViewCell: UITableViewCell {
+    @IBOutlet var promptText: UILabel!
 }

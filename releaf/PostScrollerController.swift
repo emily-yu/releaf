@@ -25,7 +25,7 @@ var asdf = false
 
 class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSource {
     
-    let userID = FIRAuth.auth()!.currentUser!.uid
+//    let userID = FIRAuth.auth()!.currentUser!.uid
     var ref:FIRDatabaseReference!
     @IBOutlet var staticPostText: UITextView!
     
@@ -83,7 +83,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                             print("its dere no can do")
                             asdf = true
                             // unliking and liking posts
-                            self.ref.child("users").child(self.userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                            self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                 if let int = snapshot.value {
                                     var same: Int = int as! Int
                                     if (same > 0){ // revealpoints greater than 0
@@ -110,10 +110,10 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                             let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
                                 self.incrementPoints() // add one to your points
                                 print(checkmetoos)
-                                checkmetoos.append(self.userID)
+                                checkmetoos.append(userID)
                                 // ADD TO DATABASE TOO - should wokr?
                                 self.ref.child("post").child(String(currentIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                                    self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(snapshot.childrenCount)).setValue(self.userID) // set value
+                                    self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(snapshot.childrenCount)).setValue(userID) // set value
                                     //                                    }
                                 }
                                 self.tableView.reloadData()
@@ -142,7 +142,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                             print("its dere no can do")
                             asdf = true
                             // unliking and liking posts
-                            self.ref.child("users").child(self.userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                            self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                 if let int = snapshot.value {
                                     var same: Int = int as! Int
                                     if (same > 0){ // revealpoints greater than 0
@@ -169,12 +169,12 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                             let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
                                 self.incrementPoints() // add one to your points
                                 print(checkhugs)
-                                checkhugs.append(self.userID)
+                                checkhugs.append(userID)
                                 // ADD TO DATABASE TOO - should wokr?
                                 self.ref.child("post").child(String(currentIndex)).child("hugs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                     //                                    if let int = snapshot.value{
                                     //                                        var same = (int as! Int)+1;// add one reveal point
-                                    self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(snapshot.childrenCount)).setValue(self.userID) // set value
+                                    self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(snapshot.childrenCount)).setValue(userID) // set value
                                     //                                    }
                                 }
                                 self.tableView.reloadData()
@@ -208,11 +208,11 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                         var newstring = String(describing: snapshot.value!)
                         
                         // subtract one from reveal points
-                        self.ref.child("users").child(self.userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                        self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             if let int = snapshot.value{
                                 if (int as! Int > 0) {
                                     var same = (int as! Int)-1;// subtract one reveal point
-                                    self.ref.child("users").child(self.userID).child("revealPoints").setValue(same) // set new value
+                                    self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
                                     
                                     // retrieve first name
                                     self.ref.child("users").child(newstring).child("firsasdfadsftName").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
@@ -282,6 +282,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround() 
         
         if (replies.count > 0){
             print("not first load")
@@ -313,7 +314,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                             print("its dere no can do")
                             asdf = true
                             // unliking and liking posts
-                            self.ref.child("users").child(self.userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                            self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                 if let int = snapshot.value {
                                     var same: Int = int as! Int
                                     if (same > 0){ // revealpoints greater than 0
@@ -322,7 +323,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                         let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
                                         let submitAction = UIAlertAction(title: "Unlike", style: .default, handler: { (action) -> Void in
                                             // locate userid in array and delet
-                                            if let index = uid.index(of:self.userID) {
+                                            if let index = uid.index(of: userID) {
                                                 uid.remove(at: index)
                                             }
                                             // decrement
@@ -395,7 +396,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             if let int = snapshot.value{
                 var same = (int as! Int)+1;// add one reveal point
-                self.ref.child("users").child(self.userID).child("revealPoints").setValue(same) // set new value
+                self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
             }
         }
     }
@@ -404,7 +405,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             if let int = snapshot.value{
                 var same = (int as! Int)-1;// add one reveal point
-                self.ref.child("users").child(self.userID).child("revealPoints").setValue(same) // set new value
+                self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
             }
         }
     }
@@ -417,3 +418,21 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
 }
 
 
+class PromptTableViewCell: UITableViewCell {
+    @IBOutlet var prompt: UILabel!
+    @IBOutlet var leaves: UILabel!
+    @IBOutlet var username: UILabel!
+}
+
+// Put this piece of code anywhere you like
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
