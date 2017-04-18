@@ -104,12 +104,12 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                 else { // doesn't work
                     
                     print("custom image")
-//                    let endIndex = same.index(same.endIndex, offsetBy: 0)
-//                    var truncated = same.substring(to: endIndex)
-//                    let newString = truncated.replacingOccurrences(of: "\n", with: " ", options: .literal, range: nil)
-//                    let dataDecoded:Data = Data(base64Encoded: same, options: .ignoreUnknownCharacters)!
-//                    let image = UIImage(data: dataDecoded)!
-//                    self.imageView.image = image
+                    let endIndex = same.index(same.endIndex, offsetBy: 0)
+                    var truncated = same.substring(to: endIndex)
+                    let newString = truncated.replacingOccurrences(of: "\n", with: " ", options: .literal, range: nil)
+                    let dataDecoded:Data = Data(base64Encoded: same, options: .ignoreUnknownCharacters)!
+                    let image = UIImage(data: dataDecoded)!
+                    self.imageView.image = image
                 }
             }
         })
