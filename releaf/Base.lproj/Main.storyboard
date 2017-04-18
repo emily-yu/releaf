@@ -862,18 +862,8 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="CHC-Ke-quZ">
-                                <rect key="frame" x="34" y="507" width="300" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <segments>
-                                    <segment title="Full Anonymous"/>
-                                    <segment title="Part Anonymous"/>
-                                </segments>
-                                <color key="tintColor" red="0.57454901930000002" green="0.72993499039999998" blue="0.2784076929" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            </segmentedControl>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Z0M-OT-8VZ">
-                                <rect key="frame" x="34" y="158" width="307" height="333"/>
+                                <rect key="frame" x="34" y="158" width="307" height="372"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -895,15 +885,13 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="New Post" image="plus" id="IBD-rj-XRv"/>
                     <connections>
-                        <outlet property="anonControl" destination="CHC-Ke-quZ" id="He2-Jy-lAE"/>
                         <outlet property="body" destination="Z0M-OT-8VZ" id="xjU-13-2AX"/>
                         <outlet property="header" destination="RXn-zu-neg" id="tfU-gn-w1D"/>
-                        <outlet property="segmentedView" destination="CHC-Ke-quZ" id="yxK-8W-L0X"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xa4-uj-469" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="750" y="358"/>
+            <point key="canvasLocation" x="749.5" y="357.5"/>
         </scene>
         <!--Login Controller-->
         <scene sceneID="VOm-Dd-vde">

@@ -41,17 +41,17 @@ class CreatePostController: UIViewController {
             self.ref.child("post").observeSingleEvent(of: .value, with: { (snapshot) in
                 
                 // anonymous control
-                var anonStatus: String!
-                if (self.anonControl.selectedSegmentIndex == 0){
-                    print("fullanon")
-                    self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/status").setValue("fullanon")
-                    anonStatus = "fullanon"
-                }
-                else {
-                    print("partanon")
-                    self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/status").setValue("partanon")
-                    anonStatus = "partanon"
-                }
+//                var anonStatus: String!
+//                if (self.anonControl.selectedSegmentIndex == 0){
+//                    print("fullanon")
+//                    self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/status").setValue("fullanon")
+//                    anonStatus = "fullanon"
+//                }
+//                else {
+//                    print("partanon")
+//                    self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/status").setValue("partanon")
+//                    anonStatus = "partanon"
+//                }
                 
                 if let int = (snapshot.value) {
                     var same = (String((int as AnyObject).count)) as String!
@@ -72,7 +72,6 @@ class CreatePostController: UIViewController {
                         "metoo": [
                             "0": "asdklfj2"
                         ],
-                        "status": anonStatus,
                         ] as NSDictionary)
                     
                     var baseValue = String(((snapshot.value!) as AnyObject).count)

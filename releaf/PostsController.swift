@@ -191,9 +191,10 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
 
     }
     
-    // revealing user identities - CHECK ANON STATUS (IF FULLANON CANNOT REVEAL)
+    // revealing user identities
     @IBAction func userReveal(_ sender: Any) {
         // Alert Prompt
+        
         let alert = UIAlertController(title: "Reveal User", message: "You are about to use one impact point to see the user of this post.",preferredStyle: .alert)
         let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
             var indexPath: IndexPath!

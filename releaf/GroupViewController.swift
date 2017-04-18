@@ -92,6 +92,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
             self.revealPoints.text = "IMPACTS POINTS: \(snapshot.value!)"
         })
         
+        
         // check if profile picture exists, if not set to the thing
         self.ref.child("users").child(userID).child("base64string").observeSingleEvent(of: .value, with: { (snapshot) in
 //            print(snapshot.value!)
@@ -112,6 +113,21 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                 }
             }
         })
+        
+        if (replies.count > 0){
+            print("not first load")
+            self.tableView.reloadData()
+        }
+        else {
+            print("first load")
+            ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observe(.value, with: {
+                snapshot in
+                for restaurant in snapshot.children {
+                    restaurantNames.append((restaurant as AnyObject).value!)
+                }
+                //            print(restaurantNames)
+            })
+        }
         
         let cellReuseIdentifier = "cell"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)

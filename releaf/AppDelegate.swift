@@ -93,7 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             }
         }
         
-        // append all the posts to myposts, then transfer to array
+//         append all the posts to myposts, then transfer to array
         ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
                 self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
