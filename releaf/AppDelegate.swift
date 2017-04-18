@@ -14,9 +14,6 @@ import GoogleSignIn
 
 /*
  high priority:
- - interact with a post you earn a point (me too, hug)
- - lcik on post go to it
- - problem with repeating first post in MYPOSTS
  - CHECK ANON STATUS (IF FULLANON CANNOT REVEAL)
  
  - problem with decoding image - unsure whats going on
@@ -56,15 +53,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             // get how many replies there are
             for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
-//                print("index:" + String(index)) // indexes of the posts
-                
                 // appends all the text in post replies to 'replies' array
                 self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
                 })
             }
-            
         }
-        
         
         var userID: String = FIRAuth.auth()!.currentUser!.uid
         // set groups array
@@ -100,7 +93,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             }
         }
         
-        // NOT DONE
         // append all the posts to myposts, then transfer to array
         ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON

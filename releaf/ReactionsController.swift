@@ -144,12 +144,12 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell:HugsTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "HugsTableViewCell") as! HugsTableViewCell
-        //        cell.prompt.text = String(groups[indexPath.row])
         cell.username.text = String(hugs[indexPath.row])
         
         return cell
     }
     
+    // loads the right replies but need to find the index that the tableView's text 's index and use that to find the arrays - right now just uses the clickedIndex's replies which isn't the same
     func loadData() {
         ref = FIRDatabase.database().reference()
         // to see all people that said me too

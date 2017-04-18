@@ -16,6 +16,10 @@ var replies: [String] = [] // temp store replies for certain post
 var leaves: [Int] = [] // temp store LIKES for everything replies
 var tempLikes: [Int] = []
 
+// checking
+var checkhugs: [String] = []
+var checkmetoos: [String] = []
+
 var currentIndex = 0
 var asdf = false
 
@@ -53,6 +57,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
             currentIndex = Int(randomNum) // set currentIndex to be this value
         }
         
+        
         // reload everything in the tableView for a new post
         replies.removeAll()
         leaves.removeAll()
@@ -67,10 +72,126 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         
     }
     @IBOutlet var tableView: UITableView!
-    @IBAction func meToo_isPressed(_ sender: Any) {
+    @IBAction func meToo_isPressed(_ sender: Any) { // sets the arrays
+        // checks me toos
+        ref = FIRDatabase.database().reference()
+        self.ref.child("post").child(String(currentIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+                self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    if var same:String = (snapshot.value! as? String) {
+                        if checkmetoos.contains(FIRAuth.auth()!.currentUser!.uid) {
+                            print("its dere no can do")
+                            asdf = true
+                            // unliking and liking posts
+                            self.ref.child("users").child(self.userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                if let int = snapshot.value {
+                                    var same: Int = int as! Int
+                                    if (same > 0){ // revealpoints greater than 0
+                                        // if user revealpoints are greater than 0...
+                                        let alertController = UIAlertController(title: "Error", message: "You've already reacted to this post.", preferredStyle: .alert)
+                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                                        alertController.addAction(defaultAction)
+                                        self.present(alertController, animated: true, completion: nil)
+                                    }
+                                    else { // can't subtract
+                                        let alertController = UIAlertController(title: "Error", message: "You can't remove your reaction from this post.", preferredStyle: .alert)
+                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                                        alertController.addAction(defaultAction)
+                                        self.present(alertController, animated: true, completion: nil)
+                                    }
+                                }
+                            }
+                        }
+                        else {
+                            print("not there")
+                            asdf = false
+                            // Alert Prompt
+                            let alert = UIAlertController(title: "React to Post", message: "You are about to react to this post.",preferredStyle: .alert)
+                            let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
+                                self.incrementPoints() // add one to your points
+                                print(checkmetoos)
+                                checkmetoos.append(self.userID)
+                                // ADD TO DATABASE TOO - should wokr?
+                                self.ref.child("post").child(String(currentIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                    self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(snapshot.childrenCount)).setValue(self.userID) // set value
+                                    //                                    }
+                                }
+                                self.tableView.reloadData()
+                            })
+                            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
+                            alert.addAction(cancel)
+                            alert.addAction(submitAction)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                })
+            }
+        }
+        
+
     }
     
-    // revealing user identities - right now only reveals user uid, CHECK ANON STATUS (IF FULLANON CANNOT REVEAL)
+    @IBAction func hugs_isPressed(_ sender: Any) {
+        // checks me toos
+        ref = FIRDatabase.database().reference()
+        self.ref.child("post").child(String(currentIndex)).child("hugs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+                self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    if var same:String = (snapshot.value! as? String) {
+                        if checkhugs.contains(FIRAuth.auth()!.currentUser!.uid) {
+                            print("its dere no can do")
+                            asdf = true
+                            // unliking and liking posts
+                            self.ref.child("users").child(self.userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                if let int = snapshot.value {
+                                    var same: Int = int as! Int
+                                    if (same > 0){ // revealpoints greater than 0
+                                        // if user revealpoints are greater than 0...
+                                        let alertController = UIAlertController(title: "Error", message: "You've already reacted to this reply.", preferredStyle: .alert)
+                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                                        alertController.addAction(defaultAction)
+                                        self.present(alertController, animated: true, completion: nil)
+                                    }
+                                    else { // can't subtract
+                                        let alertController = UIAlertController(title: "Error", message: "You can't unlike this post.", preferredStyle: .alert)
+                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                                        alertController.addAction(defaultAction)
+                                        self.present(alertController, animated: true, completion: nil)
+                                    }
+                                }
+                            }
+                        }
+                        else {
+                            print("not there")
+                            asdf = false
+                            // Alert Prompt
+                            let alert = UIAlertController(title: "React to Post", message: "You are about to react to this post",preferredStyle: .alert)
+                            let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
+                                self.incrementPoints() // add one to your points
+                                print(checkhugs)
+                                checkhugs.append(self.userID)
+                                // ADD TO DATABASE TOO - should wokr?
+                                self.ref.child("post").child(String(currentIndex)).child("hugs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                    //                                    if let int = snapshot.value{
+                                    //                                        var same = (int as! Int)+1;// add one reveal point
+                                    self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(snapshot.childrenCount)).setValue(self.userID) // set value
+                                    //                                    }
+                                }
+                                self.tableView.reloadData()
+                            })
+                            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
+                            alert.addAction(cancel)
+                            alert.addAction(submitAction)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                })
+            }
+        }
+
+    }
+    
+    // revealing user identities - CHECK ANON STATUS (IF FULLANON CANNOT REVEAL)
     @IBAction func userReveal(_ sender: Any) {
         // Alert Prompt
         let alert = UIAlertController(title: "Reveal User", message: "You are about to use one impact point to see the user of this post.",preferredStyle: .alert)
@@ -91,7 +212,22 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                 if (int as! Int > 0) {
                                     var same = (int as! Int)-1;// subtract one reveal point
                                     self.ref.child("users").child(self.userID).child("revealPoints").setValue(same) // set new value
-                                    cell.username.text = newstring // change text
+                                    
+                                    // retrieve first name
+                                    self.ref.child("users").child(newstring).child("firsasdfadsftName").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                        if let int = snapshot.value{
+                                            var first = int as! String // first name
+                                            
+                                            // retrieve last name
+                                            self.ref.child("users").child(newstring).child("lastName").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                                if let int = snapshot.value{
+                                                    var last = int as! String
+                                                    cell.username.text = first + " " + last // change text
+                                                }
+                                            }
+                                        }
+                                    
+                                    }
                                 }
                                 else {
                                     let alertController = UIAlertController(title: "Error", message: "Not enough impact points.", preferredStyle: .alert)
@@ -116,6 +252,33 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         present(alert, animated: true, completion: nil)
     }
     
+    func loadReactionArrays(){
+        // SET HUGS AND METOO ARRAYS
+        // init metoo array
+        ref.child("post").child(String(currentIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+                self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    if var same:String = (snapshot.value! as? String) {
+                        checkmetoos.append(same)
+                        print("METOOS:\(checkmetoos)")
+                    }
+                })
+            }
+        }
+        // init hugs array
+        ref.child("post").child(String(currentIndex)).child("hugs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+                self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    if var same:String = (snapshot.value! as? String) {
+                        checkhugs.append(same)
+                        print("HGUGS\(checkhugs)")
+                    }
+                })
+            }
+        }
+
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -137,7 +300,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         self.tableView.dataSource = self
         
     }
-
+    
     // checks to see if user is listed under the reply uid's
     func checkUIDArray(replyNumber:Int) {
         ref = FIRDatabase.database().reference()
@@ -192,11 +355,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                             self.ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("likes").setValue(same) // set new value
                                         }
                                     }
-                                
-                                    // reload Data - not sure if this is working
-//                                    replies.removeAll()
-//                                    leaves.removeAll()
-//                                    self.loadData()
+                            
                                     self.tableView.reloadData()
                             })
                             let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
