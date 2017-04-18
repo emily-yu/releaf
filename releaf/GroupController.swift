@@ -11,7 +11,7 @@ import UIKit
 import Firebase
 
 var allgroups: [String] = []
-var groupDescription: [String] = []
+var groupDescription2: [String] = []
 
 class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSource {
     
@@ -31,14 +31,14 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groupDescription.count
+        return groupDescription2.count
     }
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell:JoinTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "JoinTableViewCell") as! JoinTableViewCell
         cell.groupName.text = String(allgroups[indexPath.row])
-        cell.groupDescription.text = String(groupDescription[indexPath.row])
+        cell.groupDescription.text = String(groupDescription2[indexPath.row])
 //
         return cell
     }
@@ -50,8 +50,14 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         var groupJoin = allgroups[indexPath.row]
         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             
-            var string = String((((snapshot.value!) as AnyObject).count))
-            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").child(string).setValue(groupJoin)
+//            var string = String((((snapshot.value!) as AnyObject).count)+1)
+//            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").child(string).setValue(groupJoin)
+            
+            // creating post under that person's account
+            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                var string = String((((snapshot.value!) as AnyObject).count)) // amount of posts there are + 1 to create new post
+                self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").child(string).setValue(groupJoin)
+            }
             
             //navigate back to home screen
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
@@ -105,6 +111,22 @@ class CreateGroupController: UIViewController {
                 self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                     var string = String((((snapshot.value!) as AnyObject).count) + 1) // amount of posts there are + 1 to create new post
                     self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").setValue([string:baseValue])
+                }
+                
+                allgroups.removeAll()
+                self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                    for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+                        self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
+                            if var same:String = (snapshot.value! as? String) {
+                                groupDescription2.append(same)
+                            }
+                        })
+                        self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
+                            if var same:String = (snapshot.value! as? String) {
+                                allgroups.append(same)
+                            }
+                        })
+                    }
                 }
                 
                 //navigate back to home screen

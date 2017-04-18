@@ -66,7 +66,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
         picker.dismiss(animated: true, completion: nil)
         
     }
-
+// ALL GROUPS WHEN CREATING GROUP REFRESH ALLGROUPS ARRAY
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,6 +128,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                 //            print(restaurantNames)
             })
         }
+        
         
         let cellReuseIdentifier = "cell"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
