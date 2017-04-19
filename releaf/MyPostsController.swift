@@ -91,8 +91,6 @@ class MyPostsTableViewCell: UITableViewCell {
     @IBOutlet var postText: UILabel!
 }
 
-
-// entire vc not loading?
 class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDataSource {
     
     var ref: FIRDatabaseReference!
@@ -216,11 +214,20 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
         return cell
     }
     
-    // switches to profile tab
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "myPostsSegue"){
+        if(segue.identifier == "myPostsSegue"){ // don't know if segue exists
             if let tabVC = segue.destination as? UITabBarController{
                 tabVC.selectedIndex = 2
+                tabVC.modalPresentationStyle = .custom
+                tabVC.modalTransitionStyle = .crossDissolve
+                print("called")
+            }
+        }
+        else if (segue.identifier == "toMyPostsSegue") {
+            if let tabVC = segue.destination as? UITabBarController{
+                tabVC.selectedIndex = 2
+                tabVC.modalPresentationStyle = .custom
+                tabVC.modalTransitionStyle = .crossDissolve
                 print("called")
             }
         }

@@ -106,6 +106,8 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
         if(segue.identifier == "postControllerSegue"){
             if let tabVC = segue.destination as? UITabBarController{
                 tabVC.selectedIndex = 0
+                tabVC.modalPresentationStyle = .custom
+                tabVC.modalTransitionStyle = .crossDissolve
                 print("called")
             }
         }

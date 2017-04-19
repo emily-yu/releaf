@@ -15,10 +15,10 @@ class CreatePostController: UIViewController {
 //    let userID = FIRAuth.auth()!.currentUser!.uid
     var ref:FIRDatabaseReference!
     
-    @IBOutlet var header: UITextField!
+//    @IBOutlet var header: UITextField!
     @IBOutlet var body: UITextView!
-    @IBOutlet var segmentedView: UISegmentedControl!
-    @IBOutlet var anonControl: UISegmentedControl!
+//    @IBOutlet var segmentedView: UISegmentedControl!
+//    @IBOutlet var anonControl: UISegmentedControl!
     
     @IBAction func postButton(_ sender: Any) {
         newPost()
@@ -30,8 +30,8 @@ class CreatePostController: UIViewController {
     }
     
     func newPost() {
-        if self.header.text == "" || self.body.text == "" {
-            let alertController = UIAlertController(title: "Error", message: "Please enter a header and body.", preferredStyle: .alert)
+        if self.body.text == "" {
+            let alertController = UIAlertController(title: "Error", message: "Please enter a message.", preferredStyle: .alert)
             let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             alertController.addAction(defaultAction)
             
@@ -87,8 +87,10 @@ class CreatePostController: UIViewController {
                     self.incrementPoints()
                     
                     //navigate back to home screen
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
-                    self.present(vc!, animated: true, completion: nil)
+                    var ivc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
+                    ivc?.modalPresentationStyle = .custom
+                    ivc?.modalTransitionStyle = .crossDissolve
+                    self.present(ivc!, animated: true, completion: { _ in })
                 }
             })
         }

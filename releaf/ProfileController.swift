@@ -62,11 +62,9 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     var ref:FIRDatabaseReference!
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        //        print("same")
         picker.dismiss(animated: true, completion: nil)
         
     }
-// ALL GROUPS WHEN CREATING GROUP REFRESH ALLGROUPS ARRAY
     
     override func viewDidLoad() {
         super.viewDidLoad()

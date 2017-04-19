@@ -19,7 +19,6 @@ import GoogleSignIn
  - click to expand?
  - switching posts ensure doesn't land on same post
  - rejoin group twice
- - refresh table when create new groups
  
  extra things:
   - facebook login

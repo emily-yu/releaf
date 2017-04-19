@@ -101,6 +101,16 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
         }
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "toSignUp"){
+            if let tabVC = segue.destination as? UIViewController{
+                tabVC.modalPresentationStyle = .custom
+                tabVC.modalTransitionStyle = .crossDissolve
+                print("called")
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()

@@ -64,9 +64,11 @@ class SignUpController: UIViewController, GIDSignInUIDelegate {
                         "base64string": "default"
                     ])
                     
-                    //login w/ new account
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
-                    self.present(vc!, animated: true, completion: nil)
+                    var storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    var ivc = storyboard.instantiateViewController(withIdentifier: "Home")
+                    ivc.modalPresentationStyle = .custom
+                    ivc.modalTransitionStyle = .crossDissolve
+                    self.present(ivc, animated: true, completion: { _ in })
 
                 }
                 else {
@@ -93,6 +95,24 @@ class SignUpController: UIViewController, GIDSignInUIDelegate {
         
         // TODO(developer) Configure the sign-in button look/feel
         // ...
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "postControllerSegue"){
+            if let tabVC = segue.destination as? UITabBarController{
+                tabVC.selectedIndex = 0
+                tabVC.modalPresentationStyle = .custom
+                tabVC.modalTransitionStyle = .crossDissolve
+                print("called")
+            }
+        }
+        else if (segue.identifier == "toLogin") {
+            if let tabVC = segue.destination as? UIViewController{
+                tabVC.modalPresentationStyle = .custom
+                tabVC.modalTransitionStyle = .crossDissolve
+                print("called")
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {

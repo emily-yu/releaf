@@ -82,6 +82,15 @@ class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSour
             }
         }
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "toMeTooSegue" || segue.identifier == "detailsBack"){
+            if let tabVC = segue.destination as? UIViewController{
+                tabVC.modalPresentationStyle = .custom
+                tabVC.modalTransitionStyle = .crossDissolve
+                print("called")
+            }
+        }
+    }
 }
 
 class MeTooTableViewCell: UITableViewCell {
@@ -100,8 +109,7 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
 //        ref = FIRDatabase.database().reference()
 //        // to see all people that said me too
 //        print(String(describing: clickedIndex))
-//        
-//        // fix this shiiiiiit i hope its just internet but it isn't FUCKING LOADING
+//
 //        ref.child("post").child(String(clickedIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
 //            print(snapshot.childrenCount) // get the number of children
 //            // get how many me too gais there are
@@ -174,7 +182,24 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
             }
         }
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "toHugsSegue"){
+            if let tabVC = segue.destination as? UIViewController{
+                tabVC.modalPresentationStyle = .custom
+                tabVC.modalTransitionStyle = .crossDissolve
+            }
+        }
+        else if (segue.identifier == "detailsBack") {
+            if let tabVC = segue.destination as? UIViewController{
+                tabVC.modalPresentationStyle = .custom
+                tabVC.modalTransitionStyle = .crossDissolve
+                print("called")
+            }
+
+        }
+    }
 }
+
 
 class HugsTableViewCell: UITableViewCell {
     @IBOutlet var username: UILabel!
