@@ -18,7 +18,6 @@ class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSo
 {
     @IBOutlet var tableView: UITableView!
     var ref: FIRDatabaseReference!
-//    let userID = FIRAuth.auth()!.currentUser!.uid
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,13 +53,34 @@ class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
         
-        clickedIndex = indexPath.row
+
+        var textToFind = String(myPostsText[indexPath.row])
+        print(textToFind)
+//        let query = ref.child("posts").queryOrdered(byChild: "text").queryEqual(toValue: textToFind)
+//        print(query.parent())
         
-        var storyboard = UIStoryboard(name: "Main", bundle: nil)
-        var ivc = storyboard.instantiateViewController(withIdentifier: "postInfo")
-        ivc.modalPresentationStyle = .custom
-        ivc.modalTransitionStyle = .crossDissolve
-        self.present(ivc, animated: true, completion: { _ in })
+        let refPath = self.ref.child(byAppendingPath: "post")
+//
+        refPath.queryOrdered(byChild: "text").queryEqual(toValue:textToFind).observe(.value, with: { snapshot in
+            if (snapshot.value is NSNull) {
+                print("Skillet was not found")
+            }
+            else {
+                for child in snapshot.children {   //in case there are several skillets
+                    let key = (child as AnyObject).key as String
+                    print("The key is\(key)") // gets key of post
+                    clickedIndex = Int(key)
+                    print(clickedIndex)
+                    
+                    var storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    var ivc = storyboard.instantiateViewController(withIdentifier: "postInfo")
+                    ivc.modalPresentationStyle = .custom
+                    ivc.modalTransitionStyle = .crossDissolve
+                    self.present(ivc, animated: true, completion: { _ in })
+                }
+            }
+        })
+        
     }
     
     // this method handles row deletion
@@ -179,6 +199,7 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
     // haven't added user revealing yet
     func loadData(){
         ref = FIRDatabase.database().reference()
+        print(clickedIndex)
         ref.child("post").child(String(clickedIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(((snapshot.value!) as AnyObject).count - 1) {             // get how many replies there are
                 // appends all the text in post replies to 'replies' array
