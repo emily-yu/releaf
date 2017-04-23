@@ -53,6 +53,8 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 140
     }
     
     @IBAction func post(_ sender: Any) {
