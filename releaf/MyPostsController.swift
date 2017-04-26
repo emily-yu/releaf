@@ -80,31 +80,7 @@ class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSo
                 }
             }
         })
-        
     }
-    
-    // this method handles row deletion
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if editingStyle == .delete {
-            
-            // remove the item from the data model
-            replies.remove(at: indexPath.row)
-            
-            // delete the table view row
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            
-        } else if editingStyle == .insert {
-            // Not used in our example, but if you were adding a new row, this is where you would do it.
-        }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    
 }
 
 class MyPostsTableViewCell: UITableViewCell {
@@ -228,7 +204,7 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: DetailsTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "DetailsTableViewCell") as! DetailsTableViewCell
-        cell.numberLikes.text = String(dataLikes[indexPath.row]) // dirty hack?
+        cell.numberLikes.text = String(dataLikes[indexPath.row])
         cell.replyText.text = String(dataText[indexPath.row])
         return cell
     }

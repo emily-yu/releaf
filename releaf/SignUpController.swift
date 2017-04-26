@@ -50,7 +50,6 @@ class SignUpController: UIViewController, GIDSignInUIDelegate {
                     self.ref.child("users").child((user?.uid)!).setValue([
                         "firsasdfadsftName": self.firstNameField.text!,
                         "lastName": self.lastNameField.text!,
-                        "profilePic": "encoded picture", // encode profile pictures
                         "revealPoints": 0,
                         "groups": [
                             "0": "Global Community"
@@ -60,6 +59,9 @@ class SignUpController: UIViewController, GIDSignInUIDelegate {
                         ],
                         "hugs": [
                             "0": ""
+                        ],
+                        "myPosts": [
+                            "0": "0"
                         ],
                         "base64string": "default"
                     ])

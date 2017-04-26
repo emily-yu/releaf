@@ -75,12 +75,12 @@ class CreatePostController: UIViewController {
                         ],
                         ] as NSDictionary)
                     
-                    var baseValue = String(((snapshot.value!) as AnyObject).count)
+                    var baseValue = (((snapshot.value!) as AnyObject).count)
                     
                     // creating post under that person's account
-                    self.ref.child("post").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                        var string = String((((snapshot.value!) as AnyObject).count) + 1) // amount of posts there are + 1 to create new post
-                        self.ref.child(userID).child("myPosts").setValue([string:baseValue])
+                    self.ref.child("users").child(userID).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                        var string = String((((snapshot.value!) as AnyObject).count)) // amount of posts there are + 1 to create new post
+                        self.ref.child("users").child(userID).child("myPosts").child(string).setValue(baseValue)
                     }
                     
                     // add a point to eh persons account
