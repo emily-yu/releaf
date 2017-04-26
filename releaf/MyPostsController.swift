@@ -206,7 +206,6 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
                 self.ref.child("post").child(String(clickedIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
                         self.dataText.append(snapshot.value! as! String)
                 })
-                // appends all the likes in post replies to 'leaves' array
                 self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("likes").observeSingleEvent(of: .value, with: { (snapshot) in
                         self.dataLikes.append(snapshot.value! as! Int)
                         self.tableView.reloadData()
@@ -223,15 +222,14 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataText.count
+        return dataLikes.count
     }
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: DetailsTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "DetailsTableViewCell") as! DetailsTableViewCell
-        cell.numberLikes.text = String(dataLikes[indexPath.row])
+        cell.numberLikes.text = String(dataLikes[indexPath.row]) // dirty hack?
         cell.replyText.text = String(dataText[indexPath.row])
-        
         return cell
     }
     

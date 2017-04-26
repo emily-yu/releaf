@@ -44,49 +44,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         FIRApp.configure()
         
         ref = FIRDatabase.database().reference()
-        ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            // get how many replies there are
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
-                // appends all the text in post replies to 'replies' array
-                self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-                })
-            }
-        }
-        
-//        var userID: String = FIRAuth.auth()!.currentUser!.uid
-//        // set groups array
-//        ref = FIRDatabase.database().reference()
-//        
-//        ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observe(.value, with: {
-//            snapshot in
-//            for restaurant in snapshot.children {
-//                restaurantNames.append((restaurant as AnyObject).value!)
-//            }
-////            print(restaurantNames)
-//        })
-//        
-//        // append all the posts to myposts, then transfer to array
-//        ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-//            // get how many posts you have
-//            for index in 0...(((snapshot.value!) as AnyObject).count) { // NULL WHEN NO POSTS - NULL ON
-//                
+//        ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+//            // get how many replies there are
+//            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
 //                // appends all the text in post replies to 'replies' array
-//                self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-//                    if var same:Int = (snapshot.value! as? Int) {
-//                        myposts.append(same)
-//                        // acceses right posts and puts indexs in array
-//                        // use array posts to same
-//                        for index2 in myposts {
-//                            self.ref.child("post").child(String(index2)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-//                                let int = snapshot.value!
-//                                myPostsText.append(int as! String)
-//                            })
-//                        }
-//                    }
+//                self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
 //                })
 //            }
 //        }
-        
+
 //         append all the posts to myposts, then transfer to array
         ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON

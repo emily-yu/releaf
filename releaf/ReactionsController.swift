@@ -57,7 +57,6 @@ class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSour
         return cell
     }
     
-    // right now this is not using the index number of the post that's being clicked, but the index of the cell
     func loadData() {
         ref = FIRDatabase.database().reference()
         print(String(describing: clickedIndex))
@@ -82,6 +81,7 @@ class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSour
             }
         }
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "toMeTooSegue" || segue.identifier == "detailsBack"){
             if let tabVC = segue.destination as? UIViewController{
@@ -157,20 +157,18 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         return cell
     }
     
-    // loads the right replies but need to find the index that the tableView's text 's index and use that to find the arrays - right now just uses the clickedIndex's replies which isn't the same
     func loadData() {
         ref = FIRDatabase.database().reference()
-        // to see all people that said me too
         print(String(describing: clickedIndex))
         ref.child("post").child(String(clickedIndex)).child("hugs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             print(snapshot.childrenCount) // get the number of children
-            // get how many me too gais there are
-            //            print(((snapshot.value!) as AnyObject).count - 1)
+            var indexesss: [Int] = []
             for index in 0...(snapshot.childrenCount - 1) {
-                // appends all the text in post replies to 'replies' array
-                print(index)
-                self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                print("INDEX:\(index)")
+                // changed that to clickedIndex
+                self.ref.child("post").child(String(clickedIndex)).child("hugs").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     print(snapshot.value)
+                    print(index)
                     if let int = snapshot.value{
                         var same = int as! String;
                         print(same) // gets all the names who said me too
@@ -182,6 +180,7 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
             }
         }
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "toHugsSegue"){
             if let tabVC = segue.destination as? UIViewController{
