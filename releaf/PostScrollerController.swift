@@ -61,6 +61,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         // reload everything in the tableView for a new post
         replies.removeAll()
         leaves.removeAll()
+        uid.removeAll() // idk
         loadData()
         self.tableView.reloadData()
         

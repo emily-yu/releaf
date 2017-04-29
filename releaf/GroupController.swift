@@ -109,6 +109,8 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
                 self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").child(string).setValue(groupJoin)
             }
             
+            restaurantNames.removeAll() // so it can reload
+            
             //navigate back to home screen
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
             vc?.modalPresentationStyle = .custom

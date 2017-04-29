@@ -63,18 +63,17 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
                         // get how many posts you have
                         for index in 0...(((snapshot.value!) as AnyObject).count) { // NULL WHEN NO POSTS - NULL ON
                             
-                            // appends all the text in post replies to 'replies' array
                             self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                                 if var same:Int = (snapshot.value! as? Int) {
                                     myposts.append(same)
                                     // acceses right posts and puts indexs in array
                                     // use array posts to same
-                                    for index2 in myposts {
-                                        self.ref.child("post").child(String(index2)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
+//                                    for index2 in myposts {
+                                        self.ref.child("post").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
                                             let int = snapshot.value!
                                             myPostsText.append(int as! String)
                                         })
-                                    }
+//                                    }
                                 }
                             })
                         }

@@ -30,7 +30,7 @@ import GoogleSignIn
  - api to retrieve facebook friends
 */
 
-var uid:[String] = []
+var uid:[String] = [] // need to set these values when loaddata()ing
 var userID = ""
 
 @UIApplicationMain

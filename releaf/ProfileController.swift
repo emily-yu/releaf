@@ -68,7 +68,13 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround() 
+        self.hideKeyboardWhenTappedAround()
+        
+        let cellReuseIdentifier = "cell"
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
         // Do any additional setup after loading the view, typically from a nib.
         ref = FIRDatabase.database().reference()
         
@@ -113,9 +119,49 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
             }
         })
         
-        if (replies.count > 0){
+//        if (restaurantNames.count > 0){
+//            print("not first load")
+//            print(restaurantNames)
+//            self.tableView.reloadData()
+//            
+////            ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observe(.value, with: {
+////                snapshot in
+////                for restaurant in snapshot.children {
+////                    restaurantNames.append((restaurant as AnyObject).value!)
+////                }
+////            })
+//        }
+//        else {
+//            print("first load")
+//            ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observe(.value, with: {
+//                snapshot in
+//                for restaurant in snapshot.children {
+//                    restaurantNames.append((restaurant as AnyObject).value!)
+//                }
+//            })
+//        }
+        
+        
+//        let cellReuseIdentifier = "cell"
+//        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+//        tableView.delegate = self
+//        tableView.dataSource = self
+        checking()
+
+    }
+    
+    func checking() {
+        if (restaurantNames.count > 0){
             print("not first load")
+            print(restaurantNames)
             self.tableView.reloadData()
+            
+            //            ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observe(.value, with: {
+            //                snapshot in
+            //                for restaurant in snapshot.children {
+            //                    restaurantNames.append((restaurant as AnyObject).value!)
+            //                }
+            //            })
         }
         else {
             print("first load")
@@ -123,17 +169,15 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                 snapshot in
                 for restaurant in snapshot.children {
                     restaurantNames.append((restaurant as AnyObject).value!)
+                    self.tableView.reloadData()
                 }
-                //            print(restaurantNames)
             })
+//            let cellReuseIdentifier = "cell"
+//            self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+//            self.tableView.delegate = self
+//            self.tableView.dataSource = self
         }
         
-        
-        let cellReuseIdentifier = "cell"
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        tableView.delegate = self
-        tableView.dataSource = self
-
     }
     
     private func base64PaddingWithEqual(encoded64: String) -> String {
