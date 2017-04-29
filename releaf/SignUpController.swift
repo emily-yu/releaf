@@ -46,6 +46,7 @@ class SignUpController: UIViewController, GIDSignInUIDelegate {
             FIRAuth.auth()?.createUser(withEmail: emailField.text!, password: passwordField.text!) { (user, error) in
                 
                 if error == nil {
+                    userID  = FIRAuth.auth()!.currentUser!.uid
                     // set user details
                     self.ref.child("users").child((user?.uid)!).setValue([
                         "firsasdfadsftName": self.firstNameField.text!,
@@ -54,14 +55,14 @@ class SignUpController: UIViewController, GIDSignInUIDelegate {
                         "groups": [
                             "0": "Global Community"
                         ],
-                        "metoo": [
-                            "0": ""
-                        ],
-                        "hugs": [
-                            "0": ""
-                        ],
+//                        "metoo": [
+//                            "0": ""
+//                        ],
+//                        "hugs": [
+//                            "0": ""
+//                        ],
                         "myPosts": [
-                            "0": "0"
+                            "0": 0
                         ],
                         "base64string": "default"
                     ])

@@ -15,8 +15,8 @@ var restaurantNames = [String]() // lul groups
 class GroupViewController: UIViewController, UITableViewDelegate,UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet var nameField: UILabel!
-    var tempFirst = ""
-    var tempLast = ""
+    var tempFirst = " "
+    var tempLast = " "
     @IBOutlet var tableView: UITableView!
     @IBOutlet var revealPoints: UILabel!
     @IBOutlet var imageView: UIImageView!

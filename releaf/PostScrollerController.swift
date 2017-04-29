@@ -111,7 +111,6 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                 self.incrementPoints() // add one to your points
                                 print(checkmetoos)
                                 checkmetoos.append(userID)
-                                // ADD TO DATABASE TOO - should wokr?
                                 self.ref.child("post").child(String(currentIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                     self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(snapshot.childrenCount)).setValue(userID) // set value
                                     //                                    }
@@ -316,19 +315,20 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                             // unliking and liking posts
                             self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                 if let int = snapshot.value {
+                                    // all does the same since didn't put in unliking!!
                                     var same: Int = int as! Int
                                     if (same > 0){ // revealpoints greater than 0
                                         // if user revealpoints are greater than 0...
-                                        let alertController = UIAlertController(title: "Error", message: "You've already liked this reply. Would you like to unlike the post?", preferredStyle: .alert)
+                                        let alertController = UIAlertController(title: "Error", message: "You've already liked this reply.", preferredStyle: .alert)
                                         let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                                        let submitAction = UIAlertAction(title: "Unlike", style: .default, handler: { (action) -> Void in
-                                            // locate userid in array and delet
-                                            if let index = uid.index(of: userID) {
-                                                uid.remove(at: index)
-                                            }
-                                            // decrement
-                                            self.decrementPoints()
-                                        })
+//                                        let submitAction = UIAlertAction(title: "Unlike", style: .default, handler: { (action) -> Void in
+//                                            // locate userid in array and delet
+//                                            if let index = uid.index(of: userID) {
+//                                                uid.remove(at: index)
+//                                            }
+//                                            // decrement
+//                                            self.decrementPoints()
+//                                        })
                                         alertController.addAction(defaultAction)
                                         self.present(alertController, animated: true, completion: nil)
                                     }
@@ -348,7 +348,15 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                             let alert = UIAlertController(title: "Like Post", message: "You are about to like this reply.",preferredStyle: .alert)
                             let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
                                     self.incrementPoints() // add one to your points
-                                    uid.append(same)
+                                    uid.append(userID) //asdf
+                                
+                                    // ADD TO THE THING
+                                
+                                    self.ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                        self.ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("uid").child(String(snapshot.childrenCount)).setValue(userID) // set value
+                                        //                                    }
+                                    }
+                                
                                     print(uid)
                                     // add one to the reply's likes
                                     self.ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("likes").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
@@ -389,7 +397,9 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
+        
         checkUIDArray(replyNumber: (indexPath.row))
+        
     }
     
     func incrementPoints() {
