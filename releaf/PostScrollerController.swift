@@ -324,7 +324,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                         }
                         else {
                             print("not there lets go appendo")
-                            let alertController = UIAlertController(title: "Error", message: "HAVE YET TO ADD SHIT.", preferredStyle: .alert)
+                            let alertController = UIAlertController(title: "Like Response", message: "You are about to like this response.", preferredStyle: .alert)
                             let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
                                     self.incrementPoints() // add one to your points
 

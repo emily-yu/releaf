@@ -26,6 +26,39 @@ class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSo
         
         ref = FIRDatabase.database().reference()
         
+        // append all the posts to myposts, then transfer to array
+        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            // get how many posts you have
+            myPostsText.removeAll()
+            myposts.removeAll()
+            for index in 0...(((snapshot.value!) as AnyObject).count) { // NULL WHEN NO POSTS - NULL ON
+                var countingpat2 = (((snapshot.value!) as AnyObject).count)
+                self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    if var same:Int = (snapshot.value! as? Int) {
+                        myposts.append(same)
+                        print("count\(myposts)")
+                        // acceses right posts and puts indexs in array
+                        // use array posts to same
+                                if (myposts.count == countingpat2) {
+                                                            for index2 in myposts {
+                                                                print("index:\(index2)")
+                        
+                        self.ref.child("post").child(String(index2)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
+                            let int = snapshot.value!
+                            myPostsText.append(int as! String)
+                            if (myPostsText.count == myposts.count) {
+                                print("exiting")
+                                print(myPostsText)
+                                self.tableView.reloadData()
+                            }
+                        })
+                                                            }
+                        }
+                    }
+                })
+            }
+        }
+        
         let cellReuseIdentifier = "cell"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         self.tableView.delegate = self
@@ -35,7 +68,8 @@ class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSo
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(myPostsText.count)
+//        print(myPostsText.count)
+//        print(myPostsText)
         print("sakefjalsdfjkladsf")
         return myPostsText.count
     }
