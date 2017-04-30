@@ -170,7 +170,6 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                 self.incrementPoints() // add one to your points
                                 print(checkhugs)
                                 checkhugs.append(userID)
-                                // ADD TO DATABASE TOO - should wokr?
                                 self.ref.child("post").child(String(currentIndex)).child("hugs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                     //                                    if let int = snapshot.value{
                                     //                                        var same = (int as! Int)+1;// add one reveal point
@@ -305,60 +304,37 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     
     // checks to see if user is listed under the reply uid's
     func checkUIDArray(replyNumber:Int) {
+                        var troll23: [String] = []
         ref = FIRDatabase.database().reference()
         ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
-                self.ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("uid").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-                    if var same:String = (snapshot.value! as? String) {
-                        if uid.contains(FIRAuth.auth()!.currentUser!.uid) {
+                var countinggg = ((snapshot.value!) as AnyObject).count - 1
+            self.ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("uid").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    troll23.append(snapshot.value! as! String)
+                    if (troll23.count == countinggg+1) {
+                        print("FINISHED APPENDING")
+                        print(troll23)
+                        
+                        if troll23.contains(FIRAuth.auth()!.currentUser!.uid) {
                             print("its dere no can do")
-                            asdf = true
-                            // unliking and liking posts
-                            self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                                if let int = snapshot.value {
-                                    // all does the same since didn't put in unliking!!
-                                    var same: Int = int as! Int
-                                    if (same > 0){ // revealpoints greater than 0
-                                        // if user revealpoints are greater than 0...
-                                        let alertController = UIAlertController(title: "Error", message: "You've already liked this reply.", preferredStyle: .alert)
-                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-//                                        let submitAction = UIAlertAction(title: "Unlike", style: .default, handler: { (action) -> Void in
-//                                            // locate userid in array and delet
-//                                            if let index = uid.index(of: userID) {
-//                                                uid.remove(at: index)
-//                                            }
-//                                            // decrement
-//                                            self.decrementPoints()
-//                                        })
-                                        alertController.addAction(defaultAction)
-                                        self.present(alertController, animated: true, completion: nil)
-                                    }
-                                    else { // can't subtract
-                                        let alertController = UIAlertController(title: "Error", message: "You've already liked this reply.", preferredStyle: .alert)
-                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                                        alertController.addAction(defaultAction)
-                                        self.present(alertController, animated: true, completion: nil)
-                                    }
-                                }
-                            }
+                            let alertController = UIAlertController(title: "Error", message: "You've already liked this reply.", preferredStyle: .alert)
+                            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                            alertController.addAction(defaultAction)
+                            self.present(alertController, animated: true, completion: nil)
                         }
                         else {
-                            print("not there")
-                            asdf = false
-                            // Alert Prompt
-                            let alert = UIAlertController(title: "Like Post", message: "You are about to like this reply.",preferredStyle: .alert)
+                            print("not there lets go appendo")
+                            let alertController = UIAlertController(title: "Error", message: "HAVE YET TO ADD SHIT.", preferredStyle: .alert)
                             let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
                                     self.incrementPoints() // add one to your points
-                                    uid.append(userID) //asdf
-                                
+
                                     // ADD TO THE THING
-                                
+
                                     self.ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                         self.ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("uid").child(String(snapshot.childrenCount)).setValue(userID) // set value
                                         //                                    }
                                     }
-                                
-                                    print(uid)
+
                                     // add one to the reply's likes
                                     self.ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("likes").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                         if let int = snapshot.value{
@@ -366,13 +342,13 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                             self.ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("likes").setValue(same) // set new value
                                         }
                                     }
-                            
+
                                     self.tableView.reloadData()
                             })
                             let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
-                            alert.addAction(cancel)
-                            alert.addAction(submitAction)
-                            self.present(alert, animated: true, completion: nil)
+                            alertController.addAction(cancel)
+                            alertController.addAction(submitAction)
+                            self.present(alertController, animated: true, completion: nil)
                         }
                     }
                 })
