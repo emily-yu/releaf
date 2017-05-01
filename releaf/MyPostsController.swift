@@ -31,7 +31,7 @@ class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSo
             // get how many posts you have
             myPostsText.removeAll()
             myposts.removeAll()
-            for index in 0...(((snapshot.value!) as AnyObject).count) { // NULL WHEN NO POSTS - NULL ON
+            for index in 0...(((snapshot.value!) as AnyObject).count) {
                 var countingpat2 = (((snapshot.value!) as AnyObject).count)
                 self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     if var same:Int = (snapshot.value! as? Int) {
@@ -131,8 +131,8 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
     @IBOutlet var postReplies: UITableView!
     @IBOutlet var tableView: UITableView!
     
+    // revealing users
     @IBAction func userReveal(_ sender: Any) {
-        
         // Alert Prompt
         let alert = UIAlertController(title: "Reveal User", message: "You are about to use one impact point to see the user of this post.",preferredStyle: .alert)
         let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
@@ -206,7 +206,6 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
         self.tableView.dataSource = self
     }
     
-    // haven't added user revealing yet
     func loadData(){
         ref = FIRDatabase.database().reference()
         print(clickedIndex)
@@ -244,7 +243,7 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "myPostsSegue"){ // don't know if segue exists
+        if(segue.identifier == "myPostsSegue"){
             if let tabVC = segue.destination as? UITabBarController{
                 tabVC.selectedIndex = 2
                 tabVC.modalPresentationStyle = .custom

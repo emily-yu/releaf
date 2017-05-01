@@ -13,18 +13,15 @@ import GoogleSignIn
 
 
 /*
- low priority:
+ 
+ - groups have their own posts
+ 
  - unjoin groups
  - adjust groups so people only see from a specific group
  - click to expand?
  - switching posts ensure doesn't land on same post
  - rejoin group twice
- 
- extra things:
-  - facebook login
-  - twitter login
-  - edit profile details
- 
+
  - if 3 of facebook/gmail friends are part of a group - gives suggestions if they want to join groups
  - put how many friends are in group next to group list
  - api to retrieve facebook friends
@@ -34,7 +31,7 @@ var uid:[String] = [] // need to set these values when loaddata()ing
 var userID = ""
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var ref: FIRDatabaseReference!
@@ -44,18 +41,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         FIRApp.configure()
         
         ref = FIRDatabase.database().reference()
-//        ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-//            // get how many replies there are
-//            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
-//                // appends all the text in post replies to 'replies' array
-//                self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-//                })
-//            }
-//        }
-
-//         append all the posts to myposts, then transfer to array
+        
+        // get a list of all the groups - ref: JoinGroups
         ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
                 self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
                     if var same:String = (snapshot.value! as? String) {
                         groupDescription2.append(same)
@@ -68,42 +57,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 })
             }
         }
-
-        self.ref = FIRDatabase.database().reference()
         
         // Google Sign In
-        GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
-        GIDSignIn.sharedInstance().delegate = self
+//        GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
+//        GIDSignIn.sharedInstance().delegate = self
         
         return true
     }
     
     // google sign in
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
-        // ...
-        if let error = error {
-            // ...
-            return
-        }
-        
-        guard let authentication = user.authentication else { return }
-        let credential = FIRGoogleAuthProvider.credential(withIDToken: authentication.idToken,
-                                                          accessToken: authentication.accessToken)
-        FIRAuth.auth()?.signIn(with: credential) { (user, error) in
-            // ...
-            if let error = error {
-                // ...
-                return
-            }
-        }
-        
-        
-    }
+//    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
+//        // ...
+//        if let error = error {
+//            // ...
+//            return
+//        }
+//        
+//        guard let authentication = user.authentication else { return }
+//        let credential = FIRGoogleAuthProvider.credential(withIDToken: authentication.idToken,
+//                                                          accessToken: authentication.accessToken)
+//        FIRAuth.auth()?.signIn(with: credential) { (user, error) in
+//            // ...
+//            if let error = error {
+//                // ...
+//                return
+//            }
+//        }
+//        
+//        
+//    }
     
-    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
-        // Perform any operations when the user disconnects from app here.
-        // ...
-    }
+//    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+//        // Perform any operations when the user disconnects from app here.
+//        // ...
+//    }
     
     @available(iOS 9.0, *)
     func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any])

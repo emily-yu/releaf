@@ -20,7 +20,7 @@ class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround() 
-        // handle changing posts - not working
+
         if (previousIndex == -1) {
             previousIndex = clickedIndex!
             loadData()
@@ -105,33 +105,6 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     @IBOutlet var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        ref = FIRDatabase.database().reference()
-//        // to see all people that said me too
-//        print(String(describing: clickedIndex))
-//
-//        ref.child("post").child(String(clickedIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-//            print(snapshot.childrenCount) // get the number of children
-//            // get how many me too gais there are
-////            print(((snapshot.value!) as AnyObject).count - 1)
-//            for index in 0...(snapshot.childrenCount - 1) {
-//                // appends all the text in post replies to 'replies' array
-//                print(index)
-//                self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-//                    print(snapshot.value)
-//                    if let int = snapshot.value{
-//                        var same = int as! String;
-//                        print(same) // gets all the names who said me too
-//                        metoo.append(same)
-//                        print("METOO ARRAY")
-//                        print(metoo)
-//                        
-//                        self.tableView.reloadData()
-//                        print("reloaded")
-//                    }
-//                })
-//            }
-//        }
         
         loadData()
         self.tableView.reloadData()
