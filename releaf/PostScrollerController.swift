@@ -66,10 +66,10 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         self.tableView.reloadData()
         
         // set up the tableView
-        let cellReuseIdentifier = "cell"
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+//        let cellReuseIdentifier = "cell"
+//        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+//        self.tableView.delegate = self
+//        self.tableView.dataSource = self
         
     }
     @IBOutlet var tableView: UITableView!
@@ -363,13 +363,52 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell:PromptTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "PromptTableViewCell") as! PromptTableViewCell
+//        var cell:PromptTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "PromptTableViewCell") as! PromptTableViewCell
         
-        cell.prompt.text = String(replies[indexPath.row])
-        cell.leaves.text = String(leaves[indexPath.row])
+        var cell:PromptTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "PromptTableViewCell") as? PromptTableViewCell;
+        if(cell == nil)
+        {
+            cell = PromptTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "PromptTableViewCell")
+            cell?.selectionStyle = UITableViewCellSelectionStyle.none
+        }
+        //        cell?.postText?.font = UIFont.systemFont(ofSize: 15.0)
+        cell?.prompt?.sizeToFit()
+        cell?.prompt?.text = replies[indexPath.row]
+        cell?.prompt?.numberOfLines = 0
+
         
-        return cell
+//        cell.prompt.text = String(replies[indexPath.row])
+        cell?.prompt.sizeToFit()
+        cell?.leaves.text = String(leaves[indexPath.row])
+        cell?.leaves.numberOfLines = 0
+//
+//        return cell
+        return cell!;
     }
+    
+    
+    func calculateHeight(inString:String) -> CGFloat
+    {
+        let messageString = inString
+        let attributes : [String : Any] = [NSFontAttributeName : UIFont.systemFont(ofSize: 15.0)]
+        
+        let attributedString : NSAttributedString = NSAttributedString(string: messageString, attributes: attributes)
+        
+        let rect : CGRect = attributedString.boundingRect(with: CGSize(width: 200.0, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil)
+        
+        let requredSize:CGRect = rect
+        return requredSize.height
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1;
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        var height:CGFloat = calculateHeight(inString: String(replies[indexPath.row]))
+        return height + 20.0
+    }
+
     
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

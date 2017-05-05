@@ -211,6 +211,39 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
+        
+        var textToFind = String(restaurantNames[indexPath.row])
+        print(textToFind)
+        
+        groupDetailsTitle = textToFind!
+        
+        // use this to get more details later
+//        ref.child("groups").queryOrdered(byChild: "name").queryEqual(toValue:textToFind).observe(.value, with: { snapshot in
+//            if (snapshot.value is NSNull) {
+//                print("Skillet was not found")
+//            }
+//            else {
+//                for child in snapshot.children {   //in case there are several skillets
+//                    let key = (child as AnyObject).key as String
+//                    print("The key is\(key)") // gets key of post
+//                    clickedIndex = Int(key)
+//                    print(clickedIndex)
+//                    
+//                    var storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                    var ivc = storyboard.instantiateViewController(withIdentifier: "postInfo")
+//                    ivc.modalPresentationStyle = .custom
+//                    ivc.modalTransitionStyle = .crossDissolve
+//                    self.present(ivc, animated: true, completion: { _ in })
+//                }
+//            }
+//        })
+        
+        //navigate back to home screen
+        var ivc = self.storyboard?.instantiateViewController(withIdentifier: "GroupDetailsController")
+        ivc?.modalPresentationStyle = .custom
+        ivc?.modalTransitionStyle = .crossDissolve
+        self.present(ivc!, animated: true, completion: { _ in })
+        
     }
     
     // this method handles row deletion
