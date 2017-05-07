@@ -1206,7 +1206,7 @@
         <image name="tempbackground" width="3000" height="3000"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Hny-Kr-wbb"/>
         <segue reference="n13-l3-cWC"/>
+        <segue reference="Fjo-vg-Ini"/>
     </inferredMetricsTieBreakers>
 </document>

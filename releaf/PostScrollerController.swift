@@ -55,15 +55,22 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
             // post index to address
             let randomNum = arc4random_uniform(UInt32(((snapshot.value!) as AnyObject).count)) // range is 0 to 99
             currentIndex = Int(randomNum) // set currentIndex to be this value
+            
+            // reload everything in the tableView for a new post
+            replies.removeAll()
+            leaves.removeAll()
+            uid.removeAll() // idk
+            self.loadData()
+            self.tableView.reloadData()
         }
         
         
-        // reload everything in the tableView for a new post
-        replies.removeAll()
-        leaves.removeAll()
-        uid.removeAll() // idk
-        loadData()
-        self.tableView.reloadData()
+//        // reload everything in the tableView for a new post
+//        replies.removeAll()
+//        leaves.removeAll()
+//        uid.removeAll() // idk
+//        loadData()
+//        self.tableView.reloadData()
         
         // set up the tableView
 //        let cellReuseIdentifier = "cell"
@@ -307,7 +314,12 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                         var troll23: [String] = []
         ref = FIRDatabase.database().reference()
         ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            print(currentIndex)
+            print(replyNumber)
+            print(snapshot.value!)
+            print(((snapshot.value!) as AnyObject).count)
             for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+                
                 var countinggg = ((snapshot.value!) as AnyObject).count - 1
             self.ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("uid").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     troll23.append(snapshot.value! as! String)
@@ -415,6 +427,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         print("You tapped cell number \(indexPath.row).")
         
         checkUIDArray(replyNumber: (indexPath.row))
+                                    tableView.deselectRow(at: indexPath, animated: true)
         
     }
     

@@ -77,12 +77,7 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
-        
-        //navigate back to home screen
-        var ivc = self.storyboard?.instantiateViewController(withIdentifier: "GroupDetailsController")
-        ivc?.modalPresentationStyle = .custom
-        ivc?.modalTransitionStyle = .crossDissolve
-        self.present(ivc!, animated: true, completion: { _ in })
+        tableView.deselectRow(at: indexPath, animated: true)
         
     }
     
@@ -97,7 +92,7 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
             }
         }
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

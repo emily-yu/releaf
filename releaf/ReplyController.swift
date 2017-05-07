@@ -101,6 +101,7 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
         userText.text = replies2[indexPath.row]
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     // switches to profile tab

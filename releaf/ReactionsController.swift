@@ -82,6 +82,13 @@ class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSour
         }
     }
     
+    // method to run when table view cell is tapped
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("You tapped cell number \(indexPath.row).")
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "toMeTooSegue" || segue.identifier == "detailsBack"){
             if let tabVC = segue.destination as? UIViewController{
@@ -169,6 +176,13 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
             }
 
         }
+    }
+    
+    // method to run when table view cell is tapped
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("You tapped cell number \(indexPath.row).")
+        tableView.deselectRow(at: indexPath, animated: true)
+        
     }
 }
 
