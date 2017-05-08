@@ -66,21 +66,50 @@ class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSo
         
     }
     
+    
+    // --------------- START ---------------
+    
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        print(myPostsText.count)
-//        print(myPostsText)
-        print("sakefjalsdfjkladsf")
         return myPostsText.count
     }
     
     // create a cell for each table view row
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell:MyPostsTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "MyPostsTableViewCell") as! MyPostsTableViewCell
-//        cell.prompt.text = String(replies[indexPath.row])
-        cell.postText.text = String(myPostsText[indexPath.row])
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        var cell:MyPostsTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "MyPostsTableViewCell") as? MyPostsTableViewCell;
+        if(cell == nil)
+        {
+            cell = MyPostsTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "MyPostsTableViewCell")
+            cell?.selectionStyle = UITableViewCellSelectionStyle.none
+        }
+        //        cell?.postText?.font = UIFont.systemFont(ofSize: 15.0)
+        cell?.postText?.sizeToFit()
+        cell?.postText?.text = String(myPostsText[indexPath.row])
+        cell?.postText?.numberOfLines = 0
+        return cell!;
+    }
+    func calculateHeight(inString:String) -> CGFloat
+    {
+        let messageString = inString
+        let attributes : [String : Any] = [NSFontAttributeName : UIFont.systemFont(ofSize: 15.0)]
         
-        return cell
+        let attributedString : NSAttributedString = NSAttributedString(string: messageString, attributes: attributes)
+        
+        let rect : CGRect = attributedString.boundingRect(with: CGSize(width: 222.0, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil)
+        
+        let requredSize:CGRect = rect
+        return requredSize.height
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
+        return 1;
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        var height:CGFloat = calculateHeight(inString: String(myPostsText[indexPath.row]))
+        return height + 40.0
     }
     
     // method to run when table view cell is tapped
@@ -88,9 +117,6 @@ class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSo
         print("You tapped cell number \(indexPath.row).")
         
         var textToFind = String(myPostsText[indexPath.row])
-        print(textToFind)
-//        let query = ref.child("posts").queryOrdered(byChild: "text").queryEqual(toValue: textToFind)
-//        print(query.parent())
         
         let refPath = self.ref.child(byAppendingPath: "post")
 //
@@ -113,7 +139,7 @@ class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSo
                 }
             }
         })
-                tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }
@@ -311,12 +337,46 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
         return dataLikes.count
     }
     
+    func calculateHeight(inString:String) -> CGFloat
+    {
+        let messageString = inString
+        let attributes : [String : Any] = [NSFontAttributeName : UIFont.systemFont(ofSize: 15.0)]
+        
+        let attributedString : NSAttributedString = NSAttributedString(string: messageString, attributes: attributes)
+        
+        let rect : CGRect = attributedString.boundingRect(with: CGSize(width: 222.0, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil)
+        
+        let requredSize:CGRect = rect
+        return requredSize.height
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1;
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        var height:CGFloat = calculateHeight(inString: String(dataText[indexPath.row]))
+        return height + 40.0
+    }
+    
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: DetailsTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "DetailsTableViewCell") as! DetailsTableViewCell
-        cell.numberLikes.text = String(dataLikes[indexPath.row])
-        cell.replyText.text = String(dataText[indexPath.row])
-        return cell
+        var cell:DetailsTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "DetailsTableViewCell") as? DetailsTableViewCell;
+        if(cell == nil)
+        {
+            cell = DetailsTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "DetailsTableViewCell")
+            cell?.selectionStyle = UITableViewCellSelectionStyle.none
+        }
+        
+        cell?.numberLikes?.sizeToFit()
+        cell?.numberLikes?.text = String(dataLikes[indexPath.row])
+        cell?.numberLikes?.numberOfLines = 0
+        
+        cell?.replyText?.sizeToFit()
+        cell?.replyText?.text = String(dataText[indexPath.row])
+        cell?.replyText?.numberOfLines = 0
+        
+        return cell!
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
