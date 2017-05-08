@@ -158,6 +158,9 @@ class CreateGroupController: UIViewController {
                         self.ref.child("groups").child(same!).setValue([
                             "name": self.groupName.text!,
                             "description": self.groupDescription.text!,
+                            "post": [
+                                "0": "init",
+                            ]
                         ] as NSDictionary)
                         
                         var baseValue = self.groupName.text!
