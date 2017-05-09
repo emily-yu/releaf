@@ -91,7 +91,17 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
                 print("called")
             }
         }
+        if(segue.identifier == "groupPostSegue"){
+            if let tabVC = segue.destination as? UITabBarController{
+                tabVC.selectedIndex = 1
+                tabVC.modalPresentationStyle = .custom
+                tabVC.modalTransitionStyle = .crossDissolve
+                print("called")
+            }
+        }
     }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

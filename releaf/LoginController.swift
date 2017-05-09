@@ -50,14 +50,6 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
                     // set groups array
                     self.ref = FIRDatabase.database().reference()
                     
-                    self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observe(.value, with: {
-                        snapshot in
-                        for restaurant in snapshot.children {
-                            restaurantNames.append((restaurant as AnyObject).value!)
-                        }
-                        //            print(restaurantNames)
-                    })
-                    
                     // append all the posts to myposts, then transfer to array
                 self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                         // get how many posts you have

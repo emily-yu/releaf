@@ -69,12 +69,12 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-        
+//        
         let cellReuseIdentifier = "cell"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
+//
         // Do any additional setup after loading the view, typically from a nib.
         ref = FIRDatabase.database().reference()
         
@@ -118,66 +118,25 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                 }
             }
         })
-        
-//        if (restaurantNames.count > 0){
-//            print("not first load")
-//            print(restaurantNames)
-//            self.tableView.reloadData()
-//            
-////            ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observe(.value, with: {
-////                snapshot in
-////                for restaurant in snapshot.children {
-////                    restaurantNames.append((restaurant as AnyObject).value!)
-////                }
-////            })
-//        }
-//        else {
-//            print("first load")
-//            ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observe(.value, with: {
-//                snapshot in
-//                for restaurant in snapshot.children {
-//                    restaurantNames.append((restaurant as AnyObject).value!)
-//                }
-//            })
-//        }
-        
-        
-//        let cellReuseIdentifier = "cell"
-//        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-//        tableView.delegate = self
-//        tableView.dataSource = self
         checking()
-
     }
     
     func checking() {
-        if (restaurantNames.count > 0){
-            print("not first load")
-            print(restaurantNames)
-            self.tableView.reloadData()
-            
-            //            ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observe(.value, with: {
-            //                snapshot in
-            //                for restaurant in snapshot.children {
-            //                    restaurantNames.append((restaurant as AnyObject).value!)
-            //                }
-            //            })
-        }
-        else {
-            print("first load")
-            ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observe(.value, with: {
-                snapshot in
-                for restaurant in snapshot.children {
+        ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observe(.value, with: {      snapshot in
+            if (restaurantNames.count == Int(snapshot.childrenCount)) { // array is missing data
+                self.tableView.reloadData()
+            }
+            else { // array has all data
+                for restaurant in snapshot.children { // append data
                     restaurantNames.append((restaurant as AnyObject).value!)
-                    self.tableView.reloadData()
+                    if (restaurantNames.count == Int(snapshot.childrenCount)) {
+                        print("done")
+                        print(restaurantNames)
+                        self.tableView.reloadData()
+                    }
                 }
-            })
-//            let cellReuseIdentifier = "cell"
-//            self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-//            self.tableView.delegate = self
-//            self.tableView.dataSource = self
-        }
-        
+            }
+        })
     }
     
     private func base64PaddingWithEqual(encoded64: String) -> String {
@@ -216,27 +175,6 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
         print(textToFind)
         
         groupDetailsTitle = textToFind!
-        
-        // use this to get more details later
-//        ref.child("groups").queryOrdered(byChild: "name").queryEqual(toValue:textToFind).observe(.value, with: { snapshot in
-//            if (snapshot.value is NSNull) {
-//                print("Skillet was not found")
-//            }
-//            else {
-//                for child in snapshot.children {   //in case there are several skillets
-//                    let key = (child as AnyObject).key as String
-//                    print("The key is\(key)") // gets key of post
-//                    clickedIndex = Int(key)
-//                    print(clickedIndex)
-//                    
-//                    var storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                    var ivc = storyboard.instantiateViewController(withIdentifier: "postInfo")
-//                    ivc.modalPresentationStyle = .custom
-//                    ivc.modalTransitionStyle = .crossDissolve
-//                    self.present(ivc, animated: true, completion: { _ in })
-//                }
-//            }
-//        })
         
         //navigate back to home screen
         var ivc = self.storyboard?.instantiateViewController(withIdentifier: "GroupDetailsController")

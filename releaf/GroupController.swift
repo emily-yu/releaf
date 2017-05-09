@@ -164,18 +164,23 @@ class CreateGroupController: UIViewController {
                         ] as NSDictionary)
                         
                         var baseValue = self.groupName.text!
+                        restaurantNames.append(baseValue)
+                        print("NEW ONE")
+                        print(restaurantNames)
+                        
                         
                         // add group under that person's account
                         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                            var string = String((((snapshot.value!) as AnyObject).count) + 1) // amount of posts there are + 1 to create new post
+                            var string = String((((snapshot.value!) as AnyObject).count)) // amount of posts there are + 1 to create new post
                             
                             // issue here with modifying actual data
-                            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").setValue([string:baseValue])
+                            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").child(string).setValue(baseValue)
                         }
                         
-                        allgroups.removeAll()
-                        groupDescription2.removeAll()
+                        
                         self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                            allgroups.removeAll()
+                            groupDescription2.removeAll()
                             for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
                                 self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
                                     if var same:String = (snapshot.value! as? String) {
