@@ -11,6 +11,8 @@ import UIKit
 import Firebase
 
 var groupDetailsTitle = ""
+var groupPathPost: String! // the group to post the new post to
+var groupPosts: [String] = [] // the group's posts
 
 class GroupDetailsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -24,15 +26,64 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
         
         self.groupName.text = groupDetailsTitle
         
+        
+        var textToFind2 = groupDetailsTitle
+        
+        self.ref.child("groups").queryOrdered(byChild: "name").queryEqual(toValue:textToFind2).observe(.value, with: { snapshot in
+            if (snapshot.value is NSNull) {
+                print("Skillet was not found")
+            }
+            else {
+                for child in snapshot.children {   //in case there are several skillets
+                    let key = (child as AnyObject).key as String
+                    groupPathPost = key
+                    print("GROUPINDEX:\(groupPathPost)") // gets key of post
+                    self.groupPostChecking() // load data
+                }
+            }
+        })
+        
+        
         let cellReuseIdentifier = "cell"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         self.tableView.delegate = self
         self.tableView.dataSource = self
     }
     
+    func groupPostChecking() {
+        ref.child("groups").child(String(groupPathPost)).child("post").observe(.value, with: {      snapshot in
+            var count = Int(snapshot.childrenCount-1)
+            for i in 1...snapshot.childrenCount-1 { // iterate from post 1
+                print("POSTINDEX:\(i)")
+                print("GROUPPATH:\(groupPathPost)")
+                // append all the post text
+                self.ref.child("groups").child(groupPathPost).child("post").child(String(i)).child("text").observe(.value, with: {      snapshot in
+                    groupPosts.append(snapshot.value as! String)
+                    if (groupPosts.count == count) { // array is missing data
+                        self.tableView.reloadData()
+                        print(groupPosts)
+                    }
+                })
+            }
+//            if (groupPosts.count == Int(snapshot.childrenCount)) { // array is missing data
+//                self.tableView.reloadData()
+//            }
+//            else { // array has all data
+//                for restaurant in snapshot.children { // append data
+//                    groupPosts.append((restaurant as AnyObject).value!)
+//                    if (groupPosts.count == Int(snapshot.childrenCount)) {
+//                        print("done refreshing")
+//                        self.tableView.reloadData()
+//                    }
+//                }
+//            }
+        })
+    }
+    
+    
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return restaurantNames.count
+        return groupPosts.count
     }
     
     // create a cell for each table view row
@@ -46,7 +97,7 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
         }
 //        cell?.postText?.font = UIFont.systemFont(ofSize: 15.0)
         cell?.postText?.sizeToFit()
-        cell?.postText?.text = allgroups[indexPath.row]
+        cell?.postText?.text = groupPosts[indexPath.row]
         cell?.postText?.numberOfLines = 0
         return cell!;
     }
@@ -69,7 +120,7 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var height:CGFloat = calculateHeight(inString: String(allgroups[indexPath.row]))
+        var height:CGFloat = calculateHeight(inString: String(groupPosts[indexPath.row]))
         return height + 40.0
     }
     
@@ -81,7 +132,7 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    // switches to profile tab
+    // switches to createnewpost
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "profileSegue" || segue.identifier == "createGroupSegue"){
             if let tabVC = segue.destination as? UITabBarController{
@@ -92,6 +143,23 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
             }
         }
         if(segue.identifier == "groupPostSegue"){
+            
+//            var textToFind = groupDetailsTitle
+//            self.ref.child("groups").queryOrdered(byChild: "name").queryEqual(toValue:textToFind).observe(.value, with: { snapshot in
+//                if (snapshot.value is NSNull) {
+//                    print("Skillet was not found")
+//                }
+//                else {
+//                    for child in snapshot.children {   //in case there are several skillets
+//                        let key = (child as AnyObject).key as String
+//                        print("The key is\(key)") // gets key of post
+//                        groupPathPost = Int(key)!
+//                    }
+//                }
+//            })
+            
+            groupPosts.removeAll() // remove posts from array in preparation for new group
+            
             if let tabVC = segue.destination as? UITabBarController{
                 tabVC.selectedIndex = 1
                 tabVC.modalPresentationStyle = .custom
@@ -100,7 +168,6 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
             }
         }
     }
-    
     
 
     override func didReceiveMemoryWarning() {

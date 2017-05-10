@@ -184,6 +184,8 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
         
     }
     
+    
+    
     // this method handles row deletion
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         

@@ -38,61 +38,100 @@ class CreatePostController: UIViewController {
             self.present(alertController, animated: true, completion: nil)
         }
         else {
-            ref = FIRDatabase.database().reference()
-            self.ref.child("post").observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                // anonymous control
-//                var anonStatus: String!
-//                if (self.anonControl.selectedSegmentIndex == 0){
-//                    print("fullanon")
-//                    self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/status").setValue("fullanon")
-//                    anonStatus = "fullanon"
-//                }
-//                else {
-//                    print("partanon")
-//                    self.ref.child("post/" + (String((((snapshot.value!) as AnyObject).count))) + "/status").setValue("partanon")
-//                    anonStatus = "partanon"
-//                }
-                
-                if let int = (snapshot.value) {
-                    var same = (String((int as AnyObject).count)) as String!
-                    self.ref.child("post").child(same!).setValue([
-                        "reply": [
-                            "0": [
-                                "likes": 0,
-                                "text": "reply text",
-                                "user": "default uid"
-                            ]
-                        ],
-                        "user": userID,
-                        "text": self.body.text!,
-                        "leaves": 0,
-                        "hugs": [
-                            "0": "sadjkl"
-                        ],
-                        "metoo": [
-                            "0": "asdklfj2"
-                        ],
-                        ] as NSDictionary)
+            if (groupPathPost == nil) { // normal post to global community
+                ref = FIRDatabase.database().reference()
+                self.ref.child("post").observeSingleEvent(of: .value, with: { (snapshot) in
                     
-                    var baseValue = (((snapshot.value!) as AnyObject).count)
-                    
-                    // creating post under that person's account
-                    self.ref.child("users").child(userID).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                        var string = String((((snapshot.value!) as AnyObject).count)) // amount of posts there are + 1 to create new post
-                        self.ref.child("users").child(userID).child("myPosts").child(string).setValue(baseValue)
+                    if let int = (snapshot.value) {
+                        var same = (String((int as AnyObject).count)) as String!
+                        self.ref.child("post").child(same!).setValue([
+                            "reply": [
+                                "0": [
+                                    "likes": 0,
+                                    "text": "reply text",
+                                    "user": "default uid",
+                                    "uid": [
+                                        "0": "asdf"
+                                    ],
+                                ]
+                            ],
+                            "user": userID,
+                            "text": self.body.text!,
+                            "leaves": 0,
+                            "hugs": [
+                                "0": "sadjkl"
+                            ],
+                            "metoo": [
+                                "0": "asdklfj2"
+                            ],
+                            ] as NSDictionary)
+                        
+                        var baseValue = (((snapshot.value!) as AnyObject).count)
+                        
+                        // creating post under that person's account
+                        self.ref.child("users").child(userID).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                            var string = String((((snapshot.value!) as AnyObject).count)) // amount of posts there are + 1 to create new post
+                            self.ref.child("users").child(userID).child("myPosts").child(string).setValue(baseValue)
+                        }
+                        
+                        // add a point to eh persons account
+                        self.incrementPoints()
+                        
+                        //navigate back to home screen
+                        var ivc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
+                        ivc?.modalPresentationStyle = .custom
+                        ivc?.modalTransitionStyle = .crossDissolve
+                        self.present(ivc!, animated: true, completion: { _ in })
                     }
+                })
+            }
+            else { // post to specific group
+                ref = FIRDatabase.database().reference()
+                self.ref.child("groups").child(String(groupPathPost)).child("post").observeSingleEvent(of: .value, with: { (snapshot) in
                     
-                    // add a point to eh persons account
-                    self.incrementPoints()
-                    
-                    //navigate back to home screen
-                    var ivc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
-                    ivc?.modalPresentationStyle = .custom
-                    ivc?.modalTransitionStyle = .crossDissolve
-                    self.present(ivc!, animated: true, completion: { _ in })
-                }
-            })
+                    if let int = (snapshot.value) {
+                        var same = (String((int as AnyObject).count)) as String!
+                        self.ref.child("groups").child(String(groupPathPost)).child("post").child(same!).setValue([
+                            "reply": [
+                                "0": [
+                                    "likes": 0,
+                                    "text": "reply text",
+                                    "user": "default uid",
+                                    "uid": [
+                                        "0": "asdf"
+                                    ],
+                                ]
+                            ],
+                            "user": userID,
+                            "text": self.body.text!,
+                            "leaves": 0,
+                            "hugs": [
+                                "0": "sadjkl"
+                            ],
+                            "metoo": [
+                                "0": "asdklfj2"
+                            ],
+                            ] as NSDictionary)
+                        
+//                        var baseValue = (((snapshot.value!) as AnyObject).count)
+                        
+//                        // creating post under that person's account -- RIP NOT FINNA PUT IT UNDER THE PERSON'S POSTS
+//                        self.ref.child("users").child(userID).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+//                            var string = String((((snapshot.value!) as AnyObject).count)) // amount of posts there are + 1 to create new post
+//                            self.ref.child("users").child(userID).child("myPosts").child(string).setValue(baseValue)
+//                        }
+                        
+                        // add a point to eh persons account
+                        self.incrementPoints()
+                        
+                        //navigate back to home screen
+                        var ivc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
+                        ivc?.modalPresentationStyle = .custom
+                        ivc?.modalTransitionStyle = .crossDissolve
+                        self.present(ivc!, animated: true, completion: { _ in })
+                    }
+                })
+            }
         }
     }
     

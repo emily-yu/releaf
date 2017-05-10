@@ -13,9 +13,6 @@ import GoogleSignIn
 
 
 /*
- 
- - groups have their own posts
- 
  - unjoin groups
  - adjust groups so people only see from a specific group
  - click to expand?
@@ -39,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FIRApp.configure()
+        
         
         ref = FIRDatabase.database().reference()
         
