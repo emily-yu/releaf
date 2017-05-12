@@ -38,9 +38,6 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
         let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage //2
         
         imageView.image = chosenImage
-//                print(chosenImage)
-//        imagepickedtbh = chosenImage
-        //        print(imagepickedtbh)
         
         //base64 thing
         let imageData: Data! = UIImageJPEGRepresentation(chosenImage, 0.1)
@@ -182,41 +179,6 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
         ivc?.modalTransitionStyle = .crossDissolve
         self.present(ivc!, animated: true, completion: { _ in })
         
-    }
-    
-    
-    
-    // this method handles row deletion
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if editingStyle == .delete {
-            
-            // remove the item from the data model
-            replies.remove(at: indexPath.row)
-            
-            // delete the table view row
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            
-        } else if editingStyle == .insert {
-            // Not used in our example, but if you were adding a new row, this is where you would do it.
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
-        // action one
-        let editAction = UITableViewRowAction(style: .default, title: "Edit", handler: { (action, indexPath) in
-            print("Edit tapped")
-        })
-        editAction.backgroundColor = UIColor.blue
-        
-        // action two
-        let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) in
-            print("Delete tapped")
-        })
-        deleteAction.backgroundColor = UIColor.red
-        
-        return [editAction, deleteAction]
     }
     
     override func didReceiveMemoryWarning() {

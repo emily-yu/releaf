@@ -93,15 +93,11 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
         cell?.postText?.numberOfLines = 0
         return cell!;
     }
-    func calculateHeight(inString:String) -> CGFloat
-    {
+    func calculateHeight(inString:String) -> CGFloat{
         let messageString = inString
         let attributes : [String : Any] = [NSFontAttributeName : UIFont.systemFont(ofSize: 15.0)]
-        
         let attributedString : NSAttributedString = NSAttributedString(string: messageString, attributes: attributes)
-        
         let rect : CGRect = attributedString.boundingRect(with: CGSize(width: 222.0, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil)
-        
         let requredSize:CGRect = rect
         return requredSize.height
     }
@@ -126,6 +122,7 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
     
     // switches to createnewpost
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        groupPosts.removeAll() // remove posts from array in preparation for new group
         if(segue.identifier == "profileSegue" || segue.identifier == "createGroupSegue"){
             if let tabVC = segue.destination as? UITabBarController{
                 tabVC.selectedIndex = 3
@@ -135,23 +132,6 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
             }
         }
         if(segue.identifier == "groupPostSegue"){
-            
-//            var textToFind = groupDetailsTitle
-//            self.ref.child("groups").queryOrdered(byChild: "name").queryEqual(toValue:textToFind).observe(.value, with: { snapshot in
-//                if (snapshot.value is NSNull) {
-//                    print("Skillet was not found")
-//                }
-//                else {
-//                    for child in snapshot.children {   //in case there are several skillets
-//                        let key = (child as AnyObject).key as String
-//                        print("The key is\(key)") // gets key of post
-//                        groupPathPost = Int(key)!
-//                    }
-//                }
-//            })
-            
-            groupPosts.removeAll() // remove posts from array in preparation for new group
-            
             if let tabVC = segue.destination as? UITabBarController{
                 tabVC.selectedIndex = 1
                 tabVC.modalPresentationStyle = .custom

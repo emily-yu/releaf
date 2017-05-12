@@ -92,34 +92,45 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // change imageview to a checkmark
-        // if imageview.image = the plus image then add it, if not then have popup that says you have already joined this group
         var groupJoin = allgroups[indexPath.row]
-        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+        
+        if restaurantNames.contains(groupJoin) {
+            print("yes")
             
-            // creating post under that person's account
-            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                var string = String((((snapshot.value!) as AnyObject).count)) // amount of posts there are + 1 to create new post
-                self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").child(string).setValue(groupJoin)
-            }
-            
-            restaurantNames.removeAll() // so it can reload
-            
-            //navigate back
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
-            if let tabvc = vc as? UITabBarController {
-                tabvc.selectedIndex = 3
-                tabvc.modalPresentationStyle = .custom
-                tabvc.modalTransitionStyle = .crossDissolve
-                self.present(tabvc, animated: true, completion: nil)
-            }
+//                            restaurantNames.removeAll() // so it can reload
+            let alertController = UIAlertController(title: "Error", message: "You've already joined this group.", preferredStyle: .alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(defaultAction)
+            self.present(alertController, animated: true, completion: nil)
         }
         
+        else {
+        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                
+                // creating post under that person's account
+                self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                    var string = String((((snapshot.value!) as AnyObject).count)) // amount of posts there are + 1 to create new post
+                    self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").child(string).setValue(groupJoin)
+                }
+                
+//                restaurantNames.removeAll() // so it can reload
+                            restaurantNames.removeAll() // so it can reload
+                //navigate back
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
+                if let tabvc = vc as? UITabBarController {
+                    tabvc.selectedIndex = 3
+                    tabvc.modalPresentationStyle = .custom
+                    tabvc.modalTransitionStyle = .crossDissolve
+                    self.present(tabvc, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
     // switches to profile tab
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "profileSegue" || segue.identifier == "createGroupSegue"){
+            restaurantNames.removeAll() // so it can reload
             if let tabVC = segue.destination as? UITabBarController{
                 tabVC.selectedIndex = 3
                 tabVC.modalPresentationStyle = .custom
