@@ -13,6 +13,7 @@ import GoogleSignIn
 
 
 /*
+ 
  - unjoin groups
  - adjust groups so people only see from a specific group
  - click to expand?
@@ -22,6 +23,7 @@ import GoogleSignIn
  - if 3 of facebook/gmail friends are part of a group - gives suggestions if they want to join groups
  - put how many friends are in group next to group list
  - api to retrieve facebook friends
+ 
 */
 
 
@@ -39,8 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FIRApp.configure()
         
         ref = FIRDatabase.database().reference()
-        
-        Reachability.registerListener() // check internet connection
         
         // get a list of all the groups - ref: JoinGroups
         ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in

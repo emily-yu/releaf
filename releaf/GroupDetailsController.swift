@@ -53,30 +53,22 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
     func groupPostChecking() {
         ref.child("groups").child(String(groupPathPost)).child("post").observe(.value, with: {      snapshot in
             var count = Int(snapshot.childrenCount-1)
-            for i in 1...snapshot.childrenCount-1 { // iterate from post 1
-                print("POSTINDEX:\(i)")
-                print("GROUPPATH:\(groupPathPost)")
-                // append all the post text
-                self.ref.child("groups").child(groupPathPost).child("post").child(String(i)).child("text").observe(.value, with: {      snapshot in
-                    groupPosts.append(snapshot.value as! String)
-                    if (groupPosts.count == count) { // array is missing data
-                        self.tableView.reloadData()
-                        print(groupPosts)
-                    }
-                })
+            if (count > 0) { // gotta have posts in it
+                for i in 1...snapshot.childrenCount-1 { // iterate from post 1
+                    print("POSTINDEX:\(i)")
+                    print("GROUPPATH:\(groupPathPost)")
+                    // append all the post text
+                    self.ref.child("groups").child(groupPathPost).child("post").child(String(i)).child("text").observe(.value, with: {      snapshot in
+                        groupPosts.append(snapshot.value as! String)
+                        if (groupPosts.count == count) { // array is missing data
+                            self.tableView.reloadData()
+                            print(groupPosts)
+                        }
+                    })
+                }
             }
-//            if (groupPosts.count == Int(snapshot.childrenCount)) { // array is missing data
-//                self.tableView.reloadData()
-//            }
-//            else { // array has all data
-//                for restaurant in snapshot.children { // append data
-//                    groupPosts.append((restaurant as AnyObject).value!)
-//                    if (groupPosts.count == Int(snapshot.childrenCount)) {
-//                        print("done refreshing")
-//                        self.tableView.reloadData()
-//                    }
-//                }
-//            }
+            else { // group has no posts
+            }
         })
     }
     

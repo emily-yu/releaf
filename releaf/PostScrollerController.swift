@@ -12,8 +12,8 @@ import FirebaseDatabase
 
 // post stats
 var posts: [String] = ["asdf"] // store all the posts
-var replies: [String] = [] // temp store replies for certain post
-var leaves: [Int] = [] // temp store LIKES for everything replies
+var replies: [String] = [] // store replies to post
+var leaves: [Int] = [] // store likes for replies to post
 var tempLikes: [Int] = []
 
 // checking
@@ -260,7 +260,6 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     }
     
     func loadReactionArrays(){
-        // SET HUGS AND METOO ARRAYS
         // init metoo array
         ref.child("post").child(String(currentIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
@@ -288,7 +287,9 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround() 
+        self.hideKeyboardWhenTappedAround()
+        
+        Reachability.registerListener() // check internet connection
         
         if (replies.count > 0){
             print("not first load")

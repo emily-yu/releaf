@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import AFNetworking
 
 public class Reachability {
@@ -15,12 +16,20 @@ public class Reachability {
     private var isClientWiFi:Bool = false;
     private var isClientConnectionUnknown = false;
     
+    var alertController = UIAlertController(title: "Error", message: "Network error (interrupted connection) has occurred. Please check your internet connection.", preferredStyle: .alert)
+    
     func onOnline() {
         print("****************************************** Network goes online.");
+        alertController.dismiss(animated: true, completion: nil)
     }
     
     func onOffline() {
         print("****************************************** Network goes offline.");
+        let alertWindow = UIWindow(frame: UIScreen.main.bounds)
+        alertWindow.rootViewController = UIViewController()
+        alertWindow.windowLevel = UIWindowLevelAlert + 1;
+        alertWindow.makeKeyAndVisible()
+        alertWindow.rootViewController?.present(alertController, animated: true, completion: nil)
     }
     
     func onWiFi() {
