@@ -10,6 +10,7 @@
 		30FAABE800030F7125DDCAA7 /* Pods_releafUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD30BBF634FAA53C5C1D547 /* Pods_releafUITests.framework */; };
 		3566090BC84EDF7B64656CF6 /* Pods_releaf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A84AFA04C1C6E5CDA1EA2F7 /* Pods_releaf.framework */; };
 		5B95CFC774BF6A7DF71C6EAF /* Pods_releafTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA8596CB3CE77749A45D75EB /* Pods_releafTests.framework */; };
+		A1395D081EC539ED0025A09B /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1395D071EC539ED0025A09B /* Reachability.swift */; };
 		A150BC961E7DA3F800A4175F /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A150BC951E7DA3F800A4175F /* SignUpController.swift */; };
 		A150BC981E7DA47A00A4175F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A150BC971E7DA47A00A4175F /* GoogleService-Info.plist */; };
 		A1805EA41E9DA8D40043CB85 /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1805EA31E9DA8D40043CB85 /* GroupController.swift */; };
@@ -53,6 +54,7 @@
 		6F027B2446C8DE334E0C3AFD /* Pods-releafTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-releafTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-releafTests/Pods-releafTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8E8E06EA7BC5631A56354EF5 /* Pods-releafTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-releafTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-releafTests/Pods-releafTests.release.xcconfig"; sourceTree = "<group>"; };
 		99233D825F7E2F24F749D7BD /* Pods-releaf.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-releaf.debug.xcconfig"; path = "Pods/Target Support Files/Pods-releaf/Pods-releaf.debug.xcconfig"; sourceTree = "<group>"; };
+		A1395D071EC539ED0025A09B /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = ../Reachability.swift; sourceTree = "<group>"; };
 		A150BC951E7DA3F800A4175F /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		A150BC971E7DA47A00A4175F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A1805EA31E9DA8D40043CB85 /* GroupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 		A1B02F261E7474EF0002151D /* releaf */ = {
 			isa = PBXGroup;
 			children = (
+				A1395D071EC539ED0025A09B /* Reachability.swift */,
 				A1B02F271E7474EF0002151D /* AppDelegate.swift */,
 				A1805EA31E9DA8D40043CB85 /* GroupController.swift */,
 				A197DA4E1E8B8FD00064903B /* MyPostsController.swift */,
@@ -482,6 +485,7 @@
 			files = (
 				A1805EA41E9DA8D40043CB85 /* GroupController.swift in Sources */,
 				A197DA571E8B92430064903B /* ProfileController.swift in Sources */,
+				A1395D081EC539ED0025A09B /* Reachability.swift in Sources */,
 				A1814F7C1EB7C56900DCD592 /* GroupDetailsController.swift in Sources */,
 				A1B02F2C1E7474EF0002151D /* LoginController.swift in Sources */,
 				A1A9FA7B1E86788700CD31CD /* ReplyController.swift in Sources */,

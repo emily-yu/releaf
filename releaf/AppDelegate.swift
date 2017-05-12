@@ -24,6 +24,7 @@ import GoogleSignIn
  - api to retrieve facebook friends
 */
 
+
 var uid:[String] = [] // need to set these values when loaddata()ing
 var userID = ""
 
@@ -32,13 +33,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var ref: FIRDatabaseReference!
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FIRApp.configure()
         
-        
         ref = FIRDatabase.database().reference()
+        
+        Reachability.registerListener() // check internet connection
         
         // get a list of all the groups - ref: JoinGroups
         ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
