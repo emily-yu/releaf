@@ -17,15 +17,16 @@ public class Reachability {
     private var isClientConnectionUnknown = false;
     
     var alertController = UIAlertController(title: "Error", message: "Network error (interrupted connection) has occurred. Please check your internet connection.", preferredStyle: .alert)
+    let alertWindow = UIWindow(frame: UIScreen.main.bounds)
     
     func onOnline() {
         print("****************************************** Network goes online.");
-        alertController.dismiss(animated: true, completion: nil)
+//        alertController.dismiss(animated: true, completion: nil)
+        alertWindow.isHidden = true
     }
     
     func onOffline() {
         print("****************************************** Network goes offline.");
-        let alertWindow = UIWindow(frame: UIScreen.main.bounds)
         alertWindow.rootViewController = UIViewController()
         alertWindow.windowLevel = UIWindowLevelAlert + 1;
         alertWindow.makeKeyAndVisible()

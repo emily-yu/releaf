@@ -9,9 +9,8 @@
 import Foundation
 import UIKit
 import Firebase
-import GoogleSignIn
 
-class SignUpController: UIViewController, GIDSignInUIDelegate {
+class SignUpController: UIViewController{
     
     var ref:FIRDatabaseReference!
     
@@ -29,7 +28,6 @@ class SignUpController: UIViewController, GIDSignInUIDelegate {
     }
     
     @IBAction func googleSignIn(_ sender: Any) {
-        GIDSignIn.sharedInstance().signIn()
     }
     
     @IBAction func createAccount(_ sender: Any) {
@@ -112,13 +110,7 @@ class SignUpController: UIViewController, GIDSignInUIDelegate {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        
-        // google sign in set delegate
-        GIDSignIn.sharedInstance().uiDelegate = self
-        
-        // TODO(developer) Configure the sign-in button look/feel
-        // ...
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
