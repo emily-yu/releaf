@@ -183,11 +183,7 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
     var ref: FIRDatabaseReference!
     var dataText:[String] = [] // store reply text
     var dataLikes:[Int] = [] // store likes
-    
-//    @IBOutlet var postText: UITextView!
-//    @IBOutlet var postReplies: UITableView!
-//    @IBOutlet var tableView: UITableView!
-    
+
     // revealing users
 //    @IBAction func userReveal(_ sender: Any) {
 //        // Alert Prompt
