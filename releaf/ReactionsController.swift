@@ -43,6 +43,24 @@ class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSour
 
     }
     
+    func calculateHeight(inString:String) -> CGFloat
+    {
+        let messageString = inString
+        let attributes : [String : Any] = [NSFontAttributeName : UIFont.systemFont(ofSize: 15.0)]
+        
+        let attributedString : NSAttributedString = NSAttributedString(string: messageString, attributes: attributes)
+        
+        let rect : CGRect = attributedString.boundingRect(with: CGSize(width: 222.0, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil)
+        
+        let requredSize:CGRect = rect
+        return requredSize.height
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
+        return 1;
+    }
+    
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return metoo.count
@@ -50,13 +68,18 @@ class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSour
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell:MeTooTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "MeTooTableViewCell") as! MeTooTableViewCell
-        //        cell.prompt.text = String(groups[indexPath.row])
-        cell.username.text = String(metoo[indexPath.row])
-        
-        return cell
+    var cell:MeTooTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "MeTooTableViewCell") as? MeTooTableViewCell;
+    if(cell == nil)
+    {
+    cell = MeTooTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "MeTooTableViewCell")
+    cell?.selectionStyle = UITableViewCellSelectionStyle.none
     }
-    
+    cell?.username?.sizeToFit()
+    cell?.username?.text = String(metoo[indexPath.row])
+    cell?.username?.numberOfLines = 0
+    return cell!;
+    }
+
     func loadData() {
         ref = FIRDatabase.database().reference()
         print(String(describing: clickedIndex))
@@ -124,6 +147,24 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         
     }
     
+    func calculateHeight(inString:String) -> CGFloat
+    {
+        let messageString = inString
+        let attributes : [String : Any] = [NSFontAttributeName : UIFont.systemFont(ofSize: 15.0)]
+        
+        let attributedString : NSAttributedString = NSAttributedString(string: messageString, attributes: attributes)
+        
+        let rect : CGRect = attributedString.boundingRect(with: CGSize(width: 222.0, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil)
+        
+        let requredSize:CGRect = rect
+        return requredSize.height
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
+        return 1;
+    }
+    
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return hugs.count
@@ -131,10 +172,21 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell:HugsTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "HugsTableViewCell") as! HugsTableViewCell
-        cell.username.text = String(hugs[indexPath.row])
-        
-        return cell
+//        var cell:HugsTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "HugsTableViewCell") as! HugsTableViewCell
+//        cell.username.text = String(hugs[indexPath.row])
+//        
+//        return cell
+    var cell:HugsTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "HugsTableViewCell") as? HugsTableViewCell;
+    if(cell == nil)
+    {
+    cell = HugsTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "HugsTableViewCell")
+    cell?.selectionStyle = UITableViewCellSelectionStyle.none
+    }
+    cell?.username?.sizeToFit()
+    cell?.username?.text = String(hugs[indexPath.row])
+    cell?.username?.numberOfLines = 0
+    return cell!;
+
     }
     
     func loadData() {

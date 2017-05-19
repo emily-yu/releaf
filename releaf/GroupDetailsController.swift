@@ -178,6 +178,7 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
 
     @IBOutlet var postText: UITextView!
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var eye: UIButton!
     
 
     var ref: FIRDatabaseReference!
@@ -346,10 +347,10 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
                     print(self.dataText)
                     self.tableView.reloadData()
                 })
-//                self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex)).child("reply").child(String(index)).child("likes").observeSingleEvent(of: .value, with: { (snapshot) in
-//                    self.dataLikes.append(snapshot.value! as! Int)
-//                    self.tableView.reloadData()
-//                })
+                self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(index)).child("likes").observeSingleEvent(of: .value, with: { (snapshot) in
+                    self.dataLikes.append(snapshot.value! as! Int)
+                    self.tableView.reloadData()
+                })
             }
         }
         
@@ -420,6 +421,7 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
 }
 
 class GroupPostDetailsTableViewCell: UITableViewCell {
-    
+    @IBOutlet var userText: UILabel!
     @IBOutlet var replyText: UILabel!
+    @IBOutlet var likeText: UILabel!
 }
