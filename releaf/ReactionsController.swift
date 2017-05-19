@@ -172,10 +172,6 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        var cell:HugsTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "HugsTableViewCell") as! HugsTableViewCell
-//        cell.username.text = String(hugs[indexPath.row])
-//        
-//        return cell
     var cell:HugsTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "HugsTableViewCell") as? HugsTableViewCell;
     if(cell == nil)
     {
@@ -203,7 +199,6 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
                     print(index)
                     if let int = snapshot.value{
                         var same = int as! String;
-                        print(same) // gets all the names who said me too
                         hugs.append(same)
                         self.tableView.reloadData()
                         print("reloaded")

@@ -248,66 +248,69 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
 //    }
 //    
 //    
-//    // checks to see if user is listed under the reply uid's
-//    func checkUIDArray(replyNumber:Int) {
-//        var troll23: [String] = []
-//        ref = FIRDatabase.database().reference()
-//        ref.child("post").child(String(clickedIndex)).child("reply").child(String(replyNumber)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-//            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
-//                
-//                var countinggg = ((snapshot.value!) as AnyObject).count - 1
-//                self.ref.child("post").child(String(clickedIndex)).child("reply").child(String(replyNumber)).child("uid").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-//                    troll23.append(snapshot.value! as! String)
-//                    if (troll23.count == countinggg+1) {
-//                        print("FINISHED APPENDING")
-//                        print(troll23)
-//                        
-//                        if troll23.contains(FIRAuth.auth()!.currentUser!.uid) {
-//                            print("its dere no can do")
-//                            let alertController = UIAlertController(title: "Error", message: "You've already liked this reply.", preferredStyle: .alert)
-//                            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-//                            alertController.addAction(defaultAction)
-//                            self.present(alertController, animated: true, completion: nil)
-//                        }
-//                        else {
-//                            print("not there lets go appendo")
-//                            let alertController = UIAlertController(title: "Like Response", message: "You are about to like this response.", preferredStyle: .alert)
-//                            let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
-//                                self.incrementPoints() // add one to your points
-//                                
-//                                // ADD TO THE THING
-//                                
-//                                self.ref.child("post").child(String(clickedIndex)).child("reply").child(String(replyNumber)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-//                                    self.ref.child("post").child(String(clickedIndex)).child("reply").child(String(replyNumber)).child("uid").child(String(snapshot.childrenCount)).setValue(userID) // set value
-//                                    //                                    }
-//                                }
-//                                
-//                                // add one to the reply's likes
-//                                self.ref.child("post").child(String(clickedIndex)).child("reply").child(String(replyNumber)).child("likes").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-//                                    if let int = snapshot.value{
-//                                        var same = (int as! Int)+1;// add one reveal point
-//                                        self.ref.child("post").child(String(clickedIndex)).child("reply").child(String(replyNumber)).child("likes").setValue(same) // set new value
-//                                    }
-//                                }
-//                                
-//                                self.tableView.reloadData()
-//                            })
-//                            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
-//                            alertController.addAction(cancel)
-//                            alertController.addAction(submitAction)
-//                            self.present(alertController, animated: true, completion: nil)
-//                        }
-//                    }
-//                })
-//            }
-//        }
-//    }
-//    
+    
+    // CHANGE THE REPLYNUMBER WHEN WAIT WTF IT DOESN'T CHANGE FUCK ME OMFG
+    // checks to see if user is listed under the reply uid's - AHHH NOT MODIFIED
+    func checkUIDArray(replyNumber:Int) {
+        var troll23: [String] = []
+        ref = FIRDatabase.database().reference()
+        ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // IT DED HERE
+                
+                var countinggg = ((snapshot.value!) as AnyObject).count - 1
+                self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("uid").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    print(snapshot.value)
+                    troll23.append(snapshot.value! as! String)
+                    if (troll23.count == countinggg+1) {
+                        print("FINISHED APPENDING")
+                        print(troll23)
+                        
+                        if troll23.contains(FIRAuth.auth()!.currentUser!.uid) {
+                            print("its dere no can do")
+                            let alertController = UIAlertController(title: "Error", message: "You've already liked this reply.", preferredStyle: .alert)
+                            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                            alertController.addAction(defaultAction)
+                            self.present(alertController, animated: true, completion: nil)
+                        }
+                        else {
+                            print("not there lets go appendo")
+                            let alertController = UIAlertController(title: "Like Response", message: "You are about to like this response.", preferredStyle: .alert)
+                            let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
+                                self.incrementPoints() // add one to your points
+                                
+                                // ADD TO THE THING
+                                
+                                self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                    self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("uid").child(String(snapshot.childrenCount)).setValue(userID) // set value
+                                    //                                    }
+                                }
+                                
+                                // add one to the reply's likes
+                                self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("likes").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                    if let int = snapshot.value{
+                                        var same = (int as! Int)+1;// add one reveal point
+                                        self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("likes").setValue(same) // set new value
+                                    }
+                                }
+                                
+                                self.tableView.reloadData()
+                            })
+                            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
+                            alertController.addAction(cancel)
+                            alertController.addAction(submitAction)
+                            self.present(alertController, animated: true, completion: nil)
+                        }
+                    }
+                })
+            }
+        }
+    }
+    
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
         
-//        checkUIDArray(replyNumber: (indexPath.row))
+        checkUIDArray(replyNumber: (indexPath.row))
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
@@ -340,8 +343,7 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
         ref = FIRDatabase.database().reference()
         print(clickedIndex)
             ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for index in 0...snapshot.childrenCount-1 {             // get how many replies there are
-                // appends all the text in post replies to 'replies' array
+            for index in 1...snapshot.childrenCount-1 {      // FUCKED THIS UP                // appends all the text in post replies to 'replies' array
                 self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
                     self.dataText.append(snapshot.value! as! String)
                     print(self.dataText)
@@ -357,7 +359,6 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
         // set post text
         ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             self.postText.text = String(describing: snapshot.value!)
-            print(snapshot.value)
         }
     }
     
