@@ -178,79 +178,77 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
 
     @IBOutlet var postText: UITextView!
     @IBOutlet var tableView: UITableView!
-    @IBOutlet var eye: UIButton!
     
+    @IBAction func userReveal(_ sender: UIButton) {
+        let button = sender as UIButton
+        let replyNumber = (self.tableView.indexPathForRow(at: sender.center)!).row
+//        print(replyNumber.row)
+        
+        let alert = UIAlertController(title: "Reveal User", message: "You are about to use one impact point to see the user of this post.",preferredStyle: .alert)
+        let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
+            var indexPath: IndexPath!
+            if let button = sender as? UIButton {
+                if let superview = button.superview {
+                    if let cell = superview.superview as? GroupPostDetailsTableViewCell {
+                        indexPath = self.tableView.indexPath(for: cell) as IndexPath!
+                        self.ref = FIRDatabase.database().reference()
+                        self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("user").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                            // get how many replies there are
+                            var newstring = String(describing: snapshot.value!)
+                            
+                            // subtract one from reveal points
+                            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                if let int = snapshot.value{
+                                    if (int as! Int > 0) {
+                                        var same = (int as! Int)-1;// subtract one reveal point
+                                        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("revealPoints").setValue(same) // set new value
+                                        
+                                        // retrieve first name
+                                        self.ref.child("users").child(newstring).child("firsasdfadsftName").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                            if let int = snapshot.value{
+                                                var first = int as! String // first name
+                                                
+                                                // retrieve last name
+                                                self.ref.child("users").child(newstring).child("lastName").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                                    if let int = snapshot.value{
+                                                        var last = int as! String
+                                                        cell.userText.text = first + " " + last // change text
+                                                    }
+                                                }
+                                            }
+                                            
+                                        }
+                                    }
+                                    else {
+                                        let alertController = UIAlertController(title: "Error", message: "Not enough impact points.", preferredStyle: .alert)
+                                        
+                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                                        alertController.addAction(defaultAction)
+                                        
+                                        self.present(alertController, animated: true, completion: nil)
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        })
+        let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
+        
+        alert.addAction(cancel)
+        alert.addAction(submitAction)
+        present(alert, animated: true, completion: nil)
+        
 
+    }
+    
     var ref: FIRDatabaseReference!
     var dataText:[String] = [] // store reply text
     var dataLikes:[Int] = [] // store likes
-
-    // revealing users
-//    @IBAction func userReveal(_ sender: Any) {
-//        // Alert Prompt
-//        let alert = UIAlertController(title: "Reveal User", message: "You are about to use one impact point to see the user of this post.",preferredStyle: .alert)
-//        let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
-//            var indexPath: IndexPath!
-//            if let button = sender as? UIButton {
-//                if let superview = button.superview {
-//                    if let cell = superview.superview as? DetailsTableViewCell {
-//                        indexPath = self.tableView.indexPath(for: cell) as IndexPath!
-//                        self.ref = FIRDatabase.database().reference()
-//                        self.ref.child("post").child(String(clickedIndex)).child("reply").child(String(indexPath.row)).child("user").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-//                            // get how many replies there are
-//                            var newstring = String(describing: snapshot.value!)
-//                            
-//                            // subtract one from reveal points
-//                            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-//                                if let int = snapshot.value{
-//                                    if (int as! Int > 0) {
-//                                        var same = (int as! Int)-1;// subtract one reveal point
-//                                        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("revealPoints").setValue(same) // set new value
-//                                        
-//                                        // retrieve first name
-//                                        self.ref.child("users").child(newstring).child("firsasdfadsftName").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-//                                            if let int = snapshot.value{
-//                                                var first = int as! String // first name
-//                                                
-//                                                // retrieve last name
-//                                                self.ref.child("users").child(newstring).child("lastName").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-//                                                    if let int = snapshot.value{
-//                                                        var last = int as! String
-//                                                        cell.usernameText.text = first + " " + last // change text
-//                                                    }
-//                                                }
-//                                            }
-//                                            
-//                                        }
-//                                    }
-//                                    else {
-//                                        let alertController = UIAlertController(title: "Error", message: "Not enough impact points.", preferredStyle: .alert)
-//                                        
-//                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-//                                        alertController.addAction(defaultAction)
-//                                        
-//                                        self.present(alertController, animated: true, completion: nil)
-//                                    }
-//                                }
-//                            }
-//                            
-//                        }
-//                    }
-//                }
-//            }
-//        })
-//        let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
-//        
-//        alert.addAction(cancel)
-//        alert.addAction(submitAction)
-//        present(alert, animated: true, completion: nil)
-//        
-//    }
-//    
-//    
     
-    // CHANGE THE REPLYNUMBER WHEN WAIT WTF IT DOESN'T CHANGE FUCK ME OMFG
-    // checks to see if user is listed under the reply uid's - AHHH NOT MODIFIED
+    // liking
     func checkUIDArray(replyNumber:Int) {
         var troll23: [String] = []
         ref = FIRDatabase.database().reference()
@@ -406,8 +404,12 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
         cell?.replyText?.text = String(dataText[indexPath.row])
         cell?.replyText?.numberOfLines = 0
         
+        cell?.likeText?.sizeToFit()
+        cell?.likeText?.text = String(dataLikes[indexPath.row])
+        cell?.likeText?.numberOfLines = 0
+        
         return cell!
-    }//backButton
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "backButton") {
