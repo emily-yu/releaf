@@ -122,7 +122,7 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
                 print("Skillet was not found")
             }
             else {
-                for child in snapshot.children {   //in case there are several skillets
+                for child in snapshot.children {
                     let key = (child as AnyObject).key as String
                     print("The key is\(key)") // gets key of post
                     clickedIndex = Int(key)

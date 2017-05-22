@@ -55,11 +55,10 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
             }
         }
         else {
-            print("NOT FIRST LOAD")
             allgroups.removeAll()
             groupDescription2.removeAll()
             self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+                for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
                     self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
                         if var same:String = (snapshot.value! as? String) {
                             groupDescription2.append(same)

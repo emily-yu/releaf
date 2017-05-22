@@ -10,23 +10,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-
-/*
- 
- - unjoin groups
- - adjust groups so people only see from a specific group
- - click to expand?
- - switching posts ensure doesn't land on same post
- - rejoin group twice
-
- - if 3 of facebook/gmail friends are part of a group - gives suggestions if they want to join groups
- - put how many friends are in group next to group list
- - api to retrieve facebook friends
- 
-*/
-
-
-var uid:[String] = [] // need to set these values when loaddata()ing
+var uid:[String] = []
 var userID = ""
 
 @UIApplicationMain
