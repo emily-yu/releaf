@@ -10,10 +10,6 @@ import Foundation
 import UIKit
 import Firebase
 
-// Post Reactions
-var metoo: [String] = []
-var previousIndex: Int = -1 // track whether the index has changed
-
 class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSource {
         var ref: FIRDatabaseReference!
     @IBOutlet var tableView: UITableView!
@@ -127,7 +123,6 @@ class MeTooTableViewCell: UITableViewCell {
     @IBOutlet var username: UILabel!
 }
 
-var hugs: [String] = []
 class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSource {
     
     var ref: FIRDatabaseReference!

@@ -10,10 +10,6 @@ import Foundation
 import UIKit
 import Firebase
 
-var allgroups: [String] = [] // list of groups to join
-var groupDescription2: [String] = [] // description of groups in JoinController
-var firstLoad_join = false // used for checking if it was the first time loading
-
 class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSource {
     
     var ref: FIRDatabaseReference!

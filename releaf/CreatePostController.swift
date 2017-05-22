@@ -12,13 +12,8 @@ import Firebase
 
 class CreatePostController: UIViewController {
 
-//    let userID = FIRAuth.auth()!.currentUser!.uid
     var ref:FIRDatabaseReference!
-    
-//    @IBOutlet var header: UITextField!
     @IBOutlet var body: UITextView!
-//    @IBOutlet var segmentedView: UISegmentedControl!
-//    @IBOutlet var anonControl: UISegmentedControl!
     
     @IBAction func postButton(_ sender: Any) {
         newPost()
@@ -112,14 +107,6 @@ class CreatePostController: UIViewController {
                                 "0": "asdklfj2"
                             ],
                             ] as NSDictionary)
-                        
-//                        var baseValue = (((snapshot.value!) as AnyObject).count)
-                        
-//                        // creating post under that person's account -- RIP NOT FINNA PUT IT UNDER THE PERSON'S POSTS
-//                        self.ref.child("users").child(userID).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-//                            var string = String((((snapshot.value!) as AnyObject).count)) // amount of posts there are + 1 to create new post
-//                            self.ref.child("users").child(userID).child("myPosts").child(string).setValue(baseValue)
-//                        }
                         
                         // add a point to eh persons account
                         self.incrementPoints()

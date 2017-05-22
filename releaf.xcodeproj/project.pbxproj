@@ -28,6 +28,7 @@
 		A1B02F341E7474EF0002151D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1B02F321E7474EF0002151D /* LaunchScreen.storyboard */; };
 		A1B02F3F1E7474EF0002151D /* releafTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B02F3E1E7474EF0002151D /* releafTests.swift */; };
 		A1B02F4A1E7474EF0002151D /* releafUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B02F491E7474EF0002151D /* releafUITests.swift */; };
+		A1DCB4FA1ED357F5007B9E7D /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DCB4F91ED357F5007B9E7D /* Storage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		A1B02F451E7474EF0002151D /* releafUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = releafUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B02F491E7474EF0002151D /* releafUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = releafUITests.swift; sourceTree = "<group>"; };
 		A1B02F4B1E7474EF0002151D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1DCB4F91ED357F5007B9E7D /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		A51AB55BF2403BF746476E73 /* Pods-releafUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-releafUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-releafUITests/Pods-releafUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		D91C8A06887AD65C48472310 /* Pods-releaf.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-releaf.release.xcconfig"; path = "Pods/Target Support Files/Pods-releaf/Pods-releaf.release.xcconfig"; sourceTree = "<group>"; };
 		DA8596CB3CE77749A45D75EB /* Pods_releafTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_releafTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,6 +173,7 @@
 				A150BC951E7DA3F800A4175F /* SignUpController.swift */,
 				A1B02F2B1E7474EF0002151D /* LoginController.swift */,
 				A1814F7B1EB7C56900DCD592 /* GroupDetailsController.swift */,
+				A1DCB4F91ED357F5007B9E7D /* Storage.swift */,
 				A1B02F2D1E7474EF0002151D /* Main.storyboard */,
 				A1B02F301E7474EF0002151D /* Assets.xcassets */,
 				A1B02F321E7474EF0002151D /* LaunchScreen.storyboard */,
@@ -495,6 +498,7 @@
 				A1B02F2A1E7474EF0002151D /* PostScrollerController.swift in Sources */,
 				A1805EA61E9DBF870043CB85 /* ReactionsController.swift in Sources */,
 				A150BC961E7DA3F800A4175F /* SignUpController.swift in Sources */,
+				A1DCB4FA1ED357F5007B9E7D /* Storage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

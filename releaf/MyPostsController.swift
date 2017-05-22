@@ -10,10 +10,6 @@ import Foundation
 import UIKit
 import Firebase
 
-var myposts: [Int] = [] //indexes of posts
-var myPostsText: [String] = []
-var clickedIndex: Int!
-
 class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSource
 {
     @IBOutlet var tableView: UITableView!

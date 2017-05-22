@@ -10,29 +10,15 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-// post stats
-var posts: [String] = ["asdf"] // store all the posts
-var replies: [String] = [] // store replies to post
-var leaves: [Int] = [] // store likes for replies to post
-var tempLikes: [Int] = []
-
-// checking
-var checkhugs: [String] = []
-var checkmetoos: [String] = []
-
-var currentIndex = 0
-var asdf = false
-
 class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSource {
-    
-//    let userID = FIRAuth.auth()!.currentUser!.uid
+
     var ref:FIRDatabaseReference!
     @IBOutlet var staticPostText: UITextView!
     
     func loadData(){
         ref = FIRDatabase.database().reference()
         ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {             // get how many replies there are
+            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
                 // appends all the text in post replies to 'replies' array
                 self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
                     replies.append(snapshot.value! as! String)
@@ -63,21 +49,6 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
             self.loadData()
             self.tableView.reloadData()
         }
-        
-        
-//        // reload everything in the tableView for a new post
-//        replies.removeAll()
-//        leaves.removeAll()
-//        uid.removeAll() // idk
-//        loadData()
-//        self.tableView.reloadData()
-        
-        // set up the tableView
-//        let cellReuseIdentifier = "cell"
-//        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-//        self.tableView.delegate = self
-//        self.tableView.dataSource = self
-        
     }
     @IBOutlet var tableView: UITableView!
     @IBAction func meToo_isPressed(_ sender: Any) { // sets the arrays
@@ -178,10 +149,8 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                 print(checkhugs)
                                 checkhugs.append(userID)
                                 self.ref.child("post").child(String(currentIndex)).child("hugs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                                    //                                    if let int = snapshot.value{
-                                    //                                        var same = (int as! Int)+1;// add one reveal point
-                                    self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(snapshot.childrenCount)).setValue(userID) // set value
-                                    //                                    }
+ 
+                                self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(snapshot.childrenCount)).setValue(userID)
                                 }
                                 self.tableView.reloadData()
                             })
@@ -376,32 +345,26 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        var cell:PromptTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "PromptTableViewCell") as! PromptTableViewCell
-        
         var cell:PromptTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "PromptTableViewCell") as? PromptTableViewCell;
-        if(cell == nil)
-        {
+        
+        if(cell == nil) {
             cell = PromptTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "PromptTableViewCell")
             cell?.selectionStyle = UITableViewCellSelectionStyle.none
         }
-        //        cell?.postText?.font = UIFont.systemFont(ofSize: 15.0)
+        
         cell?.prompt?.sizeToFit()
         cell?.prompt?.text = replies[indexPath.row]
         cell?.prompt?.numberOfLines = 0
-
         
-//        cell.prompt.text = String(replies[indexPath.row])
         cell?.prompt.sizeToFit()
         cell?.leaves.text = String(leaves[indexPath.row])
         cell?.leaves.numberOfLines = 0
-//
-//        return cell
+        
         return cell!;
     }
     
     
-    func calculateHeight(inString:String) -> CGFloat
-    {
+    func calculateHeight(inString:String) -> CGFloat {
         let messageString = inString
         let attributes : [String : Any] = [NSFontAttributeName : UIFont.systemFont(ofSize: 15.0)]
         
@@ -473,7 +436,6 @@ class PromptTableViewCell: UITableViewCell {
     @IBOutlet var username: UILabel!
 }
 
-// Put this piece of code anywhere you like
 extension UIViewController {
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))

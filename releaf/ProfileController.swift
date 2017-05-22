@@ -10,8 +10,6 @@ import Foundation
 import UIKit
 import Firebase
 
-var restaurantNames = [String]() // lul groups
-
 class GroupViewController: UIViewController, UITableViewDelegate,UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet var nameField: UILabel!
@@ -74,8 +72,6 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
 //
         // Do any additional setup after loading the view, typically from a nib.
         ref = FIRDatabase.database().reference()
-        
-//        let userID = FIRAuth.auth()!.currentUser!.uid
         
         // set name
         self.ref.child("users").child(userID).child("firsasdfadsftName").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -144,7 +140,6 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
             // padding with equal
             let newLength = encoded64.characters.count + (4 - remainder)
             return encoded64.padding(toLength: newLength, withPad: "=", startingAt: 0)
-//            return encoded64.stringByPaddingToLength(newLength, withString: "=", startingAtIndex: 0)
         }
     }
     
@@ -158,7 +153,6 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell:GroupTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "GroupTableViewCell") as! GroupTableViewCell
-        //        cell.prompt.text = String(groups[indexPath.row])
         cell.groupText.text = String(restaurantNames[indexPath.row])
         
         return cell

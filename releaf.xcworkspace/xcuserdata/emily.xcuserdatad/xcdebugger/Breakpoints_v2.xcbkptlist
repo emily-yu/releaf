@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "releaf/MyPostsController.swift"
-            timestampString = "515887392.259626"
+            timestampString = "517167291.184118"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "releaf/GroupDetailsController.swift"
-            timestampString = "516579664.668305"
+            timestampString = "517167291.184118"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
             landmarkName = "groupPostChecking()"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "releaf/GroupDetailsController.swift"
-            timestampString = "516960331.953791"
+            timestampString = "517167291.184118"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "userReveal(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "releaf/GroupDetailsController.swift"
-            timestampString = "516960333.554341"
+            timestampString = "517167291.184118"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "186"
-            endingLineNumber = "186"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
             landmarkName = "userReveal(_:)"
             landmarkType = "7">
          </BreakpointContent>

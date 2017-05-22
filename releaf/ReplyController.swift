@@ -10,32 +10,6 @@ import Foundation
 import UIKit
 import Firebase
 
-// prompts
-var replies2: [String] = ["Look at the progress you've made.",
-                          "What is within your control?",
-                          "Would it still matter 5 years later?",
-                          "Is your problem actionable?",
-                          "Write your personal mission statement.",
-                          "What is the smallest step you can take?",
-                          "Create a routine to prevent it from happening again.",
-                          "Write down when and where you will be solving this problem.",
-                          "Create a prototype to test your assumptions.",
-                          "Do something in the next hour to answer a question you have.",
-                          "Express your emotions to others.",
-                          "Who can you collaborate on this?",
-                          "Talk to a mentor.",
-                          "Name 5 people you admire.",
-                          "Build a supportive community.",
-                          "Explore something new.",
-                          "Take 5 minutes to do something you find interesting.",
-                          "How can you approach this differently?",
-                          "Have a beginner's mindset!",
-                          "What are new opportunities?",
-                          "What are you grateful for now?",
-                          "Take 3 deep breaths.",
-                          "Look at what is going on with kindness.",
-                          "What do you value in this experience?",
-                          "What have you learned in this experience?"]
 
 class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     

@@ -10,10 +10,6 @@ import Foundation
 import UIKit
 import Firebase
 
-var groupDetailsTitle = ""
-var groupPathPost: String! // the group to post the new post to
-var groupPosts: [String] = [] // the group's posts
-
 class GroupDetailsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var ref: FIRDatabaseReference!
@@ -176,6 +172,10 @@ class GroupDetailCells: UITableViewCell {
 
 class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    var ref: FIRDatabaseReference!
+    var dataText:[String] = [] // store reply text
+    var dataLikes:[Int] = [] // store likes
+    
     @IBOutlet var postText: UITextView!
     @IBOutlet var tableView: UITableView!
     
@@ -243,10 +243,6 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
         
 
     }
-    
-    var ref: FIRDatabaseReference!
-    var dataText:[String] = [] // store reply text
-    var dataLikes:[Int] = [] // store likes
     
     // liking
     func checkUIDArray(replyNumber:Int) {
@@ -322,8 +318,6 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -365,8 +359,7 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
         return dataText.count
     }
     
-    func calculateHeight(inString:String) -> CGFloat
-    {
+    func calculateHeight(inString:String) -> CGFloat {
         let messageString = inString
         let attributes : [String : Any] = [NSFontAttributeName : UIFont.systemFont(ofSize: 15.0)]
         
@@ -395,10 +388,6 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
             cell = GroupPostDetailsTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "GroupPostDetailsTableViewCell")
             cell?.selectionStyle = UITableViewCellSelectionStyle.none
         }
-        
-//        cell?.numberLikes?.sizeToFit()
-//        cell?.numberLikes?.text = String(dataLikes[indexPath.row])
-//        cell?.numberLikes?.numberOfLines = 0
         
         cell?.replyText?.sizeToFit()
         cell?.replyText?.text = String(dataText[indexPath.row])

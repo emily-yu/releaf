@@ -10,9 +10,6 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-var uid:[String] = []
-var userID = ""
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

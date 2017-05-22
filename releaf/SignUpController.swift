@@ -53,12 +53,6 @@ class SignUpController: UIViewController{
                         "groups": [
                             "0": "Global Community"
                         ],
-//                        "metoo": [
-//                            "0": ""
-//                        ],
-//                        "hugs": [
-//                            "0": ""
-//                        ],
                         "myPosts": [
                             "0": 0
                         ],
@@ -75,12 +69,10 @@ class SignUpController: UIViewController{
                                     myposts.append(same)
                                     // acceses right posts and puts indexs in array
                                     // use array posts to same
-                                    //                                    for index2 in myposts {
                                     self.ref.child("post").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
                                         let int = snapshot.value!
                                         myPostsText.append(int as! String)
                                     })
-                                    //                                    }
                                 }
                             })
                         }
