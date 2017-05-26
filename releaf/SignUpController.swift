@@ -59,16 +59,12 @@ class SignUpController: UIViewController{
                         "base64string": "default"
                     ])
                     
-                    // append all the posts to myposts, then transfer to array
+                    // append, then transfer to array
                     self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                        // get how many posts you have
-                        for index in 0...(((snapshot.value!) as AnyObject).count) { // NULL WHEN NO POSTS - NULL ON
-                            
+                        for index in 0...(((snapshot.value!) as AnyObject).count) {
                             self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                                 if var same:Int = (snapshot.value! as? Int) {
                                     myposts.append(same)
-                                    // acceses right posts and puts indexs in array
-                                    // use array posts to same
                                     self.ref.child("post").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
                                         let int = snapshot.value!
                                         myPostsText.append(int as! String)
