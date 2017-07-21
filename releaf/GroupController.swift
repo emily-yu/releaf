@@ -235,6 +235,8 @@ class CreateGroupController: UIViewController {
         self.hideKeyboardWhenTappedAround()
         ref = FIRDatabase.database().reference()
         
+//        groupDescription.backgroundColor = UIColor(red: 67, green: 176, blue: 103, alpha: 1).withAlphaComponent(0.6)
+//        
     }
     
     override func didReceiveMemoryWarning() {
