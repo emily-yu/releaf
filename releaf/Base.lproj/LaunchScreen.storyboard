@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,24 +22,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="leaf-2" translatesAutoresizingMaskIntoConstraints="NO" id="lbT-xT-fQS">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="leaf-2" translatesAutoresizingMaskIntoConstraints="NO" id="lbT-xT-fQS">
                                 <rect key="frame" x="-157" y="0.0" width="682" height="678"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="678" id="2vb-7e-gTG"/>
+                                    <constraint firstAttribute="width" constant="682" id="gj1-8E-20O"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="R E L E A F" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edi-Lj-nbg">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="R E L E A F" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edi-Lj-nbg">
                                 <rect key="frame" x="113" y="315" width="149" height="36"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="28"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.086916372180000007" green="0.22869966920000001" blue="0.12951545419999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="edi-Lj-nbg" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="NmJ-7O-gTp"/>
-                            <constraint firstItem="edi-Lj-nbg" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="gZt-WY-5mp"/>
-                            <constraint firstAttribute="bottom" secondItem="lbT-xT-fQS" secondAttribute="bottom" constant="-11" id="rWS-PW-QV0"/>
+                            <constraint firstItem="edi-Lj-nbg" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="2g3-CB-Z2o"/>
+                            <constraint firstItem="edi-Lj-nbg" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="295" id="6HD-4K-lNd"/>
+                            <constraint firstItem="edi-Lj-nbg" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="97" id="70Q-ca-A0J"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="lbT-xT-fQS" secondAttribute="bottom" constant="-11" id="EVF-ql-cjS"/>
+                            <constraint firstItem="lbT-xT-fQS" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="-157" id="MjA-AM-PAC"/>
+                            <constraint firstItem="lbT-xT-fQS" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="e44-aE-3Ip"/>
+                            <constraint firstItem="edi-Lj-nbg" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="zU0-QK-mL2"/>
                         </constraints>
                     </view>
                 </viewController>
