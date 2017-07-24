@@ -11,7 +11,6 @@ pod 'Firebase/Auth'
 pod 'Firebase/Database'
 pod ‘AFNetworking’
 
-
   target 'releafTests' do
     inherit! :search_paths
     # Pods for testing

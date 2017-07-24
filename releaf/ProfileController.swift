@@ -11,7 +11,63 @@ import UIKit
 import Firebase
 
 class GroupViewController: UIViewController, UITableViewDelegate,UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
+    var tableData = [String]() // mutable table data
+    
+    @IBOutlet var progressBar: UIProgressView!
+    @IBOutlet var static_selector: UISegmentedControl!
+    @IBAction func tableChanged(_ sender: Any) {
+        // TODO: insert reloading data here
+        print(static_selector.selectedSegmentIndex)
+        if (static_selector.selectedSegmentIndex == 0) {
+            // communities
+            progressBar.setProgress(0.33333333, animated: false)
+            addCommunityButton.isHidden = true
+//            joinCommunity.isHidden = true
+        }
+        else if (static_selector.selectedSegmentIndex == 1) {
+            // favorites
+            progressBar.setProgress(0.66666666, animated: false)
+            addCommunityButton.isHidden = true
+//            joinCommunity.isHidden = true
+        }
+        else {
+            // posts
+            progressBar.setProgress(1, animated: false)
+            addCommunityButton.isHidden = true
+//            joinCommunity.isHidden = true
+        }
+    }
+    
+    var hidden = true
+    @IBOutlet var addCommunityButton: UIButton!
+    @IBAction func addCommunity(_ sender: Any) {
+        if (hidden) {
+            UIView.animate(withDuration: 1, animations: {
+                self.joinCommunity.frame.origin.x -= +126
+                self.createCommunity.frame.origin.x -= 63
+                self.joinCommunity.isEnabled = true
+                self.createCommunity.isEnabled = true
+                self.createCommunity.isHidden = false
+                self.joinCommunity.isHidden = false
+            })
+            hidden = !(hidden)
+        }
+        else {
+            UIView.animate(withDuration: 1, animations: {
+                self.joinCommunity.frame.origin.x += +126
+                self.createCommunity.frame.origin.x += 63
+                self.joinCommunity.isEnabled = false
+                self.createCommunity.isEnabled = false
+                self.createCommunity.isHidden = true
+                self.joinCommunity.isHidden = true
+            })
+            hidden = !(hidden)
+        }
+    }
+    @IBOutlet var createCommunity: UIButton!
+    @IBOutlet var joinCommunity: UIButton!
+    
     @IBOutlet var nameField: UILabel!
     var tempFirst = " "
     var tempLast = " "
@@ -64,7 +120,12 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-//        
+        
+        self.joinCommunity.isEnabled = false
+        self.createCommunity.isEnabled = false
+        self.createCommunity.isHidden = true
+        self.joinCommunity.isHidden = true
+//
         let cellReuseIdentifier = "cell"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         self.tableView.delegate = self
@@ -77,23 +138,18 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
         self.ref.child("users").child(userID).child("firsasdfadsftName").observeSingleEvent(of: .value, with: { (snapshot) in
             self.tempFirst = String(describing: snapshot.value!)
             print(snapshot.value!)
-        })
-        self.ref.child("users").child(userID).child("lastName").observeSingleEvent(of: .value, with: { (snapshot) in
-            self.tempLast = String(describing: snapshot.value!)
-            print(snapshot.value!)
             self.nameField.text = self.tempFirst + " " + self.tempLast
         })
 
-        // set reveal points
-        self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value, with: { (snapshot) in
-            print(snapshot.value!)
-            self.revealPoints.text = "IMPACTS POINTS: \(snapshot.value!)"
+        // set school
+        self.ref.child("users").child(userID).child("school").observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot.value ?? "")
+            self.revealPoints.text = snapshot.value! as! String
         })
         
         
         // check if profile picture exists, if not set to the thing
         self.ref.child("users").child(userID).child("base64string").observeSingleEvent(of: .value, with: { (snapshot) in
-//            print(snapshot.value!)
             if var same:String = (snapshot.value! as? String) {
                 if (same == "default") { // works
                     self.imageView.image = #imageLiteral(resourceName: "guy")
