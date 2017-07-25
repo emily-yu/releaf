@@ -15,6 +15,16 @@ class CreatePostController: UIViewController {
     var ref:FIRDatabaseReference!
     @IBOutlet var body: UITextView!
     
+    @IBOutlet var anonButton: UIButton!
+    @IBAction func anon_isChecked(_ sender: Any) {
+        if (anonButton.backgroundColor == UIColor.white) {
+            anonButton.backgroundColor = UIColor.green
+        }
+        else {
+            anonButton.backgroundColor = UIColor.white
+        }
+    }
+    
     @IBAction func postButton(_ sender: Any) {
         newPost()
     }
@@ -35,6 +45,15 @@ class CreatePostController: UIViewController {
         else {
             if (groupPathPost == nil) { // normal post to global community
                 ref = FIRDatabase.database().reference()
+                
+                var anonStatus: Bool
+                if (anonButton.backgroundColor == UIColor.white) {
+                    anonStatus = false
+                }
+                else {
+                    anonStatus = true
+                }
+                
                 self.ref.child("post").observeSingleEvent(of: .value, with: { (snapshot) in
                     
                     if let int = (snapshot.value) {
@@ -59,6 +78,7 @@ class CreatePostController: UIViewController {
                             "metoo": [
                                 "0": "asdklfj2"
                             ],
+                            "anonStatus" : anonStatus,
                             ] as NSDictionary)
                         
                         var baseValue = (((snapshot.value!) as AnyObject).count)

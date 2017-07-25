@@ -17,6 +17,16 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     @IBOutlet var tableView: UITableView!
     @IBOutlet var userText: UITextView!
+    @IBOutlet var anonButton: UIButton!
+    @IBAction func anon_isChecked(_ sender: Any) {
+        if (anonButton.backgroundColor == UIColor.white) {
+            anonButton.backgroundColor = UIColor.green
+        }
+        else {
+            anonButton.backgroundColor = UIColor.white
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +43,13 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     @IBAction func post(_ sender: Any) {
         ref = FIRDatabase.database().reference()
+        var anonStatus: Bool
+        if (anonButton.backgroundColor == UIColor.white) {
+            anonStatus = false
+        }
+        else {
+            anonStatus = true
+        }
         ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
 
             var replyIndex = String((((snapshot.value!) as AnyObject).count))
@@ -42,7 +59,8 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
                 "user": FIRAuth.auth()!.currentUser!.uid,
                 "uid": [
                     "0": "deafult"
-                ]
+                ],
+                "anon" : anonStatus,
             ])
         }
         
