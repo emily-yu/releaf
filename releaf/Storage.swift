@@ -14,6 +14,9 @@ import Foundation
 var uid:[String] = []
 var userID = ""
 
+// CreatePostController
+var postDestination = [String]()
+
 // GroupController
 var allgroups: [String] = [] // group names to join in JoinController
 var groupDescription2: [String] = [] // description of groups in JoinController

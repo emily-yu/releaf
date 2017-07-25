@@ -15,6 +15,8 @@ class CreatePostController: UIViewController {
     var ref:FIRDatabaseReference!
     @IBOutlet var body: UITextView!
     
+    @IBOutlet var destination: UITextView!
+    
     @IBOutlet var anonButton: UIButton!
     @IBAction func anon_isChecked(_ sender: Any) {
         if (anonButton.backgroundColor == UIColor.white) {
@@ -31,7 +33,20 @@ class CreatePostController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround() 
+        self.hideKeyboardWhenTappedAround()
+        if (postDestination.count == 0) {
+            destination.text.append("You have no groups added. You must select at least one post destination")
+        }
+        else {
+            for text in postDestination {
+                if (text == postDestination[0]) {
+                    destination.text = text
+                }
+                else {
+                    destination.text.append(", \(text)")
+                }
+            }
+        }
     }
     
     func newPost() {
@@ -150,4 +165,136 @@ class CreatePostController: UIViewController {
             }
         }
     }
+}
+
+class SelectGroup: UIViewController,UITableViewDelegate,UITableViewDataSource {
+    
+    @IBOutlet var tableView: UITableView!
+    var ref:FIRDatabaseReference!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
+        ref = FIRDatabase.database().reference()
+        checkIfFirstLoad() // set up tableView data
+        
+        // set up tableviewcells
+        let cellReuseIdentifier = "cell"
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+//        let cells = self.tableView.visibleCells as! Array<GroupCell>
+//        print("SAEMAMSEMAMEMSAME\(cells)")
+//        for cell in cells {
+//            // look at data
+//            print(cell.groupName.text)
+//            if postDestination.contains(String(describing: cell.groupName.text)) {
+//                print("yes")
+//                cell.cellState.image = #imageLiteral(resourceName: "check")
+//            }
+//        }
+    }
+    
+    @IBAction func addGroups(_ sender: Any) {
+    }
+    
+    // number of rows in table view
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return allgroups.count
+    }
+    
+    // create a cell for each table view row
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell:GroupCell = self.tableView.dequeueReusableCell(withIdentifier: "GroupCell") as! GroupCell
+        cell.groupName.text = String(allgroups[indexPath.row])
+        if postDestination.contains(String(allgroups[indexPath.row])) {
+            print("yes")
+            cell.cellState.image = #imageLiteral(resourceName: "check")
+        }
+        return cell
+    }
+    
+    // method to run when table view cell is tapped
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var groupJoin = allgroups[indexPath.row]
+        let cell = self.tableView.cellForRow(at: indexPath) as! GroupCell
+        if (cell.cellState.image == #imageLiteral(resourceName: "check")) {
+            cell.cellState.image = nil
+            postDestination = postDestination.filter {$0 != groupJoin}
+        }
+        else {
+            cell.cellState.image = #imageLiteral(resourceName: "check")
+            postDestination.append(groupJoin)
+        }
+        print(postDestination)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func checkIfFirstLoad() {
+        if (firstLoad_join == false) {
+            firstLoad_join = true
+            print("FIRST LOAD")
+            self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
+                    self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
+                        if var same:String = (snapshot.value! as? String) {
+                            groupDescription2.append(same)
+                        }
+                    })
+                    self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
+                        if var same:String = (snapshot.value! as? String) {
+                            allgroups.append(same)
+                        }
+                    })
+                }
+            }
+            let cells = self.tableView.visibleCells as! Array<GroupCell>
+            print("SAEMAMSEMAMEMSAME\(cells)")
+            for cell in cells {
+                // look at data
+                print(cell.groupName.text)
+                if postDestination.contains(String(describing: cell.groupName.text)) {
+                    print("yes")
+                    cell.cellState.image = #imageLiteral(resourceName: "check")
+                }
+            }
+        }
+        else {
+            allgroups.removeAll()
+            groupDescription2.removeAll()
+            self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
+                    self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
+                        if var same:String = (snapshot.value! as? String) {
+                            groupDescription2.append(same)
+                        }
+                    })
+                    self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
+                        if var same:String = (snapshot.value! as? String) {
+                            allgroups.append(same)
+                            self.tableView.reloadData()
+                        }
+                    })
+                }
+            }
+        }
+        
+    }
+    
+    // switches to profile tab
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "newPost"){
+            if let tabVC = segue.destination as? UITabBarController{
+                tabVC.selectedIndex = 1
+                tabVC.modalPresentationStyle = .custom
+                tabVC.modalTransitionStyle = .crossDissolve
+                print("called")
+            }
+        }
+    }
+}
+
+class GroupCell: UITableViewCell {
+    @IBOutlet var groupName: UILabel!
+    @IBOutlet var cellState: UIImageView!
 }
