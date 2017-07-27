@@ -183,16 +183,6 @@ class SelectGroup: UIViewController,UITableViewDelegate,UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         
-//        let cells = self.tableView.visibleCells as! Array<GroupCell>
-//        print("SAEMAMSEMAMEMSAME\(cells)")
-//        for cell in cells {
-//            // look at data
-//            print(cell.groupName.text)
-//            if postDestination.contains(String(describing: cell.groupName.text)) {
-//                print("yes")
-//                cell.cellState.image = #imageLiteral(resourceName: "check")
-//            }
-//        }
     }
     
     @IBAction func addGroups(_ sender: Any) {
