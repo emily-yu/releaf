@@ -14,6 +14,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     
     var tableData = [String]() // mutable table data
     
+    @IBOutlet var titleText: UILabel!
     @IBOutlet var progressBar: UIProgressView!
     @IBOutlet var static_selector: UISegmentedControl!
     @IBAction func tableChanged(_ sender: Any) {
@@ -22,20 +23,20 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
         if (static_selector.selectedSegmentIndex == 0) {
             // communities
             progressBar.setProgress(0.33333333, animated: false)
-            addCommunityButton.isHidden = true
-//            joinCommunity.isHidden = true
+            addCommunityButton.isHidden = false
+            titleText.text = "COMMUNITIES"
         }
         else if (static_selector.selectedSegmentIndex == 1) {
             // favorites
             progressBar.setProgress(0.66666666, animated: false)
             addCommunityButton.isHidden = true
-//            joinCommunity.isHidden = true
+            titleText.text = "FAVORITES"
         }
         else {
             // posts
             progressBar.setProgress(1, animated: false)
             addCommunityButton.isHidden = true
-//            joinCommunity.isHidden = true
+            titleText.text = "POSTS"
         }
     }
     
