@@ -58,15 +58,109 @@ class CreatePostController: UIViewController {
             self.present(alertController, animated: true, completion: nil)
         }
         else {
-            if (groupPathPost == nil) { // normal post to global community
+            
+            var anonStatusArray = [Bool]()
+            var cancerCount = [Int]()
+            if (groupPathPost == nil) { // normal post to global community + multiple groups from normal selector
                 ref = FIRDatabase.database().reference()
                 
                 var anonStatus: Bool
                 if (anonButton.backgroundColor == UIColor.white) {
                     anonStatus = false
+                    anonStatusArray.append(anonStatus)
                 }
                 else {
                     anonStatus = true
+                    anonStatusArray.append(anonStatus)
+                }
+                
+                var keyarray = [String]()
+                for group in postDestination {
+                    print(group)
+                    self.ref.child("groups").queryOrdered(byChild: "name").queryEqual(toValue: group).observe(.value, with: { snapshot in
+                        if (snapshot.value is NSNull) {
+                            print("Skillet was not found")
+                        }
+                        else {
+                            for child in snapshot.children {   //in case there are several skillets
+                                let key = (child as AnyObject).key as String
+                                print("The key is\(key)") // gets key of post
+                                keyarray.append(key)
+                                print(keyarray)
+                                if (keyarray.count == postDestination.count) {
+                                    print("ALL KEYS\(keyarray)")
+                                    
+                                    for key in keyarray {
+                                        self.ref.child("groups").child(key).child("post").observeSingleEvent(of: .value, with: { (snapshot) in
+                                            if let int = (snapshot.value) {
+                                                cancerCount.append((Int((int as AnyObject).count)) as Int!)
+                                                if (cancerCount.count == postDestination.count) {
+                                                    print("ALL COUNTS\(cancerCount)")
+                                                    let (first, last, interval) = (0, cancerCount.count, 1)
+                                                    var n = 0
+                                                    for _ in stride(from: first, to: last, by: interval) {
+                                                        n += 1
+                                                        print(n)
+                                                        self.ref.child("groups").child(keyarray[n-1]).child("post").child(String(describing: cancerCount[n-1])).setValue([
+                                                            "reply": [
+                                                                "0": [
+                                                                    "likes": 0,
+                                                                    "text": "reply text",
+                                                                    "user": "default uid",
+                                                                    "uid": [
+                                                                        "0": "asdf"
+                                                                    ],
+                                                                ]
+                                                            ],
+                                                            "user": userID,
+                                                            "text": self.body.text!,
+                                                            "leaves": 0,
+                                                            "hugs": [
+                                                                "0": "sadjkl"
+                                                            ],
+                                                            "metoo": [
+                                                                "0": "asdklfj2"
+                                                            ],
+                                                            "anonStatus" : anonStatus,
+                                                            ] as NSDictionary)
+                                                    }
+                                                    for index in stride(from: (cancerCount.count-1), to: 0, by: 1){
+                                                        print(index)
+                                                        print(cancerCount[index])
+                                                        self.ref.child("groups").child(keyarray[index]).child("post").child(String(describing: cancerCount[index])).setValue([
+                                                            "reply": [
+                                                                "0": [
+                                                                    "likes": 0,
+                                                                    "text": "reply text",
+                                                                    "user": "default uid",
+                                                                    "uid": [
+                                                                        "0": "asdf"
+                                                                    ],
+                                                                ]
+                                                            ],
+                                                            "user": userID,
+                                                            "text": self.body.text!,
+                                                            "leaves": 0,
+                                                            "hugs": [
+                                                                "0": "sadjkl"
+                                                            ],
+                                                            "metoo": [
+                                                                "0": "asdklfj2"
+                                                            ],
+                                                            "anonStatus" : anonStatus,
+                                                        ] as NSDictionary)
+                                                    }
+
+//                                                    }
+                                                }
+                                            }
+                                        })
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    })
                 }
                 
                 self.ref.child("post").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -93,16 +187,7 @@ class CreatePostController: UIViewController {
                             "metoo": [
                                 "0": "asdklfj2"
                             ],
-                            "anonStatus" : anonStatus,
                             ] as NSDictionary)
-                        
-                        var baseValue = (((snapshot.value!) as AnyObject).count)
-                        
-                        // creating post under that person's account
-                        self.ref.child("users").child(userID).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                            var string = String((((snapshot.value!) as AnyObject).count)) // amount of posts there are + 1 to create new post
-                            self.ref.child("users").child(userID).child("myPosts").child(string).setValue(baseValue)
-                        }
                         
                         // add a point to eh persons account
                         self.incrementPoints()
@@ -114,6 +199,7 @@ class CreatePostController: UIViewController {
                         self.present(ivc!, animated: true, completion: { _ in })
                     }
                 })
+
             }
             else { // post to specific group
                 ref = FIRDatabase.database().reference()
