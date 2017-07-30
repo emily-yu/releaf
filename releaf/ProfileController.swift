@@ -12,7 +12,8 @@ import Firebase
 
 class GroupViewController: UIViewController, UITableViewDelegate,UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var tableData = [String]() // mutable table data
+    var tableData = restaurantNames // mutable table data - reload each time change segment (currently set to the first index data b/c it should load w/ that)
+    var profileTable_isFirstLoad = true
     
     @IBOutlet var titleText: UILabel!
     @IBOutlet var progressBar: UIProgressView!
@@ -24,19 +25,33 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
             // communities
             progressBar.setProgress(0.33333333, animated: false)
             addCommunityButton.isHidden = false
+            createCommunity.isHidden = true
+            joinCommunity.isHidden = true
             titleText.text = "COMMUNITIES"
+            tableData = restaurantNames
+            tableView.reloadData()
         }
         else if (static_selector.selectedSegmentIndex == 1) {
             // favorites
             progressBar.setProgress(0.66666666, animated: false)
             addCommunityButton.isHidden = true
+            createCommunity.isHidden = true
+            joinCommunity.isHidden = true
             titleText.text = "FAVORITES"
+            tableData = restaurantNames // dummy data for now -- implement saving posts under users > uid > favorites section
+            profileTable_isFirstLoad = false
+            tableView.reloadData()
         }
         else {
             // posts
             progressBar.setProgress(1, animated: false)
             addCommunityButton.isHidden = true
+            createCommunity.isHidden = true
+            joinCommunity.isHidden = true
             titleText.text = "POSTS"
+            tableData = myPostsText
+            profileTable_isFirstLoad = false
+            tableView.reloadData()
         }
     }
     
@@ -87,9 +102,6 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        //get image thing
-        print("haeoijfaociweacmwiejcmaowiecmaowiec")
         let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage //2
         
         imageView.image = chosenImage
@@ -121,6 +133,9 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+        
+        // set initial state
+        static_selector.selectedSegmentIndex = 0
         
         self.joinCommunity.isEnabled = false
         self.createCommunity.isEnabled = false
@@ -204,32 +219,47 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return restaurantNames.count
+        if (profileTable_isFirstLoad) {
+            return restaurantNames.count
+        }
+        else {
+            return tableData.count
+        }
+//        return tableData.count
     }
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell:GroupTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "GroupTableViewCell") as! GroupTableViewCell
-        cell.groupText.text = String(restaurantNames[indexPath.row])
+        if (profileTable_isFirstLoad) {
+            cell.groupText.text = String(restaurantNames[indexPath.row])
+        }
+        else {
+            cell.groupText.text = String(tableData[indexPath.row])
+        }
+//        cell.groupText.text = String(tableData[indexPath.row])
         
         return cell
     }
     
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("You tapped cell number \(indexPath.row).")
-        
-        var textToFind = String(restaurantNames[indexPath.row])
-        print(textToFind)
-        
-        groupDetailsTitle = textToFind!
-        
-        //navigate back to home screen
-        var ivc = self.storyboard?.instantiateViewController(withIdentifier: "GroupDetailsController")
-        ivc?.modalPresentationStyle = .custom
-        ivc?.modalTransitionStyle = .crossDissolve
-        self.present(ivc!, animated: true, completion: { _ in })
-        
+        if (static_selector.selectedSegmentIndex == 0) { // communities
+            var textToFind = String(restaurantNames[indexPath.row])
+            groupDetailsTitle = textToFind!
+            
+            //navigate back to home screen
+            var ivc = self.storyboard?.instantiateViewController(withIdentifier: "GroupDetailsController")
+            ivc?.modalPresentationStyle = .custom
+            ivc?.modalTransitionStyle = .crossDissolve
+            self.present(ivc!, animated: true, completion: { _ in })
+        }
+        else if (static_selector.selectedSegmentIndex == 1) { // favorites
+            
+        }
+        else { // posts
+            
+        }
     }
     
     override func didReceiveMemoryWarning() {
