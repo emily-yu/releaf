@@ -74,6 +74,8 @@ var asdf = false
 
 // ProfileController
 var restaurantNames = [String]() // the user's groups
+var favoritedPosts = [Int]() // favorited posts (me too, hugs, etc.)
+var favoritedPostsText = [String]()
 
 // GroupDetailsController
 var groupDetailsTitle = ""

@@ -38,7 +38,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
             createCommunity.isHidden = true
             joinCommunity.isHidden = true
             titleText.text = "FAVORITES"
-            tableData = restaurantNames // dummy data for now -- implement saving posts under users > uid > favorites section
+            tableData = favoritedPostsText
             profileTable_isFirstLoad = false
             tableView.reloadData()
         }
@@ -202,6 +202,34 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                 }
             }
         })
+        // append all the posts to myposts, then transfer to array
+        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("favorites").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            // get how many posts you have
+            favoritedPostsText.removeAll()
+            favoritedPosts.removeAll()
+            for index in 0...(((snapshot.value!) as AnyObject).count) {
+                var countingpat2 = (((snapshot.value!) as AnyObject).count)
+                self.ref.child("users").child(userID).child("favorites").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    if var same:Int = (snapshot.value! as? Int) {
+                        favoritedPosts.append(same)
+                        if (favoritedPosts.count == countingpat2) {
+                            for index2 in favoritedPosts {
+                                print("index:\(index2)")
+                                
+                                self.ref.child("post").child(String(index2)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
+                                    let int = snapshot.value!
+                                    favoritedPostsText.append(int as! String)
+                                    if (favoritedPostsText.count == favoritedPosts.count) {
+                                        print("exiting")
+                                        self.tableView.reloadData()
+                                    }
+                                })
+                            }
+                        }
+                    }
+                })
+            }
+        }
     }
     
     private func base64PaddingWithEqual(encoded64: String) -> String {

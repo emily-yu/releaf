@@ -94,6 +94,9 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                     self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(snapshot.childrenCount)).setValue(userID) // set value
                                     //                                    }
                                 }
+                                self.ref.child("users").child(userID).child("favorites").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                    self.ref.child("users").child(userID).child("favorites").child(String(snapshot.childrenCount)).setValue(currentIndex) // set value
+                                }
                                 self.tableView.reloadData()
                             })
                             let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
