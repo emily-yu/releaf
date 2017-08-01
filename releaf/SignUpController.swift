@@ -15,7 +15,7 @@ class SignUpController: UIViewController{
     var ref:FIRDatabaseReference!
     
     @IBOutlet var firstNameField: UITextField!
-    @IBOutlet var lastNameField: UITextField!
+    @IBOutlet var lastNameField: UITextField! // changed to school
     @IBOutlet var emailField: UITextField!
     @IBOutlet var passwordField: UITextField!
     
@@ -48,13 +48,16 @@ class SignUpController: UIViewController{
                     // set user details
                     self.ref.child("users").child((user?.uid)!).setValue([
                         "firsasdfadsftName": self.firstNameField.text!,
-                        "lastName": self.lastNameField.text!,
+                        "school": self.lastNameField.text!,
                         "revealPoints": 0,
                         "groups": [
                             "0": "Global Community"
                         ],
                         "myPosts": [
                             "0": 0
+                        ],
+                        "favorites" : [
+                            "0": "init",
                         ],
                         "base64string": "default"
                     ])
