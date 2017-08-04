@@ -27,15 +27,15 @@ class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSo
             // get how many posts you have
             myPostsText.removeAll()
             myposts.removeAll()
-            for index in 0...(((snapshot.value!) as AnyObject).count) {
-                var countingpat2 = (((snapshot.value!) as AnyObject).count)
+            for index in 0...snapshot.childrenCount {
+                var countingpat2 = snapshot.childrenCount
                 self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     if var same:Int = (snapshot.value! as? Int) {
                         myposts.append(same)
                         print("count\(myposts)")
                         // acceses right posts and puts indexs in array
                         // use array posts to same
-                                if (myposts.count == countingpat2) {
+                                if (myposts.count == Int(countingpat2)) {
                                                             for index2 in myposts {
                                                                 print("index:\(index2)")
                         
@@ -222,15 +222,12 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
         var troll23: [String] = []
         ref = FIRDatabase.database().reference()
         ref.child("post").child(String(clickedIndex)).child("reply").child(String(replyNumber)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+            for index in 0...(snapshot.childrenCount - 1) { // NULL WHEN NO POSTS - NULL ON
                 
-                var countinggg = ((snapshot.value!) as AnyObject).count - 1
+                var countinggg = snapshot.childrenCount - 1
                 self.ref.child("post").child(String(clickedIndex)).child("reply").child(String(replyNumber)).child("uid").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     troll23.append(snapshot.value! as! String)
-                    if (troll23.count == countinggg+1) {
-                        print("FINISHED APPENDING")
-                        print(troll23)
-                        
+                    if (troll23.count == Int(countinggg+1)) {
                         if troll23.contains(FIRAuth.auth()!.currentUser!.uid) {
                             print("its dere no can do")
                             let alertController = UIAlertController(title: "Error", message: "You've already liked this reply.", preferredStyle: .alert)
@@ -309,7 +306,7 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
         ref = FIRDatabase.database().reference()
         print(clickedIndex)
         ref.child("post").child(String(clickedIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {             // get how many replies there are
+            for index in 0...(snapshot.childrenCount - 1) {             // get how many replies there are
                 // appends all the text in post replies to 'replies' array
                 self.ref.child("post").child(String(clickedIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
                         self.dataText.append(snapshot.value! as! String)

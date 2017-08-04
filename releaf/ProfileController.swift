@@ -207,12 +207,12 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
             // get how many posts you have
             favoritedPostsText.removeAll()
             favoritedPosts.removeAll()
-            for index in 0...(((snapshot.value!) as AnyObject).count) {
-                var countingpat2 = (((snapshot.value!) as AnyObject).count)
+            for index in 0...snapshot.childrenCount {
+                var countingpat2 = snapshot.childrenCount;
                 self.ref.child("users").child(userID).child("favorites").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     if var same:Int = (snapshot.value! as? Int) {
                         favoritedPosts.append(same)
-                        if (favoritedPosts.count == countingpat2) {
+                        if (favoritedPosts.count == Int(countingpat2)) {
                             for index2 in favoritedPosts {
                                 print("index:\(index2)")
                                 

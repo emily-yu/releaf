@@ -51,7 +51,7 @@ class LoginController: UIViewController {
                     // append all the posts to myposts, then transfer to array
                 self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                         // get how many posts you have
-                        for index in 0...(((snapshot.value!) as AnyObject).count) { // NULL WHEN NO POSTS - NULL ON
+                        for index in 0...snapshot.childrenCount { // NULL WHEN NO POSTS - NULL ON
                             
                             self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                                 if var same:Int = (snapshot.value! as? Int) {

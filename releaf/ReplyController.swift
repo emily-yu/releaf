@@ -52,7 +52,7 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
 
-            var replyIndex = String((((snapshot.value!) as AnyObject).count))
+            var replyIndex = String(snapshot.childrenCount)
             self.ref.child("post").child(String(currentIndex)).child("reply").child(replyIndex).setValue([
                 "likes": 0,
                 "text": self.userText.text!,

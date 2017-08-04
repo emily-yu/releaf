@@ -64,7 +64,7 @@ class SignUpController: UIViewController{
                     
                     // append, then transfer to array
                     self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                        for index in 0...(((snapshot.value!) as AnyObject).count) {
+                        for index in 0...snapshot.childrenCount {
                             self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                                 if var same:Int = (snapshot.value! as? Int) {
                                     myposts.append(same)

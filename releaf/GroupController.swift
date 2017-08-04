@@ -36,7 +36,7 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
             firstLoad_join = true
             print("FIRST LOAD")
             self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
+                for index in 0...(snapshot.childrenCount - 1) {
                     self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
                         if var same:String = (snapshot.value! as? String) {
                             groupDescription2.append(same)
@@ -54,7 +54,7 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
             allgroups.removeAll()
             groupDescription2.removeAll()
             self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
+                for index in 0...(snapshot.childrenCount - 1) {
                     self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
                         if var same:String = (snapshot.value! as? String) {
                             groupDescription2.append(same)
@@ -104,7 +104,7 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
                 
                 // creating post under that person's account
                 self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                    var string = String((((snapshot.value!) as AnyObject).count)) // amount of posts there are + 1 to create new post
+                    var string = String(snapshot.childrenCount) // amount of posts there are + 1 to create new post
                     self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").child(string).setValue(groupJoin)
                 }
                 
@@ -177,7 +177,7 @@ class CreateGroupController: UIViewController {
                         
                         // add group under that person's account
                         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                            var string = String((((snapshot.value!) as AnyObject).count)) // amount of posts there are + 1 to create new post
+                            var string = String(snapshot.childrenCount) // amount of posts there are + 1 to create new post
                             
                             // issue here with modifying actual data
                             self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").child(string).setValue(baseValue)
@@ -187,7 +187,7 @@ class CreateGroupController: UIViewController {
                         self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             allgroups.removeAll()
                             groupDescription2.removeAll()
-                            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+                            for index in 0...(snapshot.childrenCount - 1) { // NULL WHEN NO POSTS - NULL ON
                                 self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
                                     if var same:String = (snapshot.value! as? String) {
                                         groupDescription2.append(same)

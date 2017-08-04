@@ -18,7 +18,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     func loadData(){
         ref = FIRDatabase.database().reference()
         ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
+            for index in 0...(snapshot.childrenCount - 1) {
                 // appends all the text in post replies to 'replies' array
                 self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
                     replies.append(snapshot.value! as! String)
@@ -39,7 +39,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         ref = FIRDatabase.database().reference()
         ref.child("post").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             // post index to address
-            let randomNum = arc4random_uniform(UInt32(((snapshot.value!) as AnyObject).count)) // range is 0 to 99
+            let randomNum = arc4random_uniform(UInt32(snapshot.childrenCount)) // range is 0 to 99
             currentIndex = Int(randomNum) // set currentIndex to be this value
             
             // reload everything in the tableView for a new post
@@ -55,7 +55,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         // checks me toos
         ref = FIRDatabase.database().reference()
         self.ref.child("post").child(String(currentIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+            for index in 0...(snapshot.childrenCount - 1) { // NULL WHEN NO POSTS - NULL ON
                 self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     if var same:String = (snapshot.value! as? String) {
                         if checkmetoos.contains(FIRAuth.auth()!.currentUser!.uid) {
@@ -116,7 +116,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         // checks me toos
         ref = FIRDatabase.database().reference()
         self.ref.child("post").child(String(currentIndex)).child("hugs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+            for index in 0...(snapshot.childrenCount - 1) { // NULL WHEN NO POSTS - NULL ON
                 self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     if var same:String = (snapshot.value! as? String) {
                         if checkhugs.contains(FIRAuth.auth()!.currentUser!.uid) {
@@ -234,7 +234,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     func loadReactionArrays(){
         // init metoo array
         ref.child("post").child(String(currentIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+            for index in 0...(snapshot.childrenCount - 1) { // NULL WHEN NO POSTS - NULL ON
                 self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     if var same:String = (snapshot.value! as? String) {
                         checkmetoos.append(same)
@@ -245,7 +245,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         }
         // init hugs array
         ref.child("post").child(String(currentIndex)).child("hugs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+            for index in 0...(snapshot.childrenCount - 1) { // NULL WHEN NO POSTS - NULL ON
                 self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     if var same:String = (snapshot.value! as? String) {
                         checkhugs.append(same)
@@ -287,16 +287,12 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                         var troll23: [String] = []
         ref = FIRDatabase.database().reference()
         ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            print(currentIndex)
-            print(replyNumber)
-            print(snapshot.value!)
-            print(((snapshot.value!) as AnyObject).count)
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // NULL WHEN NO POSTS - NULL ON
+            for index in 0...(snapshot.childrenCount - 1) { // NULL WHEN NO POSTS - NULL ON
                 
-                var countinggg = ((snapshot.value!) as AnyObject).count - 1
+                var countinggg = snapshot.childrenCount - 1
             self.ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("uid").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     troll23.append(snapshot.value! as! String)
-                    if (troll23.count == countinggg+1) {
+                    if (troll23.count == Int(countinggg+1)) {
                         print("FINISHED APPENDING")
                         print(troll23)
                         

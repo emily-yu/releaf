@@ -249,13 +249,13 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
         var troll23: [String] = []
         ref = FIRDatabase.database().reference()
         ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for index in 0...(((snapshot.value!) as AnyObject).count - 1) { // IT DED HERE
+            for index in 0...(snapshot.childrenCount - 1) { // IT DED HERE
                 
-                var countinggg = ((snapshot.value!) as AnyObject).count - 1
+                var countinggg = snapshot.childrenCount - 1
                 self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("uid").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     print(snapshot.value)
                     troll23.append(snapshot.value! as! String)
-                    if (troll23.count == countinggg+1) {
+                    if (troll23.count == Int(countinggg+1)) {
                         print("FINISHED APPENDING")
                         print(troll23)
                         

@@ -311,7 +311,7 @@ class SelectGroup: UIViewController,UITableViewDelegate,UITableViewDataSource {
             firstLoad_join = true
             print("FIRST LOAD")
             self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
+                for index in 0...(snapshot.childrenCount - 1) {
                     self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
                         if var same:String = (snapshot.value! as? String) {
                             groupDescription2.append(same)
@@ -339,7 +339,7 @@ class SelectGroup: UIViewController,UITableViewDelegate,UITableViewDataSource {
             allgroups.removeAll()
             groupDescription2.removeAll()
             self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                for index in 0...(((snapshot.value!) as AnyObject).count - 1) {
+                for index in 0...(snapshot.childrenCount - 1) {
                     self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
                         if var same:String = (snapshot.value! as? String) {
                             groupDescription2.append(same)
