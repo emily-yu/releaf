@@ -134,6 +134,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         
+        print(appFunctions().testFunction())
         // set initial state
         static_selector.selectedSegmentIndex = 0
         
