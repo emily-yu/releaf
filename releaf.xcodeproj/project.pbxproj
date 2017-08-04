@@ -13,6 +13,7 @@
 		A1395D081EC539ED0025A09B /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1395D071EC539ED0025A09B /* Reachability.swift */; };
 		A150BC961E7DA3F800A4175F /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A150BC951E7DA3F800A4175F /* SignUpController.swift */; };
 		A150BC981E7DA47A00A4175F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A150BC971E7DA47A00A4175F /* GoogleService-Info.plist */; };
+		A17C97F61F3446A200BFAF19 /* RecentActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17C97F51F3446A200BFAF19 /* RecentActivityController.swift */; };
 		A1805EA41E9DA8D40043CB85 /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1805EA31E9DA8D40043CB85 /* GroupController.swift */; };
 		A1805EA61E9DBF870043CB85 /* ReactionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1805EA51E9DBF870043CB85 /* ReactionsController.swift */; };
 		A1814F7C1EB7C56900DCD592 /* GroupDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1814F7B1EB7C56900DCD592 /* GroupDetailsController.swift */; };
@@ -58,6 +59,7 @@
 		A1395D071EC539ED0025A09B /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = ../Reachability.swift; sourceTree = "<group>"; };
 		A150BC951E7DA3F800A4175F /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		A150BC971E7DA47A00A4175F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A17C97F51F3446A200BFAF19 /* RecentActivityController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentActivityController.swift; sourceTree = "<group>"; };
 		A1805EA31E9DA8D40043CB85 /* GroupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
 		A1805EA51E9DBF870043CB85 /* ReactionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionsController.swift; sourceTree = "<group>"; };
 		A1814F7B1EB7C56900DCD592 /* GroupDetailsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsController.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				A1814F7B1EB7C56900DCD592 /* GroupDetailsController.swift */,
 				A1DCB4F91ED357F5007B9E7D /* Storage.swift */,
 				A1B02F2D1E7474EF0002151D /* Main.storyboard */,
+				A17C97F51F3446A200BFAF19 /* RecentActivityController.swift */,
 				A1B02F301E7474EF0002151D /* Assets.xcassets */,
 				A1B02F321E7474EF0002151D /* LaunchScreen.storyboard */,
 				A1B02F351E7474EF0002151D /* Info.plist */,
@@ -499,6 +502,7 @@
 				A1805EA61E9DBF870043CB85 /* ReactionsController.swift in Sources */,
 				A150BC961E7DA3F800A4175F /* SignUpController.swift in Sources */,
 				A1DCB4FA1ED357F5007B9E7D /* Storage.swift in Sources */,
+				A17C97F61F3446A200BFAF19 /* RecentActivityController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
