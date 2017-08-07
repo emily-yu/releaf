@@ -373,22 +373,8 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "myPostsSegue"){
-            if let tabVC = segue.destination as? UITabBarController{
-                tabVC.selectedIndex = 2
-                tabVC.modalPresentationStyle = .custom
-                tabVC.modalTransitionStyle = .crossDissolve
-                print("called")
-            }
-        }
-        else if (segue.identifier == "toMyPostsSegue") {
-            if let tabVC = segue.destination as? UITabBarController{
-                tabVC.selectedIndex = 2
-                tabVC.modalPresentationStyle = .custom
-                tabVC.modalTransitionStyle = .crossDissolve
-                print("called")
-            }
-        }
+        appFunctions().navigateTabController(index: 2, sIdentifier: "myPostsSegue", segue: segue);
+        appFunctions().navigateTabController(index: 2, sIdentifier: "toMyPostsSegue", segue: segue);
     }
 }
 

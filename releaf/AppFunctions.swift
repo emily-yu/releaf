@@ -34,9 +34,17 @@ class appFunctions {
     
     /* Navigation through tab controller with transition
      * @param {Int} index - Index of tab to navigate to
+     * @param {String} sIdentifier - Identifier of segue triggering navigation
      * @param {UIStoryboardSegue} segue - Segue triggering navigation
      */
-    func navigateTabController(index: Int, segue: UIStoryboardSegue) {
+    func navigateTabController(index: Int, sIdentifier: String,segue: UIStoryboardSegue) {
+        if(segue.identifier == sIdentifier){
+            if let tabVC = segue.destination as? UITabBarController{
+                tabVC.selectedIndex = index
+                tabVC.modalPresentationStyle = .custom
+                tabVC.modalTransitionStyle = .crossDissolve
+            }
+        }
     }
     
     /* Creates and appends new instance of object referenced in Firebase

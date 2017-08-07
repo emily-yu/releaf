@@ -216,7 +216,6 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
                 tabVC.modalTransitionStyle = .crossDissolve
                 print("called")
             }
-
         }
     }
     

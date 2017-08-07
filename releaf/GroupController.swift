@@ -124,15 +124,9 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     
     // switches to profile tab
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "profileSegue" || segue.identifier == "createGroupSegue"){
-            restaurantNames.removeAll() // so it can reload
-            if let tabVC = segue.destination as? UITabBarController{
-                tabVC.selectedIndex = 3
-                tabVC.modalPresentationStyle = .custom
-                tabVC.modalTransitionStyle = .crossDissolve
-                print("called")
-            }
-        }
+        appFunctions().navigateTabController(index: 3, sIdentifier: "profileSegue", segue: segue);
+        appFunctions().navigateTabController(index: 3, sIdentifier: "createGroupSegue", segue: segue);
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -220,14 +214,8 @@ class CreateGroupController: UIViewController {
     
     // switches to profile tab
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "profileSegue" || segue.identifier == "createGroupSegue"){
-            if let tabVC = segue.destination as? UITabBarController{
-                tabVC.selectedIndex = 3
-                tabVC.modalPresentationStyle = .custom
-                tabVC.modalTransitionStyle = .crossDissolve
-                print("called")
-            }
-        }
+        appFunctions().navigateTabController(index: 3, sIdentifier: "profileSegue", segue: segue);
+        appFunctions().navigateTabController(index: 3, sIdentifier: "createGroupSegue", segue: segue);
     }
     
     override func viewDidLoad() {
