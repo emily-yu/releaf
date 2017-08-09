@@ -114,9 +114,6 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
         self.ref.child("users").child(notifUser[indexPath.row]).child("base64string").observeSingleEvent(of: .value, with: { (snapshot) in
             if let same: String = (snapshot.value! as? String) {
                 if (same != "default") {
-                    let endIndex = same.index(same.endIndex, offsetBy: 0)
-                    let truncated = same.substring(to: endIndex)
-                    let newString = truncated.replacingOccurrences(of: "\n", with: " ", options: .literal, range: nil)
                     let dataDecoded:Data = Data(base64Encoded: same, options: .ignoreUnknownCharacters)!
                     let image = UIImage(data: dataDecoded)!
                     cell?.profileImage?.image = image

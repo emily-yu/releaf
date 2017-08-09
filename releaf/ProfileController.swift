@@ -94,7 +94,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     var imagePicker: UIImagePickerController!
     
     @IBAction func editPhoto(_ sender: Any) {
-        var imagePicker = UIImagePickerController()
+        let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerControllerSourceType.camera;
         imagePicker.allowsEditing = true
@@ -161,7 +161,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
         // set school
         self.ref.child("users").child(userID).child("school").observeSingleEvent(of: .value, with: { (snapshot) in
             print(snapshot.value ?? "")
-            self.revealPoints.text = snapshot.value! as! String
+            self.revealPoints.text = snapshot.value! as? String
         })
         
         
@@ -175,9 +175,6 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                 else { // doesn't work
                     
                     print("custom image")
-                    let endIndex = same.index(same.endIndex, offsetBy: 0)
-                    let truncated = same.substring(to: endIndex)
-                    let newString = truncated.replacingOccurrences(of: "\n", with: " ", options: .literal, range: nil)
                     let dataDecoded:Data = Data(base64Encoded: same, options: .ignoreUnknownCharacters)!
                     let image = UIImage(data: dataDecoded)!
                     self.imageView.image = image

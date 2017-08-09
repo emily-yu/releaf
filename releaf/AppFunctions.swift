@@ -21,7 +21,7 @@ class appFunctions {
     */
     func retrieveInfoByPath(path: String, type: Any) -> Any {
         return 0;
-    }
+    };
     
     /* Retrieve array of data from Firebase
      * @param {String} path - Path to retrieve data from
@@ -30,7 +30,7 @@ class appFunctions {
      */
     func retrieveInfoArrayByPath(path: String, type: Any) -> [Any] {
         return [0];
-    }
+    };
     
     /* Navigation through tab controller with transition
      * @param {Int} index - Index of tab to navigate to
@@ -45,13 +45,13 @@ class appFunctions {
                 tabVC.modalTransitionStyle = .crossDissolve
             }
         }
-    }
+    };
     
     /* Creates and appends new instance of object referenced in Firebase
      * @param {String} path - Path of collection of objects
      */
     func createNew() {
-    }
+    };
 
 }
 

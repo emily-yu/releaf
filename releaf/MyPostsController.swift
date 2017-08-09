@@ -10,48 +10,43 @@ import Foundation
 import UIKit
 import Firebase
 
-class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSource
-{
+class MyPostsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     @IBOutlet var tableView: UITableView!
     var ref: FIRDatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround() 
-        // Do any additional setup after loading the view, typically from a nib.
+        self.hideKeyboardWhenTappedAround()
+        ref = FIRDatabase.database().reference();
         
-        ref = FIRDatabase.database().reference()
-        
-        // append all the posts to myposts, then transfer to array
+        // Append indexes of posts stored in user info, then using those indexes to retrieve their text
         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            // get how many posts you have
-            myPostsText.removeAll()
-            myposts.removeAll()
-            for index in 0...snapshot.childrenCount {
-                var countingpat2 = snapshot.childrenCount
-                self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-                    if var same:Int = (snapshot.value! as? Int) {
-                        myposts.append(same)
-                        print("count\(myposts)")
-                        // acceses right posts and puts indexs in array
-                        // use array posts to same
-                                if (myposts.count == Int(countingpat2)) {
-                                                            for index2 in myposts {
-                                                                print("index:\(index2)")
-                        
-                        self.ref.child("post").child(String(index2)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-                            let int = snapshot.value!
-                            myPostsText.append(int as! String)
-                            if (myPostsText.count == myposts.count) {
-                                print("exiting")
-                                print(myPostsText)
-                                self.tableView.reloadData()
+            
+            // Clearing data from previous posts
+            myPostsText.removeAll();
+            myposts.removeAll();
+            
+            // Retrieving indexes of posts in user info
+            let numberChildren = snapshot.childrenCount;
+            for childIndex in 0...numberChildren {
+                self.ref.child("users").child(userID).child("myPosts").child(String(childIndex)).observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let index : Int = snapshot.value! as? Int {
+                        myposts.append(index);
+                        if (myposts.count == Int(numberChildren)) {
+                            for postIndex in myposts {
+                                self.ref.child("post").child(String(postIndex)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
+                                    myPostsText.append(snapshot.value! as! String);
+                                    
+                                    // Finish appending group text
+                                    if (myPostsText.count == myposts.count) {
+                                        self.tableView.reloadData();
+                                    }
+                                });
                             }
-                        })
-                                                            }
                         }
                     }
-                })
+                });
             }
         }
         
@@ -61,83 +56,69 @@ class MyPostsController: UIViewController, UITableViewDelegate,UITableViewDataSo
         self.tableView.dataSource = self
         
     }
-    
-    
-    // --------------- START ---------------
-    
-    // number of rows in table view
+
+    // INIT: Calculate number of rows in tableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return myPostsText.count
     }
     
-    // create a cell for each table view row
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
+    // INIT: Create cell for each tableView row
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell:MyPostsTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "MyPostsTableViewCell") as? MyPostsTableViewCell;
-        if(cell == nil)
-        {
+        if (cell == nil) {
             cell = MyPostsTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "MyPostsTableViewCell")
             cell?.selectionStyle = UITableViewCellSelectionStyle.none
         }
-        //        cell?.postText?.font = UIFont.systemFont(ofSize: 15.0)
-        cell?.postText?.sizeToFit()
-        cell?.postText?.text = String(myPostsText[indexPath.row])
-        cell?.postText?.numberOfLines = 0
+        cell?.postText?.sizeToFit();
+        cell?.postText?.text = String(myPostsText[indexPath.row]);
+        cell?.postText?.numberOfLines = 0;
         return cell!;
     }
-    func calculateHeight(inString:String) -> CGFloat
-    {
-        let messageString = inString
-        let attributes : [String : Any] = [NSFontAttributeName : UIFont.systemFont(ofSize: 15.0)]
-        
+    
+    func calculateHeight(inString:String) -> CGFloat {
+        let messageString = inString;
+        let attributes : [String : Any] = [NSFontAttributeName : UIFont.systemFont(ofSize: 15.0)];
         let attributedString : NSAttributedString = NSAttributedString(string: messageString, attributes: attributes)
+        let rect : CGRect = attributedString.boundingRect(with: CGSize(width: 222.0, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil);
+        let requredSize:CGRect = rect;
         
-        let rect : CGRect = attributedString.boundingRect(with: CGSize(width: 222.0, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil)
-        
-        let requredSize:CGRect = rect
-        return requredSize.height
+        return requredSize.height;
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int
-    {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1;
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var height:CGFloat = calculateHeight(inString: String(myPostsText[indexPath.row]))
-        return height + 40.0
+        let height:CGFloat = calculateHeight(inString: String(myPostsText[indexPath.row]));
+        return height + 40.0;
     }
     
-    // method to run when table view cell is tapped
+    // INTERACTION: Cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("You tapped cell number \(indexPath.row).")
         
-        var textToFind = String(myPostsText[indexPath.row])
+        let textToFind = String(myPostsText[indexPath.row]);
+        let refPath = self.ref.child(byAppendingPath: "post");
         
-        let refPath = self.ref.child(byAppendingPath: "post")
-//
         refPath.queryOrdered(byChild: "text").queryEqual(toValue:textToFind).observe(.value, with: { snapshot in
             if (snapshot.value is NSNull) {
-                print("Skillet was not found")
+                print("Item was not found");
             }
             else {
-                for child in snapshot.children {   //in case there are several skillets
-                    let key = (child as AnyObject).key as String
-                    print("The key is\(key)") // gets key of post
+                for child in snapshot.children {
+                    let key = (child as AnyObject).key as String;
                     clickedIndex = Int(key)
-                    print(clickedIndex)
                     
-                    var storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    var ivc = storyboard.instantiateViewController(withIdentifier: "postInfo")
-                    ivc.modalPresentationStyle = .custom
-                    ivc.modalTransitionStyle = .crossDissolve
-                    self.present(ivc, animated: true, completion: { _ in })
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil);
+                    let ivc = storyboard.instantiateViewController(withIdentifier: "postInfo");
+                    ivc.modalPresentationStyle = .custom;
+                    ivc.modalTransitionStyle = .crossDissolve;
+                    self.present(ivc, animated: true, completion: { _ in });
                 }
             }
         })
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true);
     }
-    
 }
 
 class MyPostsTableViewCell: UITableViewCell {

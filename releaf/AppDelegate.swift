@@ -17,28 +17,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var ref: FIRDatabaseReference!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        FIRApp.configure()
         
+        // Configuring Firebase and creating reference
+        FIRApp.configure()
         ref = FIRDatabase.database().reference()
         
-        // get a list of all the groups - ref: JoinGroups
+        // Retrieve data from all groups > ref: JoinGroups
         ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(snapshot.childrenCount - 1) {
                 self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
-                    if var same:String = (snapshot.value! as? String) {
-                        groupDescription2.append(same)
+                    if let description : String = snapshot.value! as? String {
+                        groupDescription2.append(description);
                     }
-                })
+                });
                 self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
-                    if var same:String = (snapshot.value! as? String) {
-                        allgroups.append(same)
+                    if let name : String = snapshot.value! as? String {
+                        allgroups.append(name);
                     }
-                })
+                });
             }
         }
         
-        return true
+        return true;
     }
 
 
