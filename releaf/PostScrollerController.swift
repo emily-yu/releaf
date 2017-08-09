@@ -64,7 +64,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                             // unliking and liking posts
                             self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                 if let int = snapshot.value {
-                                    var same: Int = int as! Int
+                                    let same: Int = int as! Int
                                     if (same > 0){ // revealpoints greater than 0
                                         // if user revealpoints are greater than 0...
                                         let alertController = UIAlertController(title: "Error", message: "You've already reacted to this post.", preferredStyle: .alert)
@@ -90,7 +90,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                 self.ref.child("users").child(originalPoster as! String).child("notification").observeSingleEvent(of: .value, with: { (snapshot) in
                                     if let int = (snapshot.value) {
                                         print(int)
-                                        var same = (String((int as AnyObject).count)) as String!
+                                        let same = (String((int as AnyObject).count)) as String!
                                         self.ref.child("users").child(originalPoster as! String).child("notification").child(same!).setValue([
                                             "action" : "me too",
                                             "post"   : currentIndex,
@@ -142,7 +142,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                             // unliking and liking posts
                             self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                 if let int = snapshot.value {
-                                    var same: Int = int as! Int
+                                    let same: Int = int as! Int
                                     if (same > 0){ // revealpoints greater than 0
                                         // if user revealpoints are greater than 0...
                                         let alertController = UIAlertController(title: "Error", message: "You've already reacted to this reply.", preferredStyle: .alert)
@@ -167,7 +167,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                 let originalPoster = snapshot.value
                                 self.ref.child("users").child(originalPoster as! String).child("notification").observeSingleEvent(of: .value, with: { (snapshot) in
                                     if let int = (snapshot.value) {
-                                        var same = (String((int as AnyObject).count)) as String!
+                                        let same = (String((int as AnyObject).count)) as String!
                                         self.ref.child("users").child(originalPoster as! String).child("notification").child(same!).setValue([
                                             "action" : "hug",
                                             "post"   : currentIndex,
@@ -216,24 +216,24 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                         self.ref = FIRDatabase.database().reference()
                         self.ref.child("post").child(String(currentIndex)).child("reply").child(String(indexPath.row)).child("user").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             // get how many replies there are
-                        var newstring = String(describing: snapshot.value!)
+                        let newstring = String(describing: snapshot.value!)
                         
                         // subtract one from reveal points
                         self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             if let int = snapshot.value{
                                 if (int as! Int > 0) {
-                                    var same = (int as! Int)-1;// subtract one reveal point
+                                    let same = (int as! Int)-1;// subtract one reveal point
                                     self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
                                     
                                     // retrieve first name
                                     self.ref.child("users").child(newstring).child("firsasdfadsftName").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                         if let int = snapshot.value{
-                                            var first = int as! String // first name
+                                            let first = int as! String // first name
                                             
                                             // retrieve last name
                                             self.ref.child("users").child(newstring).child("lastName").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                                 if let int = snapshot.value{
-                                                    var last = int as! String
+                                                    let last = int as! String
                                                     cell.username.text = first + " " + last // change text
                                                 }
                                             }
@@ -269,7 +269,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         ref.child("post").child(String(currentIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(snapshot.childrenCount - 1) { // NULL WHEN NO POSTS - NULL ON
                 self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-                    if var same:String = (snapshot.value! as? String) {
+                    if let same:String = (snapshot.value! as? String) {
                         checkmetoos.append(same)
                         print("METOOS:\(checkmetoos)")
                     }
@@ -280,7 +280,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         ref.child("post").child(String(currentIndex)).child("hugs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(snapshot.childrenCount - 1) { // NULL WHEN NO POSTS - NULL ON
                 self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-                    if var same:String = (snapshot.value! as? String) {
+                    if let same:String = (snapshot.value! as? String) {
                         checkhugs.append(same)
                         print("HGUGS\(checkhugs)")
                     }
@@ -322,7 +322,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(snapshot.childrenCount - 1) { // NULL WHEN NO POSTS - NULL ON
                 
-                var countinggg = snapshot.childrenCount - 1
+                let countinggg = snapshot.childrenCount - 1
             self.ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("uid").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     troll23.append(snapshot.value! as! String)
                     if (troll23.count == Int(countinggg+1)) {
@@ -352,7 +352,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                     // add one to the reply's likes
                                     self.ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("likes").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                         if let int = snapshot.value{
-                                            var same = (int as! Int)+1;// add one reveal point
+                                            let same = (int as! Int)+1;// add one reveal point
                                             self.ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("likes").setValue(same) // set new value
                                         }
                                     }
@@ -413,7 +413,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var height:CGFloat = calculateHeight(inString: String(replies[indexPath.row]))
+        let height:CGFloat = calculateHeight(inString: String(replies[indexPath.row]))
         return height + 20.0
     }
 
@@ -430,7 +430,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     func incrementPoints() {
         self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             if let int = snapshot.value{
-                var same = (int as! Int)+1;// add one reveal point
+                let same = (int as! Int)+1;// add one reveal point
                 self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
             }
         }
@@ -439,7 +439,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     func decrementPoints() {
         self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             if let int = snapshot.value{
-                var same = (int as! Int)-1;// add one reveal point
+                let same = (int as! Int)-1;// add one reveal point
                 self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
             }
         }

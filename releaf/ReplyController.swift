@@ -52,7 +52,7 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
 
-            var replyIndex = String(snapshot.childrenCount)
+            let replyIndex = String(snapshot.childrenCount)
             self.ref.child("post").child(String(currentIndex)).child("reply").child(replyIndex).setValue([
                 "likes": 0,
                 "text": self.userText.text!,
@@ -70,7 +70,7 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
             let originalPoster = snapshot.value
             self.ref.child("users").child(originalPoster as! String).child("notification").observeSingleEvent(of: .value, with: { (snapshot) in
                 if let int = (snapshot.value) {
-                    var same = (String((int as AnyObject).count)) as String!
+                    let same = (String((int as AnyObject).count)) as String!
                     self.ref.child("users").child(originalPoster as! String).child("notification").child(same!).setValue([
                         "action" : "like",
                         "post"   : currentIndex,
@@ -83,7 +83,7 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
         // add a point to user points
         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             if let int = snapshot.value{
-                var same = (int as! Int)+1;// add one reveal point
+                let same = (int as! Int)+1;// add one reveal point
                 self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("revealPoints").setValue(same) // set new value
             }
         }
@@ -98,7 +98,7 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell:ReplyPromptTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "ReplyPromptTableCell") as! ReplyPromptTableViewCell
+        let cell:ReplyPromptTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "ReplyPromptTableCell") as! ReplyPromptTableViewCell
         
         cell.promptText.text = String(replies2[indexPath.row])
    

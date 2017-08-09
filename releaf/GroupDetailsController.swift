@@ -23,7 +23,7 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
         self.groupName.text = groupDetailsTitle
         
         
-        var textToFind2 = groupDetailsTitle
+        let textToFind2 = groupDetailsTitle
         
         self.ref.child("groups").queryOrdered(byChild: "name").queryEqual(toValue:textToFind2).observe(.value, with: { snapshot in
             if (snapshot.value is NSNull) {
@@ -48,7 +48,7 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
     
     func groupPostChecking() {
         ref.child("groups").child(String(groupPathPost)).child("post").observe(.value, with: {      snapshot in
-            var count = Int(snapshot.childrenCount-1)
+            let count = Int(snapshot.childrenCount-1)
             if (count > 0) { // gotta have posts in it
                 for i in 1...snapshot.childrenCount-1 { // iterate from post 1
                     print("POSTINDEX:\(i)")
@@ -104,7 +104,7 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var height:CGFloat = calculateHeight(inString: String(groupPosts[indexPath.row]))
+        let height:CGFloat = calculateHeight(inString: String(groupPosts[indexPath.row]))
         return height + 40.0
     }
     
@@ -112,7 +112,7 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        var textToFind = String(groupPosts[indexPath.row])
+        let textToFind = String(groupPosts[indexPath.row])
         ref.child("groups").child(String(groupPathPost)).child("post").queryOrdered(byChild: "text").queryEqual(toValue:textToFind).observe(.value, with: { snapshot in
             if (snapshot.value is NSNull) {
                 print("Skillet was not found")
@@ -124,8 +124,8 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
                     clickedIndex = Int(key)
                     print(clickedIndex)
                     
-                    var storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    var ivc = storyboard.instantiateViewController(withIdentifier: "groupPostInfo")
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let ivc = storyboard.instantiateViewController(withIdentifier: "groupPostInfo")
                     ivc.modalPresentationStyle = .custom
                     ivc.modalTransitionStyle = .crossDissolve
                     self.present(ivc, animated: true, completion: { _ in })
@@ -182,24 +182,24 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
                         self.ref = FIRDatabase.database().reference()
                         self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("user").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             // get how many replies there are
-                            var newstring = String(describing: snapshot.value!)
+                            let newstring = String(describing: snapshot.value!)
                             
                             // subtract one from reveal points
                             self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                 if let int = snapshot.value{
                                     if (int as! Int > 0) {
-                                        var same = (int as! Int)-1;// subtract one reveal point
+                                        let same = (int as! Int)-1;// subtract one reveal point
                                         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("revealPoints").setValue(same) // set new value
                                         
                                         // retrieve first name
                                         self.ref.child("users").child(newstring).child("firsasdfadsftName").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                             if let int = snapshot.value{
-                                                var first = int as! String // first name
+                                                let first = int as! String // first name
                                                 
                                                 // retrieve last name
                                                 self.ref.child("users").child(newstring).child("lastName").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                                     if let int = snapshot.value{
-                                                        var last = int as! String
+                                                        let last = int as! String
                                                         cell.userText.text = first + " " + last // change text
                                                     }
                                                 }
@@ -239,7 +239,7 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
         ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(snapshot.childrenCount - 1) { // IT DED HERE
                 
-                var countinggg = snapshot.childrenCount - 1
+                let countinggg = snapshot.childrenCount - 1
                 self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("uid").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     print(snapshot.value)
                     troll23.append(snapshot.value! as! String)
@@ -270,7 +270,7 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
                                 // add one to the reply's likes
                                 self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("likes").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                     if let int = snapshot.value{
-                                        var same = (int as! Int)+1;// add one reveal point
+                                        let same = (int as! Int)+1;// add one reveal point
                                         self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("likes").setValue(same) // set new value
                                     }
                                 }
@@ -300,7 +300,7 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
     func incrementPoints() {
         self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             if let int = snapshot.value{
-                var same = (int as! Int)+1;// add one reveal point
+                let same = (int as! Int)+1;// add one reveal point
                 self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
             }
         }
@@ -364,7 +364,7 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var height:CGFloat = calculateHeight(inString: String(dataText[indexPath.row]))
+        let height:CGFloat = calculateHeight(inString: String(dataText[indexPath.row]))
         return height + 40.0
     }
     

@@ -36,19 +36,19 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
             notifUser.removeAll()
             for index in 1...snapshot.childrenCount-1 {
                 print(index)
-                var countingpat2 = snapshot.childrenCount
+                let countingpat2 = snapshot.childrenCount
             self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").child(String(index)).child("action").observeSingleEvent(of: .value, with: { (snapshot) in
-                    if var same: String = (snapshot.value! as? String) {
+                    if let same: String = (snapshot.value! as? String) {
                         notifImage.append(same)
                     }
                 })
             self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").child(String(index)).child("post").observeSingleEvent(of: .value, with: { (snapshot) in
-                    if var same: String = (snapshot.value! as? String) {
+                    if let same: String = (snapshot.value! as? String) {
                         notifText.append(same)
                     }
                 })
             self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").child(String(index)).child("user").observeSingleEvent(of: .value, with: { (snapshot) in
-                    if var same: String = (snapshot.value! as? String) {
+                    if let same: String = (snapshot.value! as? String) {
                         notifUser.append(same)
                         print(notifUser.count)
                         print(countingpat2-1)
@@ -81,25 +81,25 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
         // TODO: Remove notifications after the user closes the app
         // TODO: Clicking the notification takes you to the post in the post scroller
         self.ref.child("users").child(notifUser[indexPath.row]).child("firsasdfadsftName").observeSingleEvent(of: .value, with: { (snapshot) in
-            if var same: String = (snapshot.value! as? String) {
+            if let same: String = (snapshot.value! as? String) {
                 switch(notifImage[indexPath.row]) {
                     case "hug":
                         self.ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                            if var same2: String = (snapshot.value! as? String) {
+                            if let same2: String = (snapshot.value! as? String) {
                                 cell?.detail?.text = "\(same) has given you a hug for your post, \(same2)";
                             }
                         }
                         break;
                     case "like":
                         self.ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                            if var same2: String = (snapshot.value! as? String) {
+                            if let same2: String = (snapshot.value! as? String) {
                                 cell?.detail?.text = "\(notifText[indexPath.row]) has liked your reply in response to the post, \(same2)";
                             }
                         }
                         break;
                     case "me too":
                         self.ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                            if var same2: String = (snapshot.value! as? String) {
+                            if let same2: String = (snapshot.value! as? String) {
                                 cell?.detail?.text = "\(same) has responded 'me too' to your post, \(same2)";
                             }
                         }
@@ -112,10 +112,10 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
         })
         
         self.ref.child("users").child(notifUser[indexPath.row]).child("base64string").observeSingleEvent(of: .value, with: { (snapshot) in
-            if var same: String = (snapshot.value! as? String) {
+            if let same: String = (snapshot.value! as? String) {
                 if (same != "default") {
                     let endIndex = same.index(same.endIndex, offsetBy: 0)
-                    var truncated = same.substring(to: endIndex)
+                    let truncated = same.substring(to: endIndex)
                     let newString = truncated.replacingOccurrences(of: "\n", with: " ", options: .literal, range: nil)
                     let dataDecoded:Data = Data(base64Encoded: same, options: .ignoreUnknownCharacters)!
                     let image = UIImage(data: dataDecoded)!

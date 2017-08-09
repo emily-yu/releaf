@@ -20,8 +20,8 @@ class SignUpController: UIViewController{
     @IBOutlet var passwordField: UITextField!
     
     @IBAction func loginController(_ sender: Any) {
-        var storyboard = UIStoryboard(name: "Main", bundle: nil)
-        var ivc = storyboard.instantiateViewController(withIdentifier: "login")
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let ivc = storyboard.instantiateViewController(withIdentifier: "login")
         ivc.modalPresentationStyle = .custom
         ivc.modalTransitionStyle = .crossDissolve
         self.present(ivc, animated: true, completion: { _ in })
@@ -69,7 +69,7 @@ class SignUpController: UIViewController{
                     self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                         for index in 0...snapshot.childrenCount {
                             self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-                                if var same:Int = (snapshot.value! as? Int) {
+                                if let same:Int = (snapshot.value! as? Int) {
                                     myposts.append(same)
                                     self.ref.child("post").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
                                         let int = snapshot.value!
@@ -80,8 +80,8 @@ class SignUpController: UIViewController{
                         }
                     }
                     
-                    var storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    var ivc = storyboard.instantiateViewController(withIdentifier: "Home")
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let ivc = storyboard.instantiateViewController(withIdentifier: "Home")
                     ivc.modalPresentationStyle = .custom
                     ivc.modalTransitionStyle = .crossDissolve
                     self.present(ivc, animated: true, completion: { _ in })

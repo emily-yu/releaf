@@ -167,7 +167,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
         
         // check if profile picture exists, if not set to the thing
         self.ref.child("users").child(userID).child("base64string").observeSingleEvent(of: .value, with: { (snapshot) in
-            if var same:String = (snapshot.value! as? String) {
+            if let same:String = (snapshot.value! as? String) {
                 if (same == "default") { // works
                     self.imageView.image = #imageLiteral(resourceName: "guy")
                     print("set at default")
@@ -176,7 +176,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                     
                     print("custom image")
                     let endIndex = same.index(same.endIndex, offsetBy: 0)
-                    var truncated = same.substring(to: endIndex)
+                    let truncated = same.substring(to: endIndex)
                     let newString = truncated.replacingOccurrences(of: "\n", with: " ", options: .literal, range: nil)
                     let dataDecoded:Data = Data(base64Encoded: same, options: .ignoreUnknownCharacters)!
                     let image = UIImage(data: dataDecoded)!
@@ -209,9 +209,9 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
             favoritedPostsText.removeAll()
             favoritedPosts.removeAll()
             for index in 0...snapshot.childrenCount {
-                var countingpat2 = snapshot.childrenCount;
+                let countingpat2 = snapshot.childrenCount;
                 self.ref.child("users").child(userID).child("favorites").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-                    if var same:Int = (snapshot.value! as? Int) {
+                    if let same:Int = (snapshot.value! as? Int) {
                         favoritedPosts.append(same)
                         if (favoritedPosts.count == Int(countingpat2)) {
                             for index2 in favoritedPosts {
@@ -259,7 +259,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell:GroupTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "GroupTableViewCell") as! GroupTableViewCell
+        let cell:GroupTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "GroupTableViewCell") as! GroupTableViewCell
         if (profileTable_isFirstLoad) {
             cell.groupText.text = String(restaurantNames[indexPath.row])
         }
@@ -274,11 +274,11 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (static_selector.selectedSegmentIndex == 0) { // communities
-            var textToFind = String(restaurantNames[indexPath.row])
+            let textToFind = String(restaurantNames[indexPath.row])
             groupDetailsTitle = textToFind!
             
             //navigate back to home screen
-            var ivc = self.storyboard?.instantiateViewController(withIdentifier: "GroupDetailsController")
+            let ivc = self.storyboard?.instantiateViewController(withIdentifier: "GroupDetailsController")
             ivc?.modalPresentationStyle = .custom
             ivc?.modalTransitionStyle = .crossDissolve
             self.present(ivc!, animated: true, completion: { _ in })
