@@ -118,6 +118,12 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
         return cell!;
     }
     
+    // method to run when table view cell is tapped
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("You tapped cell number \(indexPath.row).")
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+    }
 }
 
 class NotificationCell: UITableViewCell {
