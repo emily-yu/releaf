@@ -136,6 +136,7 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    // TODO: CREATE NOTIFICATION SUPPORT FOR GROUPS
     // switches to createnewpost
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         groupPosts.removeAll() // remove posts from array in preparation for new group

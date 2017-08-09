@@ -14,6 +14,11 @@ import Foundation
 var uid:[String] = []
 var userID = ""
 
+// RecentActivityController
+var notifImage = [String]()
+var notifText = [String]()
+var notifUser = [String]()
+
 // CreatePostController
 var postDestination = [String]()
 

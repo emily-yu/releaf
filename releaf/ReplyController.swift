@@ -64,6 +64,22 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
             ])
         }
         
+        // TODO: CONVERT THIS INTO A GENERIC FUNCTION
+        // Add to original poster's notifactions
+        self.ref.child("post").child(String(currentIndex)).child("user").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            let originalPoster = snapshot.value
+            self.ref.child("users").child(originalPoster as! String).child("notification").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let int = (snapshot.value) {
+                    var same = (String((int as AnyObject).count)) as String!
+                    self.ref.child("users").child(originalPoster as! String).child("notification").child(same!).setValue([
+                        "action" : "like",
+                        "post"   : currentIndex,
+                        "user"   : userID,
+                    ] as NSDictionary)
+                }
+            })
+        }
+        
         // add a point to user points
         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             if let int = snapshot.value{

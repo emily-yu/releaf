@@ -83,6 +83,23 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                         }
                         else {
                             print("not there")
+                            
+                            // Add to original poster's notifactions
+                            self.ref.child("post").child(String(currentIndex)).child("user").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                let originalPoster = snapshot.value
+                                self.ref.child("users").child(originalPoster as! String).child("notification").observeSingleEvent(of: .value, with: { (snapshot) in
+                                    if let int = (snapshot.value) {
+                                        print(int)
+                                        var same = (String((int as AnyObject).count)) as String!
+                                        self.ref.child("users").child(originalPoster as! String).child("notification").child(same!).setValue([
+                                            "action" : "me too",
+                                            "post"   : currentIndex,
+                                            "user"   : userID,
+                                        ] as NSDictionary)
+                                    }
+                                })
+                            }
+                            
                             asdf = false
                             // Alert Prompt
                             let alert = UIAlertController(title: "React to Post", message: "You are about to react to this post.",preferredStyle: .alert)
@@ -144,6 +161,22 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                         }
                         else {
                             print("not there")
+                            
+                            // Add to original poster's notifactions
+                            self.ref.child("post").child(String(currentIndex)).child("user").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                                let originalPoster = snapshot.value
+                                self.ref.child("users").child(originalPoster as! String).child("notification").observeSingleEvent(of: .value, with: { (snapshot) in
+                                    if let int = (snapshot.value) {
+                                        var same = (String((int as AnyObject).count)) as String!
+                                        self.ref.child("users").child(originalPoster as! String).child("notification").child(same!).setValue([
+                                            "action" : "hug",
+                                            "post"   : currentIndex,
+                                            "user"   : userID,
+                                            ] as NSDictionary)
+                                    }
+                                })
+                            }
+                            
                             asdf = false
                             // Alert Prompt
                             let alert = UIAlertController(title: "React to Post", message: "You are about to react to this post",preferredStyle: .alert)

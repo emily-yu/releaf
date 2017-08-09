@@ -59,6 +59,9 @@ class SignUpController: UIViewController{
                         "favorites" : [
                             "0": 0,
                         ],
+                        "notification" : [
+                            "0" : "init",
+                        ],
                         "base64string": "default"
                     ])
                     
