@@ -65,13 +65,16 @@ class MyPostsController: UIViewController, UITableViewDelegate, UITableViewDataS
     // INIT: Create cell for each tableView row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell:MyPostsTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "MyPostsTableViewCell") as? MyPostsTableViewCell;
+        
         if (cell == nil) {
             cell = MyPostsTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "MyPostsTableViewCell")
             cell?.selectionStyle = UITableViewCellSelectionStyle.none
         }
+        
         cell?.postText?.sizeToFit();
         cell?.postText?.text = String(myPostsText[indexPath.row]);
         cell?.postText?.numberOfLines = 0;
+        
         return cell!;
     }
     
