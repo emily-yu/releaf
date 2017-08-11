@@ -151,24 +151,24 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
                         self.ref = FIRDatabase.database().reference()
                         self.ref.child("post").child(String(clickedIndex)).child("reply").child(String(indexPath.row)).child("user").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             // get how many replies there are
-                            var newstring = String(describing: snapshot.value!)
+                            let newstring = String(describing: snapshot.value!)
                             
                             // subtract one from reveal points
                             self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                 if let int = snapshot.value{
                                     if (int as! Int > 0) {
-                                        var same = (int as! Int)-1;// subtract one reveal point
+                                        let same = (int as! Int)-1;// subtract one reveal point
                                         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("revealPoints").setValue(same) // set new value
                                         
                                         // retrieve first name
                                         self.ref.child("users").child(newstring).child("firsasdfadsftName").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                             if let int = snapshot.value{
-                                                var first = int as! String // first name
+                                                let first = int as! String // first name
                                                 
                                                 // retrieve last name
                                                 self.ref.child("users").child(newstring).child("lastName").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                                     if let int = snapshot.value{
-                                                        var last = int as! String
+                                                        let last = int as! String
                                                         cell.usernameText.text = first + " " + last // change text
                                                     }
                                                 }
@@ -208,7 +208,7 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
         ref.child("post").child(String(clickedIndex)).child("reply").child(String(replyNumber)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(snapshot.childrenCount - 1) { // NULL WHEN NO POSTS - NULL ON
                 
-                var countinggg = snapshot.childrenCount - 1
+                let countinggg = snapshot.childrenCount - 1
                 self.ref.child("post").child(String(clickedIndex)).child("reply").child(String(replyNumber)).child("uid").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     troll23.append(snapshot.value! as! String)
                     if (troll23.count == Int(countinggg+1)) {
@@ -235,7 +235,7 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
                                 // add one to the reply's likes
                                 self.ref.child("post").child(String(clickedIndex)).child("reply").child(String(replyNumber)).child("likes").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                     if let int = snapshot.value{
-                                        var same = (int as! Int)+1;// add one reveal point
+                                        let same = (int as! Int)+1;// add one reveal point
                                         self.ref.child("post").child(String(clickedIndex)).child("reply").child(String(replyNumber)).child("likes").setValue(same) // set new value
                                     }
                                 }
@@ -265,7 +265,7 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
     func incrementPoints() {
         self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             if let int = snapshot.value{
-                var same = (int as! Int)+1;// add one reveal point
+                let same = (int as! Int)+1;// add one reveal point
                 self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
             }
         }
@@ -332,7 +332,7 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var height:CGFloat = calculateHeight(inString: String(dataText[indexPath.row]))
+        let height:CGFloat = calculateHeight(inString: String(dataText[indexPath.row]))
         return height + 40.0
     }
     

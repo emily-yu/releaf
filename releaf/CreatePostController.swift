@@ -166,7 +166,7 @@ class CreatePostController: UIViewController {
                 self.ref.child("post").observeSingleEvent(of: .value, with: { (snapshot) in
                     
                     if let int = (snapshot.value) {
-                        var same = (String((int as AnyObject).count)) as String!
+                        let same = (String((int as AnyObject).count)) as String!
                         self.ref.child("post").child(same!).setValue([
                             "reply": [
                                 "0": [
@@ -193,7 +193,7 @@ class CreatePostController: UIViewController {
                         self.incrementPoints()
                         
                         //navigate back to home screen
-                        var ivc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
+                        let ivc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
                         ivc?.modalPresentationStyle = .custom
                         ivc?.modalTransitionStyle = .crossDissolve
                         self.present(ivc!, animated: true, completion: { _ in })
@@ -206,7 +206,7 @@ class CreatePostController: UIViewController {
                 self.ref.child("groups").child(String(groupPathPost)).child("post").observeSingleEvent(of: .value, with: { (snapshot) in
                     
                     if let int = (snapshot.value) {
-                        var same = (String((int as AnyObject).count)) as String!
+                        let same = (String((int as AnyObject).count)) as String!
                         self.ref.child("groups").child(String(groupPathPost)).child("post").child(same!).setValue([
                             "reply": [
                                 "0": [
@@ -233,7 +233,7 @@ class CreatePostController: UIViewController {
                         self.incrementPoints()
                         
                         //navigate back to home screen
-                        var ivc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
+                        let ivc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
                         ivc?.modalPresentationStyle = .custom
                         ivc?.modalTransitionStyle = .crossDissolve
                         self.present(ivc!, animated: true, completion: { _ in })
@@ -246,7 +246,7 @@ class CreatePostController: UIViewController {
     func incrementPoints() {
         self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             if let int = snapshot.value{
-                var same = (int as! Int)+1;// add one reveal point
+                let same = (int as! Int)+1;// add one reveal point
                 self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
             }
         }
@@ -281,7 +281,7 @@ class SelectGroup: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell:GroupCell = self.tableView.dequeueReusableCell(withIdentifier: "GroupCell") as! GroupCell
+        let cell:GroupCell = self.tableView.dequeueReusableCell(withIdentifier: "GroupCell") as! GroupCell
         cell.groupName.text = String(allgroups[indexPath.row])
         if postDestination.contains(String(allgroups[indexPath.row])) {
             print("yes")
@@ -292,7 +292,7 @@ class SelectGroup: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var groupJoin = allgroups[indexPath.row]
+        let groupJoin = allgroups[indexPath.row]
         let cell = self.tableView.cellForRow(at: indexPath) as! GroupCell
         if (cell.cellState.image == #imageLiteral(resourceName: "check")) {
             cell.cellState.image = nil
@@ -313,12 +313,12 @@ class SelectGroup: UIViewController,UITableViewDelegate,UITableViewDataSource {
             self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                 for index in 0...(snapshot.childrenCount - 1) {
                     self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if var same:String = (snapshot.value! as? String) {
+                        if let same:String = (snapshot.value! as? String) {
                             groupDescription2.append(same)
                         }
                     })
                     self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if var same:String = (snapshot.value! as? String) {
+                        if let same:String = (snapshot.value! as? String) {
                             allgroups.append(same)
                         }
                     })
@@ -341,12 +341,12 @@ class SelectGroup: UIViewController,UITableViewDelegate,UITableViewDataSource {
             self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                 for index in 0...(snapshot.childrenCount - 1) {
                     self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if var same:String = (snapshot.value! as? String) {
+                        if let same:String = (snapshot.value! as? String) {
                             groupDescription2.append(same)
                         }
                     })
                     self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if var same:String = (snapshot.value! as? String) {
+                        if let same:String = (snapshot.value! as? String) {
                             allgroups.append(same)
                             self.tableView.reloadData()
                         }

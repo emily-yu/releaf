@@ -38,12 +38,12 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
             self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                 for index in 0...(snapshot.childrenCount - 1) {
                     self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if var same:String = (snapshot.value! as? String) {
+                        if let same:String = (snapshot.value! as? String) {
                             groupDescription2.append(same)
                         }
                     })
                     self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if var same:String = (snapshot.value! as? String) {
+                        if let same:String = (snapshot.value! as? String) {
                             allgroups.append(same)
                         }
                     })
@@ -56,12 +56,12 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
             self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                 for index in 0...(snapshot.childrenCount - 1) {
                     self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if var same:String = (snapshot.value! as? String) {
+                        if let same:String = (snapshot.value! as? String) {
                             groupDescription2.append(same)
                         }
                     })
                     self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if var same:String = (snapshot.value! as? String) {
+                        if let same:String = (snapshot.value! as? String) {
                             allgroups.append(same)
                             self.tableView.reloadData()
                         }
@@ -78,7 +78,7 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell:JoinTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "JoinTableViewCell") as! JoinTableViewCell
+        let cell:JoinTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "JoinTableViewCell") as! JoinTableViewCell
         cell.groupName.text = String(allgroups[indexPath.row])
         cell.groupDescription.text = String(groupDescription2[indexPath.row])
 //
@@ -87,7 +87,7 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var groupJoin = allgroups[indexPath.row]
+        let groupJoin = allgroups[indexPath.row]
         
         if restaurantNames.contains(groupJoin) {
             print("yes")
@@ -104,7 +104,7 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
                 
                 // creating post under that person's account
                 self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                    var string = String(snapshot.childrenCount) // amount of posts there are + 1 to create new post
+                    let string = String(snapshot.childrenCount) // amount of posts there are + 1 to create new post
                     self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").child(string).setValue(groupJoin)
                 }
                 
@@ -154,7 +154,7 @@ class CreateGroupController: UIViewController {
                 self.ref.child("groups").observeSingleEvent(of: .value, with: { (snapshot) in
                     
                     if let int = (snapshot.value) {
-                        var same = (String((int as AnyObject).count)) as String!
+                        let same = (String((int as AnyObject).count)) as String!
                         self.ref.child("groups").child(same!).setValue([
                             "name": self.groupName.text!,
                             "description": self.groupDescription.text!,
@@ -163,7 +163,7 @@ class CreateGroupController: UIViewController {
                             ]
                         ] as NSDictionary)
                         
-                        var baseValue = self.groupName.text!
+                        let baseValue = self.groupName.text!
                         restaurantNames.append(baseValue)
                         print("NEW ONE")
                         print(restaurantNames)
@@ -171,7 +171,7 @@ class CreateGroupController: UIViewController {
                         
                         // add group under that person's account
                         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                            var string = String(snapshot.childrenCount) // amount of posts there are + 1 to create new post
+                            let string = String(snapshot.childrenCount) // amount of posts there are + 1 to create new post
                             
                             // issue here with modifying actual data
                             self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").child(string).setValue(baseValue)
@@ -183,12 +183,12 @@ class CreateGroupController: UIViewController {
                             groupDescription2.removeAll()
                             for index in 0...(snapshot.childrenCount - 1) { // NULL WHEN NO POSTS - NULL ON
                                 self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
-                                    if var same:String = (snapshot.value! as? String) {
+                                    if let same:String = (snapshot.value! as? String) {
                                         groupDescription2.append(same)
                                     }
                                 })
                                 self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
-                                    if var same:String = (snapshot.value! as? String) {
+                                    if let same:String = (snapshot.value! as? String) {
                                         allgroups.append(same)
                                     }
                                 })
