@@ -261,7 +261,7 @@ class SelectGroup: UIViewController,UITableViewDelegate,UITableViewDataSource {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         ref = FIRDatabase.database().reference()
-        checkIfFirstLoad() // set up tableView data
+        loadData() // set up tableView data
         
         // set up tableviewcells
         let cellReuseIdentifier = "cell"
@@ -269,9 +269,6 @@ class SelectGroup: UIViewController,UITableViewDelegate,UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         
-    }
-    
-    @IBAction func addGroups(_ sender: Any) {
     }
     
     // number of rows in table view
@@ -284,7 +281,6 @@ class SelectGroup: UIViewController,UITableViewDelegate,UITableViewDataSource {
         let cell:GroupCell = self.tableView.dequeueReusableCell(withIdentifier: "GroupCell") as! GroupCell
         cell.groupName.text = String(allgroups[indexPath.row])
         if postDestination.contains(String(allgroups[indexPath.row])) {
-            print("yes")
             cell.cellState.image = #imageLiteral(resourceName: "check")
         }
         return cell
@@ -306,55 +302,31 @@ class SelectGroup: UIViewController,UITableViewDelegate,UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func checkIfFirstLoad() {
-        if (firstLoad_join == false) {
-            firstLoad_join = true
-            print("FIRST LOAD")
-            self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                for index in 0...(snapshot.childrenCount - 1) {
-                    self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if let same:String = (snapshot.value! as? String) {
-                            groupDescription2.append(same)
-                        }
-                    })
-                    self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if let same:String = (snapshot.value! as? String) {
-                            allgroups.append(same)
-                        }
-                    })
-                }
-            }
-            let cells = self.tableView.visibleCells as! Array<GroupCell>
-            print("SAEMAMSEMAMEMSAME\(cells)")
-            for cell in cells {
-                // look at data
-                print(cell.groupName.text)
-                if postDestination.contains(String(describing: cell.groupName.text)) {
-                    print("yes")
-                    cell.cellState.image = #imageLiteral(resourceName: "check")
-                }
-            }
-        }
-        else {
+    func loadData() {
+        self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            
+            let counter = snapshot.childrenCount - 1;
+            // Clearing data from previous group array
             allgroups.removeAll()
             groupDescription2.removeAll()
-            self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                for index in 0...(snapshot.childrenCount - 1) {
-                    self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if let same:String = (snapshot.value! as? String) {
-                            groupDescription2.append(same)
-                        }
-                    })
-                    self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if let same:String = (snapshot.value! as? String) {
-                            allgroups.append(same)
+            
+            for index in 0...(snapshot.childrenCount - 1) {
+                self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let same:String = (snapshot.value! as? String) {
+                        groupDescription2.append(same)
+                    }
+                });
+                self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let same:String = (snapshot.value! as? String) {
+                        allgroups.append(same)
+                        
+                        if (allgroups.count == Int(counter)) {
                             self.tableView.reloadData()
                         }
-                    })
-                }
+                    }
+                });
             }
         }
-        
     }
     
     // switches to profile tab
