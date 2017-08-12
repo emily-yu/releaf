@@ -101,7 +101,7 @@ class MyPostsController: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let textToFind = String(myPostsText[indexPath.row]);
-        let refPath = self.ref.child(byAppendingPath: "post");
+        let refPath = self.ref.child("post");
         
         refPath.queryOrdered(byChild: "text").queryEqual(toValue:textToFind).observe(.value, with: { snapshot in
             if (snapshot.value is NSNull) {

@@ -20,8 +20,7 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         super.viewDidLoad()
         
         ref = FIRDatabase.database().reference()
-        
-        checkIfFirstLoad() // set up tableView data
+        loadData() // set up tableView data
         
         // set up tableviewcells
         let cellReuseIdentifier = "cell"
@@ -31,44 +30,30 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         
     }
     
-    func checkIfFirstLoad() {
-        if (firstLoad_join == false) {
-            firstLoad_join = true
-            print("FIRST LOAD")
-            self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                for index in 0...(snapshot.childrenCount - 1) {
-                    self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if let same:String = (snapshot.value! as? String) {
-                            groupDescription2.append(same)
-                        }
-                    })
-                    self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if let same:String = (snapshot.value! as? String) {
-                            allgroups.append(same)
-                        }
-                    })
-                }
-            }
-        }
-        else {
+    func loadData() {
+        
+        // Retrieve list of groups
+        self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            
+            // Clearing data from previous group array
             allgroups.removeAll()
             groupDescription2.removeAll()
-            self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                for index in 0...(snapshot.childrenCount - 1) {
-                    self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if let same:String = (snapshot.value! as? String) {
-                            groupDescription2.append(same)
-                        }
-                    })
-                    self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if let same:String = (snapshot.value! as? String) {
-                            allgroups.append(same)
-                            self.tableView.reloadData()
-                        }
-                    })
-                }
+        
+            for index in 0...(snapshot.childrenCount - 1) {
+                self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let same:String = (snapshot.value! as? String) {
+                        groupDescription2.append(same)
+                    }
+                });
+                self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let same:String = (snapshot.value! as? String) {
+                        allgroups.append(same)
+                        self.tableView.reloadData()
+                    }
+                });
             }
         }
+        
     }
     
     // number of rows in table view
@@ -81,7 +66,7 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         let cell:JoinTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "JoinTableViewCell") as! JoinTableViewCell
         cell.groupName.text = String(allgroups[indexPath.row])
         cell.groupDescription.text = String(groupDescription2[indexPath.row])
-//
+        
         return cell
     }
     
@@ -90,9 +75,6 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         let groupJoin = allgroups[indexPath.row]
         
         if restaurantNames.contains(groupJoin) {
-            print("yes")
-            
-//                            restaurantNames.removeAll() // so it can reload
             let alertController = UIAlertController(title: "Error", message: "You've already joined this group.", preferredStyle: .alert)
             let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             alertController.addAction(defaultAction)
@@ -107,9 +89,8 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
                     let string = String(snapshot.childrenCount) // amount of posts there are + 1 to create new post
                     self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").child(string).setValue(groupJoin)
                 }
-                
-//                restaurantNames.removeAll() // so it can reload
-                            restaurantNames.removeAll() // so it can reload
+            
+                restaurantNames.removeAll() // so it can reload
                 //navigate back
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
                 if let tabvc = vc as? UITabBarController {

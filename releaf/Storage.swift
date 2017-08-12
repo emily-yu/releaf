@@ -25,7 +25,6 @@ var postDestination = [String]()
 // GroupController
 var allgroups: [String] = [] // group names to join in JoinController
 var groupDescription2: [String] = [] // description of groups in JoinController
-var firstLoad_join = false // used for checking if it was the first time loading
 
 // MyPostsController
 var myposts: [Int] = [] // indexes of your posts - used to retrieve
