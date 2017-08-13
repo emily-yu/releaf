@@ -16,7 +16,7 @@ var userID = ""
 
 // RecentActivityController
 var notifImage = [String]()
-var notifText = [String]()
+var notifText = [Int]()
 var notifUser = [String]()
 
 // CreatePostController

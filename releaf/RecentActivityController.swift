@@ -34,32 +34,18 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
             notifImage.removeAll()
             notifText.removeAll()
             notifUser.removeAll()
-            for index in 1...snapshot.childrenCount-1 {
-                print(index)
-                let countingpat2 = snapshot.childrenCount
-            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").child(String(index)).child("action").observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let same: String = (snapshot.value! as? String) {
-                        notifImage.append(same)
-                    }
-                })
-            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").child(String(index)).child("post").observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let same: String = (snapshot.value! as? String) {
-                        notifText.append(same)
-                    }
-                })
-            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").child(String(index)).child("user").observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let same: String = (snapshot.value! as? String) {
-                        notifUser.append(same)
-                        print(notifUser.count)
-                        print(countingpat2-1)
-                        if (notifUser.count == Int(countingpat2-1)) {
-                            print("TEXT\(notifText)")
-                            print("USER\(notifUser)")
-                            self.tableView.reloadData()
-                        }
-                    }
-                })
-            }
+            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").observeSingleEvent(of: .value, with: { snapshot in
+                for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
+                    guard let restDict = rest.value as? [String: Any] else { continue }
+                    let action = restDict["action"] as? String
+                    let post = restDict["post"] as? Int
+                    let user = restDict["user"] as? String
+                    notifImage.append(action!)
+                    notifText.append(post!)
+                    notifUser.append(user!)
+                }
+                self.tableView.reloadData()
+            });
         }
     }
     
@@ -78,7 +64,6 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
         }
         
         // TODO: Cut off previews of posts at certain points so don't have to mess with autolayout
-        // TODO: Remove notifications after the user closes the app
         // TODO: Clicking the notification takes you to the post in the post scroller
         self.ref.child("users").child(notifUser[indexPath.row]).child("firsasdfadsftName").observeSingleEvent(of: .value, with: { (snapshot) in
             if let same: String = (snapshot.value! as? String) {
@@ -93,7 +78,7 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
                     case "like":
                         self.ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             if let same2: String = (snapshot.value! as? String) {
-                                cell?.detail?.text = "\(notifText[indexPath.row]) has liked your reply in response to the post, \(same2)";
+                                cell?.detail?.text = "\(same) has liked your reply in response to the post, \(same2)";
                             }
                         }
                         break;
@@ -133,6 +118,24 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
         print("You tapped cell number \(indexPath.row).")
         tableView.deselectRow(at: indexPath, animated: true)
         
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) in
+            self.deleteFunction(childIWantToRemove: notifText[indexPath.row]);
+            self.tableView.reloadData();
+        })
+        deleteAction.backgroundColor = UIColor(red:0.94, green:0.41, blue:0.31, alpha:1.0)
+        return [deleteAction]
+    }
+    
+    func deleteFunction(childIWantToRemove: Int) {
+        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").child(String(childIWantToRemove)).removeValue { (error, ref) in
+            if error != nil {
+                print("error \(error)")
+            }
+        }
     }
 }
 
