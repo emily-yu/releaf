@@ -63,28 +63,38 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
             cell?.selectionStyle = UITableViewCellSelectionStyle.none
         }
         
-        // TODO: Cut off previews of posts at certain points so don't have to mess with autolayout
         // TODO: Clicking the notification takes you to the post in the post scroller
+        // TODO: Check why the post indexing is screwing up and only outputting the first post
         self.ref.child("users").child(notifUser[indexPath.row]).child("firsasdfadsftName").observeSingleEvent(of: .value, with: { (snapshot) in
             if let same: String = (snapshot.value! as? String) {
+                print(same)
                 switch(notifImage[indexPath.row]) {
                     case "hug":
                         self.ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                            if let same2: String = (snapshot.value! as? String) {
+                            if var same2: String = (snapshot.value! as? String) {
+                                if (same2.characters.count > 25) {
+                                    same2 = same2.substring(to: same2.index(same2.startIndex, offsetBy: 25))
+                                }
                                 cell?.detail?.text = "\(same) has given you a hug for your post, \(same2)";
                             }
                         }
                         break;
                     case "like":
                         self.ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                            if let same2: String = (snapshot.value! as? String) {
+                            if var same2: String = (snapshot.value! as? String) {
+                                if (same2.characters.count > 25) {
+                                    same2 = same2.substring(to: same2.index(same2.startIndex, offsetBy: 25))
+                                }
                                 cell?.detail?.text = "\(same) has liked your reply in response to the post, \(same2)";
                             }
                         }
                         break;
                     case "me too":
                         self.ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                            if let same2: String = (snapshot.value! as? String) {
+                            if var same2: String = (snapshot.value! as? String) {
+                                if (same2.characters.count > 25) {
+                                    same2 = same2.substring(to: same2.index(same2.startIndex, offsetBy: 25))
+                                }
                                 cell?.detail?.text = "\(same) has responded 'me too' to your post, \(same2)";
                             }
                         }
