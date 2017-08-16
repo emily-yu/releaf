@@ -64,13 +64,14 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
         }
         
         // TODO: Clicking the notification takes you to the post in the post scroller
-        // TODO: Check why the post indexing is screwing up and only outputting the first post
         self.ref.child("users").child(notifUser[indexPath.row]).child("firsasdfadsftName").observeSingleEvent(of: .value, with: { (snapshot) in
             if let same: String = (snapshot.value! as? String) {
                 print(same)
+                print(currentIndex)
+                print(notifText)
                 switch(notifImage[indexPath.row]) {
                     case "hug":
-                        self.ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                        self.ref.child("post").child(String(notifText[indexPath.row])).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             if var same2: String = (snapshot.value! as? String) {
                                 if (same2.characters.count > 25) {
                                     same2 = same2.substring(to: same2.index(same2.startIndex, offsetBy: 25))
@@ -80,7 +81,7 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
                         }
                         break;
                     case "like":
-                        self.ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                        self.ref.child("post").child(String(notifText[indexPath.row])).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             if var same2: String = (snapshot.value! as? String) {
                                 if (same2.characters.count > 25) {
                                     same2 = same2.substring(to: same2.index(same2.startIndex, offsetBy: 25))
@@ -90,7 +91,7 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
                         }
                         break;
                     case "me too":
-                        self.ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                        self.ref.child("post").child(String(notifText[indexPath.row])).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             if var same2: String = (snapshot.value! as? String) {
                                 if (same2.characters.count > 25) {
                                     same2 = same2.substring(to: same2.index(same2.startIndex, offsetBy: 25))
