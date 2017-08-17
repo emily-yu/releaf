@@ -64,7 +64,6 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
             cell?.selectionStyle = UITableViewCellSelectionStyle.none
         }
         
-        // TODO: Clicking the notification takes you to the post in the post scroller
         self.ref.child("users").child(notifUser[indexPath.row]).child("firsasdfadsftName").observeSingleEvent(of: .value, with: { (snapshot) in
             if let same: String = (snapshot.value! as? String) {
                 print(same)
