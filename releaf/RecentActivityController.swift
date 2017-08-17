@@ -75,7 +75,7 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
                         self.ref.child("post").child(String(notifText[indexPath.row])).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             if var same2: String = (snapshot.value! as? String) {
                                 if (same2.characters.count > 25) {
-                                    same2 = same2.substring(to: same2.index(same2.startIndex, offsetBy: 25))
+                                    same2 = "\(same2.substring(to: same2.index(same2.startIndex, offsetBy: 25)))..."
                                 }
                                 cell?.detail?.text = "\(same) has given you a hug for your post, \(same2)";
                             }
@@ -85,7 +85,7 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
                         self.ref.child("post").child(String(notifText[indexPath.row])).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             if var same2: String = (snapshot.value! as? String) {
                                 if (same2.characters.count > 25) {
-                                    same2 = same2.substring(to: same2.index(same2.startIndex, offsetBy: 25))
+                                    same2 = "\(same2.substring(to: same2.index(same2.startIndex, offsetBy: 25)))..."
                                 }
                                 cell?.detail?.text = "\(same) has liked your reply in response to the post, \(same2)";
                             }
@@ -95,7 +95,7 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
                         self.ref.child("post").child(String(notifText[indexPath.row])).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             if var same2: String = (snapshot.value! as? String) {
                                 if (same2.characters.count > 25) {
-                                    same2 = same2.substring(to: same2.index(same2.startIndex, offsetBy: 25))
+                                    same2 = "\(same2.substring(to: same2.index(same2.startIndex, offsetBy: 25)))..."
                                 }
                                 cell?.detail?.text = "\(same) has responded 'me too' to your post, \(same2)";
                             }
@@ -135,19 +135,42 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) in
-            self.deleteFunction(childIWantToRemove: notifText[indexPath.row]);
-            self.tableView.reloadData();
+            print("SAME")
+            print(notifText[indexPath.row])
+            print(notifText)
+            
+            self.deleteFunction(index: indexPath.row);
         })
         deleteAction.backgroundColor = UIColor(red:0.94, green:0.41, blue:0.31, alpha:1.0)
         return [deleteAction]
     }
-    
-    func deleteFunction(childIWantToRemove: Int) {
-        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").child(String(childIWantToRemove)).removeValue { (error, ref) in
-            if error != nil {
-                print("error \(error)")
+
+    func deleteFunction(index: Int) {
+        let textToFind = notifText[index];
+        let refPath = self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification");
+        
+        refPath.queryOrdered(byChild: "post").queryEqual(toValue:textToFind).observe(.value, with: { snapshot in
+            if (snapshot.value is NSNull) {
+                print("Item was not found");
             }
-        }
+            else {
+                for child in snapshot.children {
+                    let key = (child as AnyObject).key as String;
+                    self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").child(String(key)).removeValue { (error, ref) in
+                        
+                        // remove from notif array
+                        notifText.remove(at: index)
+                        notifUser.remove(at: index)
+                        notifImage.remove(at: index)
+                        
+                        self.tableView.reloadData();
+                        if error != nil {
+                            print("error \(error)")
+                        }
+                    }
+                }
+            }
+        })
     }
 }
 
