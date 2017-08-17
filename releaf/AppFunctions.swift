@@ -26,30 +26,21 @@ class appFunctions {
     };
     
     /* Retrieve array of data from Firebase
-     * @param {String} path - Path to retrieve data from
+     * @param {String} parentPath - Path to retrieve data from
      * @param {Any} type - Data cast type to return
      * @returns {Any}
      */
-    func retrieveInfoArrayByPath(path: String, type: Any) -> [Any] {
-        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            // TODO: Check if removing array contents is necessary
-            // Retrieving notification information
-//            notifImage.removeAll()
-//            notifText.removeAll()
-//            notifUser.removeAll()
-//            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").observeSingleEvent(of: .value, with: { snapshot in
+    func retrieveInfoArrayByPath(parentPath: FIRDatabaseReference, type: Any, element: String) -> [Any] {
+//        var mutableArray = [Any]();
+//        parentPath.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+//            parentPath.child(element).observeSingleEvent(of: .value, with: { snapshot in
 //                for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
 //                    guard let restDict = rest.value as? [String: Any] else { continue }
-//                    let action = restDict["action"] as? String
-//                    let post = restDict["post"] as? Int
-//                    let user = restDict["user"] as? String
-//                    notifImage.append(action!)
-//                    notifText.append(post!)
-//                    notifUser.append(user!)
+//                    let action = restDict[element] as? Any
+//                    mutableArray.append(action!)
 //                }
-//                self.tableView.reloadData()
 //            });
-        }
+//        }
         return [0];
     };
     

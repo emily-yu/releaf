@@ -280,8 +280,28 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
             ivc?.modalTransitionStyle = .crossDissolve
             self.present(ivc!, animated: true, completion: { _ in })
         }
-        else if (static_selector.selectedSegmentIndex == 1) { // favorites
+        else if (static_selector.selectedSegmentIndex == 1) { // favorites - incomplete; hide me too and stuff based on uid
+            let textToFind = String(myPostsText[indexPath.row]);
+            let refPath = self.ref.child("post");
             
+            refPath.queryOrdered(byChild: "text").queryEqual(toValue:textToFind).observe(.value, with: { snapshot in
+                if (snapshot.value is NSNull) {
+                    print("Item was not found");
+                }
+                else {
+                    for child in snapshot.children {
+                        let key = (child as AnyObject).key as String;
+                        clickedIndex = Int(key)
+                        
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil);
+                        let ivc = storyboard.instantiateViewController(withIdentifier: "postInfo");
+                        ivc.modalPresentationStyle = .custom;
+                        ivc.modalTransitionStyle = .crossDissolve;
+                        self.present(ivc, animated: true, completion: { _ in });
+                    }
+                }
+            })
+            tableView.deselectRow(at: indexPath, animated: true);
         }
         else { // posts
             let textToFind = String(myPostsText[indexPath.row]);

@@ -138,6 +138,11 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
     @IBOutlet var postReplies: UITableView!
     @IBOutlet var tableView: UITableView!
     
+    // elements to not always show; check if their uid exists
+    @IBOutlet var meToo: UIButton!
+    @IBOutlet var hug: UIButton!
+    @IBOutlet var backgroundInfoTitle: UILabel!
+    
     // revealing users
     @IBAction func userReveal(_ sender: Any) {
         // Alert Prompt
@@ -275,10 +280,28 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         ref = FIRDatabase.database().reference()
         loadData()
+        
+        ref = FIRDatabase.database().reference()
+        ref.child("post").child(String(clickedIndex)).child("user").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            if let value = snapshot.value {
+                let uid = value as! String
+                if (uid == userID) {
+                    print(uid)
+                    print(userID)
+                    self.meToo.isHidden = false
+                    self.hug.isHidden = false
+                    self.backgroundInfoTitle.isHidden = false
+                }
+                else {
+                    self.meToo.isHidden = true
+                    self.hug.isHidden = true
+                    self.backgroundInfoTitle.isHidden = true
+                }
+            }
+        };
         
         let cellReuseIdentifier = "cell"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
