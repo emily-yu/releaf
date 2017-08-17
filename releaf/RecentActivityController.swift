@@ -29,13 +29,12 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
     
     func loadData() {
         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            // TODO: Check if removing array contents is necessary
-            // Retrieving notification information
-//            notifImage.removeAll()
-//            notifText.removeAll()
-//            notifUser.removeAll()
+            let childCount = Int(snapshot.childrenCount - 1);
             self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").observeSingleEvent(of: .value, with: { snapshot in
-//                if (snapshot.childrenCount - 1 != ) {
+                if (childCount != notifImage.count) {
+                    notifImage.removeAll()
+                    notifText.removeAll()
+                    notifUser.removeAll()
                     for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
                         guard let restDict = rest.value as? [String: Any] else { continue }
                         let action = restDict["action"] as? String
@@ -46,7 +45,7 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
                         notifUser.append(user!)
                     }
                     self.tableView.reloadData()
-//                }
+                }
             });
         }
     }
