@@ -323,12 +323,12 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
         ref = FIRDatabase.database().reference()
         print(clickedIndex)
             ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for index in 1...snapshot.childrenCount-1 {      // FUCKED THIS UP                // appends all the text in post replies to 'replies' array
-                self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-                    self.dataText.append(snapshot.value! as! String)
-                    print(self.dataText)
-                    self.tableView.reloadData()
-                })
+            for index in 1...snapshot.childrenCount-1 {
+                    self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
+                        self.dataText.append(snapshot.value! as! String)
+                        print(self.dataText)
+                        self.tableView.reloadData()
+                    })
                 self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(index)).child("likes").observeSingleEvent(of: .value, with: { (snapshot) in
                     self.dataLikes.append(snapshot.value! as! Int)
                     self.tableView.reloadData()

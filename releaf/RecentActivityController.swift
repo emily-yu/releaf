@@ -31,20 +31,22 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             // TODO: Check if removing array contents is necessary
             // Retrieving notification information
-            notifImage.removeAll()
-            notifText.removeAll()
-            notifUser.removeAll()
+//            notifImage.removeAll()
+//            notifText.removeAll()
+//            notifUser.removeAll()
             self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").observeSingleEvent(of: .value, with: { snapshot in
-                for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
-                    guard let restDict = rest.value as? [String: Any] else { continue }
-                    let action = restDict["action"] as? String
-                    let post = restDict["post"] as? Int
-                    let user = restDict["user"] as? String
-                    notifImage.append(action!)
-                    notifText.append(post!)
-                    notifUser.append(user!)
-                }
-                self.tableView.reloadData()
+//                if (snapshot.childrenCount - 1 != ) {
+                    for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
+                        guard let restDict = rest.value as? [String: Any] else { continue }
+                        let action = restDict["action"] as? String
+                        let post = restDict["post"] as? Int
+                        let user = restDict["user"] as? String
+                        notifImage.append(action!)
+                        notifText.append(post!)
+                        notifUser.append(user!)
+                    }
+                    self.tableView.reloadData()
+//                }
             });
         }
     }
