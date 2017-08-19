@@ -140,7 +140,7 @@ class GroupDetailsController: UIViewController, UITableViewDelegate, UITableView
     // switches to createnewpost
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         groupPosts.removeAll() // remove posts from array in preparation for new group
-        appFunctions().navigateTabController(index: 3, sIdentifier: "profileSegue", segue: segue);
+        appFunctions().navigateTabController(index: 2, sIdentifier: "profileSegue", segue: segue);
         appFunctions().navigateTabController(index: 3, sIdentifier: "createGroupSegue", segue: segue);
         appFunctions().navigateTabController(index: 1, sIdentifier: "groupPostSegue", segue: segue);
     }
@@ -321,20 +321,24 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
     
     func loadData(){
         ref = FIRDatabase.database().reference()
-        print(clickedIndex)
-            ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for index in 1...snapshot.childrenCount-1 {
-                    self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-                        self.dataText.append(snapshot.value! as! String)
-                        print(self.dataText)
-                        self.tableView.reloadData()
-                    })
-                self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(index)).child("likes").observeSingleEvent(of: .value, with: { (snapshot) in
-                    self.dataLikes.append(snapshot.value! as! Int)
-                    self.tableView.reloadData()
-                })
+
+        self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            let childCount = Int(snapshot.childrenCount - 1);
+            self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+
+//                if (childCount != notifImage.count) {
+                    for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
+                        guard let restDict = rest.value as? [String: Any] else { continue }
+                        let text = restDict["text"] as? String
+                        let like = restDict["likes"] as? Int
+                        self.dataText.append(text!)
+                        self.dataLikes.append(like!)
+                    }
+                self.tableView.reloadData();
+//                }
             }
         }
+            
         
         // set post text
         ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in

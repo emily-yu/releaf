@@ -1374,11 +1374,6 @@
                                                 <segue destination="49e-Tb-3d3" kind="show" identifier="profileSegue" id="Hny-Kr-wbb"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="New Post" id="Jkt-bS-M3O">
-                                            <connections>
-                                                <segue destination="49e-Tb-3d3" kind="show" identifier="groupPostSegue" id="gzE-gR-YzT"/>
-                                            </connections>
-                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -2109,7 +2104,7 @@
         <image name="profile" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Hny-Kr-wbb"/>
         <segue reference="5Sm-1B-pUW"/>
-        <segue reference="YSY-Om-AoY"/>
     </inferredMetricsTieBreakers>
 </document>
