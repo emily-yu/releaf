@@ -22,16 +22,16 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                 // appends all the text in post replies to 'replies' array
                 self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
                     replies.append(snapshot.value! as! String)
-                })
+                });
                 // appends all the likes in post replies to 'leaves' array
                 self.ref.child("post").child(String(currentIndex)).child("reply").child(String(index)).child("likes").observeSingleEvent(of: .value, with: { (snapshot) in
-                    leaves.append(snapshot.value! as! Int)
-                    self.tableView.reloadData()
-                })
+                    leaves.append(snapshot.value! as! Int);
+                    self.tableView.reloadData();
+                });
             }
         }
         ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            self.staticPostText.text = String(describing: snapshot.value!)
+            self.staticPostText.text = String(describing: snapshot.value!);
         }
     }
     
@@ -41,8 +41,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
             // post index to address
             let randomNum = arc4random_uniform(UInt32(snapshot.childrenCount)) // range is 0 to 99
             currentIndex = Int(randomNum) // set currentIndex to be this value
-            
-            // reload everything in the tableView for a new post
+        
             replies.removeAll()
             leaves.removeAll()
             uid.removeAll() // idk
@@ -67,23 +66,21 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                     let same: Int = int as! Int
                                     if (same > 0){ // revealpoints greater than 0
                                         // if user revealpoints are greater than 0...
-                                        let alertController = UIAlertController(title: "Error", message: "You've already reacted to this post.", preferredStyle: .alert)
-                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                                        alertController.addAction(defaultAction)
-                                        self.present(alertController, animated: true, completion: nil)
+                                        let alertController = UIAlertController(title: "Error", message: "You've already reacted to this post.", preferredStyle: .alert);
+                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil);
+                                        alertController.addAction(defaultAction);
+                                        self.present(alertController, animated: true, completion: nil);
                                     }
                                     else { // can't subtract
-                                        let alertController = UIAlertController(title: "Error", message: "You can't remove your reaction from this post.", preferredStyle: .alert)
-                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                                        let alertController = UIAlertController(title: "Error", message: "You can't remove your reaction from this post.", preferredStyle: .alert);
+                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil);
                                         alertController.addAction(defaultAction)
-                                        self.present(alertController, animated: true, completion: nil)
+                                        self.present(alertController, animated: true, completion: nil);
                                     }
                                 }
                             }
                         }
                         else {
-                            print("not there")
-                            
                             // Add to original poster's notifactions
                             self.ref.child("post").child(String(currentIndex)).child("user").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                 let originalPoster = snapshot.value
@@ -97,7 +94,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                             "user"   : userID,
                                         ] as NSDictionary)
                                     }
-                                })
+                                });
                             }
                             
                             asdf = false
@@ -114,19 +111,17 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                 self.ref.child("users").child(userID).child("favorites").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                     self.ref.child("users").child(userID).child("favorites").child(String(snapshot.childrenCount)).setValue(currentIndex) // set value
                                 }
-                                self.tableView.reloadData()
+                                self.tableView.reloadData();
                             })
                             let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
-                            alert.addAction(cancel)
-                            alert.addAction(submitAction)
-                            self.present(alert, animated: true, completion: nil)
+                            alert.addAction(cancel);
+                            alert.addAction(submitAction);
+                            self.present(alert, animated: true, completion: nil);
                         }
                     }
-                })
+                });
             }
         }
-        
-
     }
     
     @IBAction func hugs_isPressed(_ sender: Any) {
@@ -174,7 +169,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                             "user"   : userID,
                                             ] as NSDictionary)
                                     }
-                                })
+                                });
                             }
                             
                             asdf = false
@@ -189,14 +184,14 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                 self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(snapshot.childrenCount)).setValue(userID)
                                 }
                                 self.tableView.reloadData()
-                            })
-                            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
+                            });
+                            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in });
                             alert.addAction(cancel)
                             alert.addAction(submitAction)
                             self.present(alert, animated: true, completion: nil)
                         }
                     }
-                })
+                });
             }
         }
 
@@ -256,8 +251,8 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                 }
             }
         }
-        })
-        let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
+        });
+        let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in });
         
         alert.addAction(cancel)
         alert.addAction(submitAction)
@@ -273,7 +268,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                         checkmetoos.append(same)
                         print("METOOS:\(checkmetoos)")
                     }
-                })
+                });
             }
         }
         // init hugs array
@@ -284,7 +279,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                         checkhugs.append(same)
                         print("HGUGS\(checkhugs)")
                     }
-                })
+                });
             }
         }
 
@@ -358,8 +353,8 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                     }
 
                                     self.tableView.reloadData()
-                            })
-                            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
+                            });
+                            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in });
                             alertController.addAction(cancel)
                             alertController.addAction(submitAction)
                             self.present(alertController, animated: true, completion: nil)
@@ -446,7 +441,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "toReply"){
+        if (segue.identifier == "toReply") {
             if let tabVC = segue.destination as? UIViewController{
                 tabVC.modalPresentationStyle = .custom
                 tabVC.modalTransitionStyle = .crossDissolve

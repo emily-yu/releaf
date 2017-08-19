@@ -11,8 +11,10 @@ import UIKit
 import Firebase
 
 class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSource {
-        var ref: FIRDatabaseReference!
+    
+    var ref: FIRDatabaseReference!
     @IBOutlet var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround() 
@@ -39,8 +41,7 @@ class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSour
 
     }
     
-    func calculateHeight(inString:String) -> CGFloat
-    {
+    func calculateHeight(inString:String) -> CGFloat {
         let messageString = inString
         let attributes : [String : Any] = [NSFontAttributeName : UIFont.systemFont(ofSize: 15.0)]
         
@@ -52,8 +53,7 @@ class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSour
         return requredSize.height
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int
-    {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1;
     }
     
@@ -64,16 +64,15 @@ class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSour
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var cell:MeTooTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "MeTooTableViewCell") as? MeTooTableViewCell;
-    if(cell == nil)
-    {
-    cell = MeTooTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "MeTooTableViewCell")
-    cell?.selectionStyle = UITableViewCellSelectionStyle.none
-    }
-    cell?.username?.sizeToFit()
-    cell?.username?.text = String(metoo[indexPath.row])
-    cell?.username?.numberOfLines = 0
-    return cell!;
+        var cell:MeTooTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "MeTooTableViewCell") as? MeTooTableViewCell;
+        if (cell == nil) {
+            cell = MeTooTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "MeTooTableViewCell")
+            cell?.selectionStyle = UITableViewCellSelectionStyle.none
+        }
+        cell?.username?.sizeToFit()
+        cell?.username?.text = String(metoo[indexPath.row])
+        cell?.username?.numberOfLines = 0
+        return cell!;
     }
 
     func loadData() {
@@ -105,7 +104,6 @@ class MeTooController: UIViewController, UITableViewDelegate,UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
         tableView.deselectRow(at: indexPath, animated: true)
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -134,7 +132,6 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         loadData()
         self.tableView.reloadData()
         
-        
         let cellReuseIdentifier = "cell"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         tableView.delegate = self
@@ -142,8 +139,7 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         
     }
     
-    func calculateHeight(inString:String) -> CGFloat
-    {
+    func calculateHeight(inString:String) -> CGFloat {
         let messageString = inString
         let attributes : [String : Any] = [NSFontAttributeName : UIFont.systemFont(ofSize: 15.0)]
         
@@ -155,8 +151,7 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         return requredSize.height
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int
-    {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1;
     }
     
@@ -167,17 +162,16 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var cell:HugsTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "HugsTableViewCell") as? HugsTableViewCell;
-    if(cell == nil)
-    {
-    cell = HugsTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "HugsTableViewCell")
-    cell?.selectionStyle = UITableViewCellSelectionStyle.none
-    }
-    cell?.username?.sizeToFit()
-    cell?.username?.text = String(hugs[indexPath.row])
-    cell?.username?.numberOfLines = 0
-    return cell!;
-
+        var cell:HugsTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "HugsTableViewCell") as? HugsTableViewCell;
+        if (cell == nil) {
+            cell = HugsTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "HugsTableViewCell")
+            cell?.selectionStyle = UITableViewCellSelectionStyle.none
+        }
+        cell?.username?.sizeToFit()
+        cell?.username?.text = String(hugs[indexPath.row])
+        cell?.username?.numberOfLines = 0
+        
+        return cell!;
     }
     
     func loadData() {
@@ -187,8 +181,6 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
             print(snapshot.childrenCount) // get the number of children
             var indexesss: [Int] = []
             for index in 0...(snapshot.childrenCount - 1) {
-                print("INDEX:\(index)")
-                // changed that to clickedIndex
                 self.ref.child("post").child(String(clickedIndex)).child("hugs").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     print(snapshot.value)
                     print(index)
@@ -196,7 +188,6 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
                         var same = int as! String;
                         hugs.append(same)
                         self.tableView.reloadData()
-                        print("reloaded")
                     }
                 })
             }
@@ -223,7 +214,6 @@ class HugsController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
         tableView.deselectRow(at: indexPath, animated: true)
-        
     }
 }
 

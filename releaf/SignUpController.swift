@@ -66,15 +66,15 @@ class SignUpController: UIViewController{
                     ])
                     
                     // append, then transfer to array
-                    self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                         for index in 0...snapshot.childrenCount {
                             self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                                 if let same:Int = (snapshot.value! as? Int) {
                                     myposts.append(same)
-                                    self.ref.child("post").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-                                        let int = snapshot.value!
-                                        myPostsText.append(int as! String)
-                                    })
+                                self.ref.child("post").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
+                                    let int = snapshot.value!
+                                    myPostsText.append(int as! String)
+                                    });
                                 }
                             })
                         }
@@ -89,7 +89,6 @@ class SignUpController: UIViewController{
                 }
                 else {
                     let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
-                    
                     let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
                     alertController.addAction(defaultAction)
                     
@@ -104,15 +103,13 @@ class SignUpController: UIViewController{
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         // Do any additional setup after loading the view, typically from a nib.
-
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "toLogin") {
-            if let tabVC = segue.destination as? UIViewController{
+            if let tabVC = segue.destination as? UIViewController {
                 tabVC.modalPresentationStyle = .custom
                 tabVC.modalTransitionStyle = .crossDissolve
-                print("called")
             }
         }
         appFunctions().navigateTabController(index: 0, sIdentifier: "postControllerSegue", segue: segue);

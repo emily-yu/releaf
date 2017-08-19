@@ -14,6 +14,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     
     var tableData = restaurantNames // mutable table data - reload each time change segment (currently set to the first index data b/c it should load w/ that)
     var profileTable_isFirstLoad = true
+     var ref:FIRDatabaseReference!
     
     @IBOutlet var titleText: UILabel!
     @IBOutlet var progressBar: UIProgressView!
@@ -66,7 +67,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                 self.createCommunity.isEnabled = true
                 self.createCommunity.isHidden = false
                 self.joinCommunity.isHidden = false
-            })
+            });
             hidden = !(hidden)
         }
         else {
@@ -77,8 +78,8 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                 self.createCommunity.isEnabled = false
                 self.createCommunity.isHidden = true
                 self.joinCommunity.isHidden = true
-            })
-            hidden = !(hidden)
+            });
+            hidden = !(hidden);
         }
     }
     @IBOutlet var createCommunity: UIButton!
@@ -110,8 +111,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
         let imageData: Data! = UIImageJPEGRepresentation(chosenImage, 0.1)
         
         let base64String = (imageData as NSData).base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-        
-        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("base64string").setValue(base64String)
+    self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("base64string").setValue(base64String)
         dismiss(animated: true, completion: nil)
     }
     
@@ -120,10 +120,6 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismiss(animated: true, completion:nil);
     }
-
-    
-    
-    var ref:FIRDatabaseReference!
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         picker.dismiss(animated: true, completion: nil)
@@ -133,21 +129,19 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-        
-//        print(appFunctions().testFunction())
-        // set initial state
+
         static_selector.selectedSegmentIndex = 0
         
         self.joinCommunity.isEnabled = false
         self.createCommunity.isEnabled = false
         self.createCommunity.isHidden = true
         self.joinCommunity.isHidden = true
-//
+
         let cellReuseIdentifier = "cell"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         self.tableView.delegate = self
         self.tableView.dataSource = self
-//
+        
         // Do any additional setup after loading the view, typically from a nib.
         ref = FIRDatabase.database().reference()
         
@@ -156,31 +150,28 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
             self.tempFirst = String(describing: snapshot.value!)
             print(snapshot.value!)
             self.nameField.text = self.tempFirst + " " + self.tempLast
-        })
+        });
 
         // set school
         self.ref.child("users").child(userID).child("school").observeSingleEvent(of: .value, with: { (snapshot) in
             print(snapshot.value ?? "")
             self.revealPoints.text = snapshot.value! as? String
-        })
+        });
         
         
         // check if profile picture exists, if not set to the thing
         self.ref.child("users").child(userID).child("base64string").observeSingleEvent(of: .value, with: { (snapshot) in
             if let same:String = (snapshot.value! as? String) {
-                if (same == "default") { // works
+                if (same == "default") {
                     self.imageView.image = #imageLiteral(resourceName: "guy")
-                    print("set at default")
                 }
-                else { // doesn't work
-                    
-                    print("custom image")
+                else {
                     let dataDecoded:Data = Data(base64Encoded: same, options: .ignoreUnknownCharacters)!
                     let image = UIImage(data: dataDecoded)!
                     self.imageView.image = image
                 }
             }
-        })
+        });
         checking()
     }
     
@@ -199,7 +190,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                     }
                 }
             }
-        })
+        });
         // append all the posts to myposts, then transfer to array
         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("favorites").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             // get how many posts you have
@@ -219,13 +210,13 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                                     favoritedPostsText.append(int as! String)
                                     if (favoritedPostsText.count == favoritedPosts.count) {
                                         print("exiting")
-                                        self.tableView.reloadData()
+                                        self.tableView.reloadData();
                                     }
-                                })
+                                });
                             }
                         }
                     }
-                })
+                });
             }
         }
     }
@@ -256,16 +247,15 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:GroupTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "GroupTableViewCell") as! GroupTableViewCell
+        let cell : GroupTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "GroupTableViewCell") as! GroupTableViewCell
         if (profileTable_isFirstLoad) {
-            cell.groupText.text = String(restaurantNames[indexPath.row])
+            cell.groupText.text = String(restaurantNames[indexPath.row]);
         }
         else {
-            cell.groupText.text = String(tableData[indexPath.row])
+            cell.groupText.text = String(tableData[indexPath.row]);
         }
-//        cell.groupText.text = String(tableData[indexPath.row])
         
-        return cell
+        return cell;
     }
     
     // method to run when table view cell is tapped
@@ -273,12 +263,11 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
         if (static_selector.selectedSegmentIndex == 0) { // communities
             let textToFind = String(restaurantNames[indexPath.row])
             groupDetailsTitle = textToFind!
-            
-            //navigate back to home screen
+
             let ivc = self.storyboard?.instantiateViewController(withIdentifier: "GroupDetailsController")
             ivc?.modalPresentationStyle = .custom
             ivc?.modalTransitionStyle = .crossDissolve
-            self.present(ivc!, animated: true, completion: { _ in })
+            self.present(ivc!, animated: true, completion: { _ in });
         }
         else if (static_selector.selectedSegmentIndex == 1) { // favorites - incomplete; hide me too and stuff based on uid
             let textToFind = String(myPostsText[indexPath.row]);
@@ -300,7 +289,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                         self.present(ivc, animated: true, completion: { _ in });
                     }
                 }
-            })
+            });
             tableView.deselectRow(at: indexPath, animated: true);
         }
         else { // posts
@@ -323,7 +312,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                         self.present(ivc, animated: true, completion: { _ in });
                     }
                 }
-            })
+            });
             tableView.deselectRow(at: indexPath, animated: true);
         }
     }
