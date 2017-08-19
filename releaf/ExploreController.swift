@@ -83,10 +83,16 @@ class ExploreController: UIViewController, UITableViewDelegate,UITableViewDataSo
     
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("You tapped cell number \(indexPath.row).")
-        tableView.deselectRow(at: indexPath, animated: true)
+            let textToFind = String(allgroups[indexPath.row])
+            groupDetailsTitle = textToFind!
+            
+            tableView.deselectRow(at: indexPath, animated: true);
+
+            let ivc = self.storyboard?.instantiateViewController(withIdentifier: "GroupDetailsController")
+            ivc?.modalPresentationStyle = .custom
+            ivc?.modalTransitionStyle = .crossDissolve
+            self.present(ivc!, animated: true, completion: { _ in })
     }
-    
     
 }
 
