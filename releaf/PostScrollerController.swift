@@ -45,8 +45,10 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
             replies.removeAll()
             leaves.removeAll()
             uid.removeAll() // idk
-            self.loadData()
+            
             self.tableView.reloadData()
+            self.loadData()
+//            self.tableView.reloadData()
         }
     }
     @IBOutlet var tableView: UITableView!
@@ -372,20 +374,24 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell:PromptTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "PromptTableViewCell") as? PromptTableViewCell;
         
-        if(cell == nil) {
-            cell = PromptTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "PromptTableViewCell")
-            cell?.selectionStyle = UITableViewCellSelectionStyle.none
-        }
+//        var cell:PromptTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "PromptTableViewCell") as? PromptTableViewCell;
+        
+//        cell = nil
+//        
+//        if (cell == nil) {
+//            cell = PromptTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "PromptTableViewCell")
+//            cell?.selectionStyle = UITableViewCellSelectionStyle.none
+//        }
+        let cell : PromptTableViewCell? = self.tableView.dequeueReusableCell(withIdentifier: "PromptTableViewCell") as? PromptTableViewCell
         
         cell?.prompt?.sizeToFit()
         cell?.prompt?.text = replies[indexPath.row]
         cell?.prompt?.numberOfLines = 0
         
-        cell?.prompt.sizeToFit()
-        cell?.leaves.text = String(leaves[indexPath.row])
-        cell?.leaves.numberOfLines = 0
+//        cell?.leaves.sizeToFit()
+        cell?.leaves?.text = String(leaves[indexPath.row])
+//        cell?.leaves.numberOfLines = 0
         
         return cell!;
     }
