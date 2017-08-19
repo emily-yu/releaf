@@ -88,17 +88,24 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
             alertController.addAction(defaultAction)
             self.present(alertController, animated: true, completion: nil)
         }
-        
         else {
-        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                
-                // creating post under that person's account
-                self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                    let string = String(snapshot.childrenCount) // amount of posts there are + 1 to create new post
-                    self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").child(string).setValue(groupJoin)
-                }
+            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             
                 restaurantNames.removeAll() // so it can reload
+
+                self.ref.child("groups").queryOrdered(byChild: "name").queryEqual(toValue:groupJoin).observeSingleEvent(of: .value, with: { (snapshot) in
+                    if (snapshot.value is NSNull) {
+                        print("Skillet was not found")
+                    }
+                    else {
+                        for child in snapshot.children {
+                            let key = (child as AnyObject).key as String
+                            self.ref.child("groups").child(key).child("member").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                            self.ref.child("groups").child(key).child("member").setValue((snapshot.value as? Int)! + 1)
+                            }
+                            }
+                        }
+                });
                 //navigate back
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
                 if let tabvc = vc as? UITabBarController {
@@ -147,6 +154,7 @@ class CreateGroupController: UIViewController {
                         self.ref.child("groups").child(same!).setValue([
                             "name": self.groupName.text!,
                             "description": self.groupDescription.text!,
+                            "member" : 1,
                             "post": [
                                 "0": "init",
                             ]
