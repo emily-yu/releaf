@@ -28,26 +28,24 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
     }
     
     func loadData() {
-        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").observeSingleEvent(of: .value, with: { snapshot in
             let childCount = Int(snapshot.childrenCount - 1);
-            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").observeSingleEvent(of: .value, with: { snapshot in
-                if (childCount != notifImage.count) {
-                    notifImage.removeAll()
-                    notifText.removeAll()
-                    notifUser.removeAll()
-                    for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
-                        guard let restDict = rest.value as? [String: Any] else { continue }
-                        let action = restDict["action"] as? String
-                        let post = restDict["post"] as? Int
-                        let user = restDict["user"] as? String
-                        notifImage.append(action!)
-                        notifText.append(post!)
-                        notifUser.append(user!)
-                    }
-                    self.tableView.reloadData()
+            if (childCount != notifImage.count) {
+                notifImage.removeAll()
+                notifText.removeAll()
+                notifUser.removeAll()
+                for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
+                    guard let restDict = rest.value as? [String: Any] else { continue }
+                    let action = restDict["action"] as? String
+                    let post = restDict["post"] as? Int
+                    let user = restDict["user"] as? String
+                    notifImage.append(action!)
+                    notifText.append(post!)
+                    notifUser.append(user!)
                 }
-            });
-        }
+                self.tableView.reloadData()
+            }
+        });
     }
     
     // number of rows in table view
