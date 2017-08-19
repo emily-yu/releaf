@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FIRApp.configure()
         ref = FIRDatabase.database().reference()
         
+        // TODO: when joining a group, add one to members section
         // Retrieve data from all groups > ref: JoinGroups
         ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(snapshot.childrenCount - 1) {

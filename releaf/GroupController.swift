@@ -48,7 +48,15 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
                 self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
                     if let same:String = (snapshot.value! as? String) {
                         allgroups.append(same)
-                        self.tableView.reloadData()
+                    }
+                });
+                self.ref.child("groups").child(String(index)).child("member").observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let same: Int = (snapshot.value! as? Int) {
+                        print("hey its me")
+                        print(same)
+                        groupMemberCount.append(same);
+                        print("asdf")
+                        self.tableView.reloadData();
                     }
                 });
             }
