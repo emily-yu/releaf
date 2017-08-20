@@ -433,8 +433,8 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2y-2c-MUA">
-                                <rect key="frame" x="28" y="177" width="154" height="32"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2y-2c-MUA">
+                                <rect key="frame" x="28" y="177" width="152" height="32"/>
                                 <color key="backgroundColor" red="0.17662562130000001" green="0.46345141420000002" blue="0.26983038749999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="vnf-8I-NSC"/>
@@ -446,8 +446,8 @@
                                     <action selector="meToo_isPressed:" destination="9pv-A4-QxB" eventType="touchUpInside" id="J0A-IM-TAI"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PnM-FY-2lz">
-                                <rect key="frame" x="196" y="177" width="150" height="33"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PnM-FY-2lz">
+                                <rect key="frame" x="194" y="177" width="152" height="33"/>
                                 <color key="backgroundColor" red="0.17662562130000001" green="0.46345141420000002" blue="0.26983038749999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="          HUGS          ">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -489,10 +489,12 @@
                             <constraint firstItem="pID-it-TMq" firstAttribute="top" secondItem="PnM-FY-2lz" secondAttribute="bottom" constant="8" symbolic="YES" id="Fjw-WQ-7yT"/>
                             <constraint firstAttribute="bottomMargin" secondItem="Fyb-qa-BEI" secondAttribute="bottom" constant="-11" id="I8u-L6-EIK"/>
                             <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="l2m-8v-u9z" secondAttribute="bottom" constant="21" id="IkF-KT-dVc"/>
+                            <constraint firstItem="PnM-FY-2lz" firstAttribute="leading" secondItem="P2y-2c-MUA" secondAttribute="trailing" constant="14" id="Kb1-CM-lvD"/>
                             <constraint firstItem="l2m-8v-u9z" firstAttribute="top" secondItem="pID-it-TMq" secondAttribute="bottom" constant="16" id="XxZ-T9-GOj"/>
                             <constraint firstItem="kCx-Ch-sOY" firstAttribute="trailing" secondItem="PnM-FY-2lz" secondAttribute="trailing" id="bZN-xk-ZqN"/>
                             <constraint firstItem="Fyb-qa-BEI" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" constant="-157" id="bhG-DC-FN0"/>
                             <constraint firstItem="P2y-2c-MUA" firstAttribute="centerY" secondItem="PnM-FY-2lz" secondAttribute="centerY" id="fUE-il-dta"/>
+                            <constraint firstItem="P2y-2c-MUA" firstAttribute="width" secondItem="PnM-FY-2lz" secondAttribute="width" id="gAi-Mh-Ang"/>
                             <constraint firstItem="QaF-Dh-wKG" firstAttribute="centerX" secondItem="kCx-Ch-sOY" secondAttribute="centerX" id="gU1-hw-50i"/>
                             <constraint firstItem="PnM-FY-2lz" firstAttribute="trailing" secondItem="pID-it-TMq" secondAttribute="trailing" id="gcI-r0-VvS"/>
                             <constraint firstAttribute="trailing" secondItem="QaF-Dh-wKG" secondAttribute="trailing" id="ic4-rV-quo"/>
@@ -1851,7 +1853,7 @@
                                     <action selector="googleSignIn:" destination="jcg-Cy-xGw" eventType="touchUpInside" id="WqK-YZ-eiV"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  USERNAME" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ywh-xS-rDa">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="USERNAME" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ywh-xS-rDa">
                                 <rect key="frame" x="89" y="272" width="196" height="30"/>
                                 <color key="backgroundColor" red="0.22468896955534798" green="0.59965461848048385" blue="0.34226616587477715" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
@@ -1862,7 +1864,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  PASSWORD" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="B3T-UI-0gO">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="PASSWORD" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="B3T-UI-0gO">
                                 <rect key="frame" x="89" y="316" width="196" height="30"/>
                                 <color key="backgroundColor" red="0.22468896960000001" green="0.59965461850000001" blue="0.34226616589999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
@@ -1921,6 +1923,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="login" destination="ywh-xS-rDa" id="Kte-9F-I4D"/>
+                        <outlet property="password" destination="B3T-UI-0gO" id="mVi-gm-OdH"/>
                         <outlet property="passwordField" destination="B3T-UI-0gO" id="xYT-fx-DHl"/>
                         <outlet property="usernameField" destination="ywh-xS-rDa" id="AT3-5f-ijJ"/>
                     </connections>

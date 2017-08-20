@@ -103,6 +103,22 @@ class SignUpController: UIViewController{
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height))
+        firstNameField.leftView = paddingView
+        firstNameField.leftViewMode = UITextFieldViewMode.always
+        
+        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height))
+        lastNameField.leftView = paddingView2
+        lastNameField.leftViewMode = UITextFieldViewMode.always
+        
+        let paddingView3 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height))
+        emailField.leftView = paddingView3
+        emailField.leftViewMode = UITextFieldViewMode.always
+        
+        let paddingView4 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height))
+        passwordField.leftView = paddingView4
+        passwordField.leftViewMode = UITextFieldViewMode.always
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

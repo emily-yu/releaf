@@ -13,6 +13,8 @@ import FirebaseAuth
 class LoginController: UIViewController {
     var ref: FIRDatabaseReference!
     
+    @IBOutlet var password: UITextField!
+    @IBOutlet var login: UITextField!
     @IBAction func googleSignIn(_ sender: Any) {
     }
     @IBOutlet var usernameField: UITextField!
@@ -100,6 +102,14 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.login.frame.height))
+        login.leftView = paddingView
+        login.leftViewMode = UITextFieldViewMode.always
+        
+        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.login.frame.height))
+        password.leftView = paddingView2
+        password.leftViewMode = UITextFieldViewMode.always
     }
     
     override func didReceiveMemoryWarning() {
