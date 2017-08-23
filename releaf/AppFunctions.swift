@@ -11,7 +11,6 @@ import Firebase
 
 class appFunctions {
     
-    
     // Store data for local app use
     var tempParameter = 0;
     var ref = FIRDatabase.database().reference();
@@ -31,16 +30,6 @@ class appFunctions {
      * @returns {Any}
      */
     func retrieveInfoArrayByPath(parentPath: FIRDatabaseReference, type: Any, element: String) -> [Any] {
-//        var mutableArray = [Any]();
-//        parentPath.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-//            parentPath.child(element).observeSingleEvent(of: .value, with: { snapshot in
-//                for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
-//                    guard let restDict = rest.value as? [String: Any] else { continue }
-//                    let action = restDict[element] as? Any
-//                    mutableArray.append(action!)
-//                }
-//            });
-//        }
         return [0];
     };
     

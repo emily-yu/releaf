@@ -59,7 +59,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                 self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     if var same:String = (snapshot.value! as? String) {
                         if checkmetoos.contains(FIRAuth.auth()!.currentUser!.uid) { // exists
-                            asdf = true
+
                             // unliking and liking posts
                             self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                 if let int = snapshot.value {
@@ -97,7 +97,6 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                 });
                             }
                             
-                            asdf = false
                             // Alert Prompt
                             let alert = UIAlertController(title: "React to Post", message: "You are about to react to this post.",preferredStyle: .alert)
                             let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
@@ -132,7 +131,6 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                 self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
                     if var same:String = (snapshot.value! as? String) {
                         if checkhugs.contains(FIRAuth.auth()!.currentUser!.uid) {
-                            asdf = true
                             // unliking and liking posts
                             self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                 if let int = snapshot.value {
@@ -169,7 +167,6 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                 });
                             }
                             
-                            asdf = false
                             // Alert Prompt
                             let alert = UIAlertController(title: "React to Post", message: "You are about to react to this post",preferredStyle: .alert)
                             let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in

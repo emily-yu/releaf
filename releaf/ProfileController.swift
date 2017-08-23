@@ -12,7 +12,7 @@ import Firebase
 
 class GroupViewController: UIViewController, UITableViewDelegate,UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var tableData = restaurantNames // mutable table data - reload each time change segment (currently set to the first index data b/c it should load w/ that)
+    var tableData = userGroups // mutable table data - reload each time change segment (currently set to the first index data b/c it should load w/ that)
     var profileTable_isFirstLoad = true
      var ref:FIRDatabaseReference!
     
@@ -29,7 +29,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
             createCommunity.isHidden = true
             joinCommunity.isHidden = true
             titleText.text = "COMMUNITIES"
-            tableData = restaurantNames
+            tableData = userGroups
             tableView.reloadData()
         }
         else if (static_selector.selectedSegmentIndex == 1) {
@@ -184,7 +184,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                 groupMemberCount.removeAll()
                 for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
                     if (rest.key != "0") {
-                        restaurantNames.append(rest.value as! String)
+                        userGroups.append(rest.value as! String)
                     }
                 }
                 self.tableView.reloadData()
@@ -235,7 +235,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (profileTable_isFirstLoad) {
-            return restaurantNames.count
+            return userGroups.count
         }
         else {
             return tableData.count
@@ -246,7 +246,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : GroupTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "GroupTableViewCell") as! GroupTableViewCell
         if (profileTable_isFirstLoad) {
-            cell.groupText.text = String(restaurantNames[indexPath.row]);
+            cell.groupText.text = String(userGroups[indexPath.row]);
         }
         else {
             cell.groupText.text = String(tableData[indexPath.row]);
@@ -258,7 +258,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (static_selector.selectedSegmentIndex == 0) { // communities
-            let textToFind = String(restaurantNames[indexPath.row])
+            let textToFind = String(userGroups[indexPath.row])
             groupDetailsTitle = textToFind!
 
             let ivc = self.storyboard?.instantiateViewController(withIdentifier: "GroupDetailsController")

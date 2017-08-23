@@ -73,7 +73,7 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let groupJoin = allgroups[indexPath.row]
         
-        if restaurantNames.contains(groupJoin) {
+        if userGroups.contains(groupJoin) {
             let alertController = UIAlertController(title: "Error", message: "You've already joined this group.", preferredStyle: .alert)
             let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             alertController.addAction(defaultAction)
@@ -82,7 +82,7 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         else {
             self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             
-                restaurantNames.removeAll() // so it can reload
+                userGroups.removeAll() // so it can reload
 
                 self.ref.child("groups").queryOrdered(byChild: "name").queryEqual(toValue:groupJoin).observeSingleEvent(of: .value, with: { (snapshot) in
                     if (snapshot.value is NSNull) {
@@ -152,9 +152,9 @@ class CreateGroupController: UIViewController {
                         ] as NSDictionary)
                         
                         let baseValue = self.groupName.text!
-                        restaurantNames.append(baseValue)
+                        userGroups.append(baseValue)
                         print("NEW ONE")
-                        print(restaurantNames)
+                        print(userGroups)
                         
                         
                         // add group under that person's account

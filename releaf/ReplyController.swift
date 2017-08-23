@@ -85,16 +85,16 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(replies2.count)
+        print(replyPrompts.count)
         print("sakefjalsdfjkladsf")
-        return replies2.count
+        return replyPrompts.count
     }
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:ReplyPromptTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "ReplyPromptTableCell") as! ReplyPromptTableViewCell
         
-        cell.promptText.text = String(replies2[indexPath.row])
+        cell.promptText.text = String(replyPrompts[indexPath.row])
    
         return cell
     }
@@ -102,7 +102,7 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
-        userText.text = replies2[indexPath.row]
+        userText.text = replyPrompts[indexPath.row]
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
