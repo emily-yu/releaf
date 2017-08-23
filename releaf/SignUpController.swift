@@ -26,10 +26,7 @@ class SignUpController: UIViewController{
         ivc.modalTransitionStyle = .crossDissolve
         self.present(ivc, animated: true, completion: { _ in })
     }
-    
-    @IBAction func googleSignIn(_ sender: Any) {
-    }
-    
+
     @IBAction func createAccount(_ sender: Any) {
         self.ref = FIRDatabase.database().reference()
         if emailField.text! == "" || passwordField.text! == "" {
@@ -76,7 +73,7 @@ class SignUpController: UIViewController{
                                     myPostsText.append(int as! String)
                                     });
                                 }
-                            })
+                            });
                         }
                     }
                     
@@ -104,19 +101,19 @@ class SignUpController: UIViewController{
         self.hideKeyboardWhenTappedAround()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height))
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height));
         firstNameField.leftView = paddingView
         firstNameField.leftViewMode = UITextFieldViewMode.always
         
-        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height))
+        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height));
         lastNameField.leftView = paddingView2
         lastNameField.leftViewMode = UITextFieldViewMode.always
         
-        let paddingView3 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height))
+        let paddingView3 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height));
         emailField.leftView = paddingView3
         emailField.leftViewMode = UITextFieldViewMode.always
         
-        let paddingView4 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height))
+        let paddingView4 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height));
         passwordField.leftView = paddingView4
         passwordField.leftViewMode = UITextFieldViewMode.always
     }

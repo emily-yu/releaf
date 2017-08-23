@@ -29,35 +29,27 @@ class ExploreController: UIViewController, UITableViewDelegate,UITableViewDataSo
     
     // Retrieve list of groups
     func loadData() {
-        self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            
-            // Clearing data from previous group array
-            allgroups.removeAll();
-            groupDescription2.removeAll();
-            groupMemberCount.removeAll();
-            
-            for index in 0...(snapshot.childrenCount - 1) {
-                self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let same:String = (snapshot.value! as? String) {
-                        groupDescription2.append(same);
+        self.ref.child("groups").observeSingleEvent(of: .value, with: { snapshot in
+            let childCount = Int(snapshot.childrenCount - 1);
+            if (childCount != groupMemberCount.count) {
+                groupDescription2.removeAll()
+                allgroups.removeAll()
+                groupMemberCount.removeAll()
+                for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
+                    guard let restDict = rest.value as? [String: Any] else { continue }
+                    print(rest)
+                    if (rest.key != "0") {
+                        let action = restDict["description"] as? String
+                        let desc = restDict["name"] as? String
+                        let count = restDict["member"] as? Int
+                        groupDescription2.append(action!)
+                        allgroups.append(desc!)
+                        groupMemberCount.append(count!)
                     }
-                });
-                self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let same:String = (snapshot.value! as? String) {
-                        allgroups.append(same);
-                    }
-                });
-                self.ref.child("groups").child(String(index)).child("member").observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let same: Int = (snapshot.value! as? Int) {
-                        print("hey its me")
-                        print(same)
-                        groupMemberCount.append(same);
-                        print("asdf")
-                        self.tableView.reloadData();
-                    }
-                });
+                }
+                self.tableView.reloadData()
             }
-        }
+        });
     }
     
     // number of rows in table view

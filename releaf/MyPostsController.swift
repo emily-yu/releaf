@@ -228,7 +228,7 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
                             print("not there lets go appendo")
                             let alertController = UIAlertController(title: "Like Response", message: "You are about to like this response.", preferredStyle: .alert)
                             let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
-                                self.incrementPoints() // add one to your points
+                                appFunctions().incrementPoints() // add one to your points
                                 
                                 // ADD TO THE THING
                                 
@@ -266,17 +266,6 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
-    
-    func incrementPoints() {
-        self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            if let int = snapshot.value{
-                let same = (int as! Int)+1;// add one reveal point
-                self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
-            }
-        }
-    }
-    
-
     
     override func viewDidLoad() {
         super.viewDidLoad()

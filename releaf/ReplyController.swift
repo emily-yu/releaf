@@ -79,14 +79,8 @@ class NewPostController: UIViewController, UITableViewDelegate, UITableViewDataS
                 }
             })
         }
-        
-        // add a point to user points
-        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            if let int = snapshot.value{
-                let same = (int as! Int)+1;// add one reveal point
-                self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("revealPoints").setValue(same) // set new value
-            }
-        }
+
+        appFunctions().incrementPoints();
     }
     
     // number of rows in table view

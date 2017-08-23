@@ -170,7 +170,6 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
     @IBAction func userReveal(_ sender: UIButton) {
         let button = sender as UIButton
         let replyNumber = (self.tableView.indexPathForRow(at: sender.center)!).row
-//        print(replyNumber.row)
         
         let alert = UIAlertController(title: "Reveal User", message: "You are about to use one impact point to see the user of this post.",preferredStyle: .alert)
         let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
@@ -258,12 +257,11 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
                     let alertController = UIAlertController(title: "Like Response", message: "You are about to like this response.", preferredStyle: .alert)
                     let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
                         
-                        self.incrementPoints() // add one to your points
+                        appFunctions().incrementPoints();
                         
                         // Add ID to UID tracking
-                        self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+                    self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex-1)).child("reply").child(String(replyNumber+1)).child("uid").child(String(snapshot.childrenCount)).setValue(userID) // set value
-                            //                                    }
                         }
 
                         // add one to the reply's likes
@@ -287,28 +285,17 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
     
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("You tapped cell number \(indexPath.row).")
-        
         checkUIDArray(replyNumber: (indexPath.row))
         tableView.deselectRow(at: indexPath, animated: true)
         
-    }
-    
-    func incrementPoints() {
-        self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            if let int = snapshot.value{
-                let same = (int as! Int)+1;// add one reveal point
-                self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
-            }
-        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        ref = FIRDatabase.database().reference()
-        loadData()
+        ref = FIRDatabase.database().reference();
+        loadData();
         
         let cellReuseIdentifier = "cell"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
@@ -317,13 +304,10 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
     }
     
     func loadData(){
-        ref = FIRDatabase.database().reference()
+        ref = FIRDatabase.database().reference();
 
         self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            let childCount = Int(snapshot.childrenCount - 1);
             self.ref.child("groups").child(String(groupPathPost)).child("post").child(String(clickedIndex)).child("reply").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-
-//                if (childCount != notifImage.count) {
                     for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
                         guard let restDict = rest.value as? [String: Any] else { continue }
                         let text = restDict["text"] as? String
@@ -332,7 +316,6 @@ class GroupPostDetailsController: UIViewController, UITableViewDelegate, UITable
                         self.dataLikes.append(like!)
                     }
                 self.tableView.reloadData();
-//                }
             }
         }
             

@@ -64,6 +64,26 @@ class appFunctions {
      */
     func createNew() {
     };
+    
+    /* Add a reveal point to the user's account */
+    func incrementPoints() {
+        self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            if let int = snapshot.value{
+                let same = (int as! Int)+1;// add one reveal point
+                self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
+            }
+        }
+    };
+    
+    /* Remove a reveal point to the user's account */
+    func decrementPoints() {
+        self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
+            if let initValue = snapshot.value{
+                let newValue = (initValue as! Int) - 1;
+                self.ref.child("users").child(userID).child("revealPoints").setValue(newValue);
+            }
+        }
+    };
 
 }
 

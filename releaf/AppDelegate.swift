@@ -18,27 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        // Configuring Firebase and creating reference
         FIRApp.configure()
-        ref = FIRDatabase.database().reference()
-        
-        // TODO: when joining a group, add one to members section
-        // Retrieve data from all groups > ref: JoinGroups
-        ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            for index in 0...(snapshot.childrenCount - 1) {
-                self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let description : String = snapshot.value! as? String {
-                        groupDescription2.append(description);
-                    }
-                });
-                self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let name : String = snapshot.value! as? String {
-                        allgroups.append(name);
-                    }
-                });
-            }
-        }
-        
         return true;
     }
 

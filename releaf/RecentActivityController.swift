@@ -156,13 +156,13 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
                     self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").child(String(key)).removeValue { (error, ref) in
                         
                         // remove from notif array
-                        notifText.remove(at: index)
-                        notifUser.remove(at: index)
-                        notifImage.remove(at: index)
+                        notifText.remove(at: index);
+                        notifUser.remove(at: index);
+                        notifImage.remove(at: index);
                         
                         self.tableView.reloadData();
                         if error != nil {
-                            print("error \(error)")
+                            print("error \(error)");
                         }
                     }
                 }

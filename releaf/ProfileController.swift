@@ -176,21 +176,21 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
     }
     
     func checking() {
-        ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observe(.value, with: {      snapshot in
-            if (restaurantNames.count == Int(snapshot.childrenCount)) { // array is missing data
-                self.tableView.reloadData()
-            }
-            else { // array has all data
-                for restaurant in snapshot.children { // append data
-                    restaurantNames.append((restaurant as AnyObject).value!)
-                    if (restaurantNames.count == Int(snapshot.childrenCount)) {
-                        print("done")
-                        print(restaurantNames)
-                        self.tableView.reloadData()
+        self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value, with: { snapshot in
+            let childCount = Int(snapshot.childrenCount - 1);
+            if (childCount != groupMemberCount.count) {
+                groupDescription2.removeAll()
+                allgroups.removeAll()
+                groupMemberCount.removeAll()
+                for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
+                    if (rest.key != "0") {
+                        restaurantNames.append(rest.value as! String)
                     }
                 }
+                self.tableView.reloadData()
             }
         });
+        
         // append all the posts to myposts, then transfer to array
         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("favorites").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             // get how many posts you have
@@ -203,8 +203,6 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
                         favoritedPosts.append(same)
                         if (favoritedPosts.count == Int(countingpat2)) {
                             for index2 in favoritedPosts {
-                                print("index:\(index2)")
-                                
                                 self.ref.child("post").child(String(index2)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
                                     let int = snapshot.value!
                                     favoritedPostsText.append(int as! String)
@@ -242,7 +240,6 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
         else {
             return tableData.count
         }
-//        return tableData.count
     }
     
     // create a cell for each table view row

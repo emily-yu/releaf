@@ -190,7 +190,7 @@ class CreatePostController: UIViewController {
                             ] as NSDictionary)
                         
                         // add a point to eh persons account
-                        self.incrementPoints()
+                        appFunctions().incrementPoints()
                         
                         //navigate back to home screen
                         let ivc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
@@ -230,7 +230,7 @@ class CreatePostController: UIViewController {
                             ] as NSDictionary)
                         
                         // add a point to eh persons account
-                        self.incrementPoints()
+                        appFunctions().incrementPoints();
                         
                         //navigate back to home screen
                         let ivc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
@@ -238,16 +238,7 @@ class CreatePostController: UIViewController {
                         ivc?.modalTransitionStyle = .crossDissolve
                         self.present(ivc!, animated: true, completion: { _ in })
                     }
-                })
-            }
-        }
-    }
-    
-    func incrementPoints() {
-        self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            if let int = snapshot.value{
-                let same = (int as! Int)+1;// add one reveal point
-                self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
+                });
             }
         }
     }
