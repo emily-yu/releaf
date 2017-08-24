@@ -10,13 +10,17 @@ import Foundation
 
 // store all global variables
 
-// AppDelegate
-var uid = [String]();
+// Current user's unique string identifier
 var userID = "";
 
 // RecentActivityController
+// Notification images (ref: RecentActivityController)
 var notifImage = [String]();
+
+// Notification text (ref: RecentActivityController)
 var notifText = [Int]();
+
+// Notification users (ref: RecentActivityController)
 var notifUser = [String]();
 
 // CreatePostController
@@ -32,10 +36,14 @@ var myposts = [Int](); // indexes of your posts - used to retrieve
 var myPostsText = [String](); // text of your posts
 var clickedIndex: Int! // track the index of the post you're viewing
 
-// ReactionsController
-var metoo = [String](); // me too reaction
-var hugs = [String](); // hugs reaction
-var previousIndex: Int = -1 // track whether the index has changed when switching posts
+// Current Post "Me Too" Reactions (ref: ReactionsController)
+var metoo = [String]();
+
+// Current Post "Hugs" Reactions (ref: ReactionsController)
+var hugs = [String]();
+
+// Tracking changes in post index while switching posts
+var previousIndex: Int = -1;
 
 // List of Reply Prompts (ref: ReplyController)
 var replyPrompts = ["Look at the progress you've made.",
@@ -79,7 +87,6 @@ var checkmetoos = [String]();
 // Current post index on the post scroller
 var currentIndex = 0
 
-// ProfileController
 // User's groups (ref: ProfileController)
 var userGroups = [String](); // the user's groups
 
@@ -89,7 +96,11 @@ var favoritedPosts = [Int](); // favorited posts (me too, hugs, etc.)
 // Text of user's favorited posts (ref: ProfileController)
 var favoritedPostsText = [String]();
 
-// GroupDetailsController
+// Name of group that user is currently navigating (ref: GroupDetailsController)
 var groupDetailsTitle = "";
-var groupPathPost: String! // the group to post the new post to
-var groupPosts = [String](); // the group's posts
+
+// Index of group that user is currently navigating (ref: GroupDetailsController)
+var groupPathPost: String!
+
+// Posts in group that user is currently navigating (ref: GroupDetailsController)
+var groupPosts = [String]();
