@@ -8,12 +8,9 @@
 
 import Foundation
 
-// store all global variables
-
 // Current user's unique string identifier
 var userID = "";
 
-// RecentActivityController
 // Notification images (ref: RecentActivityController)
 var notifImage = [String]();
 
@@ -26,15 +23,23 @@ var notifUser = [String]();
 // CreatePostController
 var postDestination = [String]();
 
-// GroupController
-var allgroups = [String](); // group names to join in JoinController
-var groupDescription2 = [String](); // description of groups in JoinController
-var groupMemberCount = [Int](); // group member counts
+// Full list of group names (ref: JoinController)
+var allgroups = [String]();
 
-// MyPostsController
-var myposts = [Int](); // indexes of your posts - used to retrieve
-var myPostsText = [String](); // text of your posts
-var clickedIndex: Int! // track the index of the post you're viewing
+// Full list of group descriptions (ref: JoinController)
+var groupDescription2 = [String]();
+
+// Full list of group member counts (ref: JoinController)
+var groupMemberCount = [Int]();
+
+// Indexes of user's posts (ref: MyPostsController)
+var myposts = [Int]();
+
+// Text of user's posts (ref: MyPostsController)
+var myPostsText = [String]();
+
+// Index of post clicked on (ref: MyPostsController)
+var clickedIndex: Int!
 
 // Current Post "Me Too" Reactions (ref: ReactionsController)
 var metoo = [String]();
