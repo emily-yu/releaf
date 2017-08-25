@@ -17,16 +17,15 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
     @IBOutlet var tableView: UITableView!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad();
         
-        ref = FIRDatabase.database().reference()
-        loadData() // set up tableView data
+        ref = FIRDatabase.database().reference();
+        loadData();
         
-        // set up tableviewcells
-        let cellReuseIdentifier = "cell"
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        tableView.delegate = self
-        tableView.dataSource = self
+        let cellReuseIdentifier = "cell";
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier);
+        tableView.delegate = self;
+        tableView.dataSource = self;
         
     }
     
@@ -35,58 +34,57 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         self.ref.child("groups").observeSingleEvent(of: .value, with: { snapshot in
             let childCount = Int(snapshot.childrenCount - 1);
             if (childCount != groupMemberCount.count) {
-                groupDescription2.removeAll()
-                allgroups.removeAll()
-                groupMemberCount.removeAll()
+                groupDescription2.removeAll();
+                allgroups.removeAll();
+                groupMemberCount.removeAll();
                 for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
                     guard let restDict = rest.value as? [String: Any] else { continue }
-                    print(rest)
                     if (rest.key != "0") {
-                        let action = restDict["description"] as? String
-                        let desc = restDict["name"] as? String
-                        let count = restDict["member"] as? Int
-                        groupDescription2.append(action!)
-                        allgroups.append(desc!)
-                        groupMemberCount.append(count!)
+                        let action = restDict["description"] as? String;
+                        let desc = restDict["name"] as? String;
+                        let count = restDict["member"] as? Int;
+                        groupDescription2.append(action!);
+                        allgroups.append(desc!);
+                        groupMemberCount.append(count!);
                     }
                 }
-                self.tableView.reloadData()
+                self.tableView.reloadData();
             }
         });
     }
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return groupDescription2.count
+        return groupDescription2.count;
     }
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:JoinTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "JoinTableViewCell") as! JoinTableViewCell
-        cell.groupName.text = String(allgroups[indexPath.row])
-        cell.groupDescription.text = String(groupDescription2[indexPath.row])
+        let cell:JoinTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "JoinTableViewCell") as! JoinTableViewCell;
+        cell.groupName.text = String(allgroups[indexPath.row]);
+        cell.groupDescription.text = String(groupDescription2[indexPath.row]);
         
-        return cell
+        return cell;
     }
     
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let groupJoin = allgroups[indexPath.row]
+        let groupJoin = allgroups[indexPath.row];
         
         if userGroups.contains(groupJoin) {
-            let alertController = UIAlertController(title: "Error", message: "You've already joined this group.", preferredStyle: .alert)
-            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            alertController.addAction(defaultAction)
-            self.present(alertController, animated: true, completion: nil)
+            let alertController = UIAlertController(title: "Error", message: "You've already joined this group.", preferredStyle: .alert);
+            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil);
+            alertController.addAction(defaultAction);
+            self.present(alertController, animated: true, completion: nil);
         }
         else {
             self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             
-                userGroups.removeAll() // so it can reload
+                userGroups.removeAll();
 
                 self.ref.child("groups").queryOrdered(byChild: "name").queryEqual(toValue:groupJoin).observeSingleEvent(of: .value, with: { (snapshot) in
                     if (snapshot.value is NSNull) {
-                        print("Skillet was not found")
+                        print("Skillet was not found");
                     }
                     else {
                         for child in snapshot.children {
@@ -94,16 +92,16 @@ class JoinController: UIViewController, UITableViewDelegate,UITableViewDataSourc
                             self.ref.child("groups").child(key).child("member").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                 self.ref.child("groups").child(key).child("member").setValue((snapshot.value as? Int)! + 1);
                             }
-                            }
                         }
+                    }
                 });
-                //navigate back
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
+
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home");
                 if let tabvc = vc as? UITabBarController {
-                    tabvc.selectedIndex = 3
-                    tabvc.modalPresentationStyle = .custom
-                    tabvc.modalTransitionStyle = .crossDissolve
-                    self.present(tabvc, animated: true, completion: nil)
+                    tabvc.selectedIndex = 3;
+                    tabvc.modalPresentationStyle = .custom;
+                    tabvc.modalTransitionStyle = .crossDissolve;
+                    self.present(tabvc, animated: true, completion: nil);
                 }
             }
         }
@@ -149,54 +147,49 @@ class CreateGroupController: UIViewController {
                             "post": [
                                 "0": "init",
                             ]
-                        ] as NSDictionary)
+                        ] as NSDictionary);
                         
                         let baseValue = self.groupName.text!
-                        userGroups.append(baseValue)
-                        print("NEW ONE")
-                        print(userGroups)
-                        
-                        
+                        userGroups.append(baseValue);
+
                         // add group under that person's account
                         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                            let string = String(snapshot.childrenCount) // amount of posts there are + 1 to create new post
-                            
-                            // issue here with modifying actual data
-                            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").child(string).setValue(baseValue)
+                            let string = String(snapshot.childrenCount);
+                            self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("groups").child(string).setValue(baseValue);
                         }
                         
                         
                         self.ref.child("groups").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                            allgroups.removeAll()
-                            groupDescription2.removeAll()
-                            for index in 0...(snapshot.childrenCount - 1) { // NULL WHEN NO POSTS - NULL ON
+                            allgroups.removeAll();
+                            groupDescription2.removeAll();
+                            for index in 0...(snapshot.childrenCount - 1) {
                                 self.ref.child("groups").child(String(index)).child("description").observeSingleEvent(of: .value, with: { (snapshot) in
                                     if let same:String = (snapshot.value! as? String) {
-                                        groupDescription2.append(same)
+                                        groupDescription2.append(same);
                                     }
-                                })
+                                });
                                 self.ref.child("groups").child(String(index)).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
                                     if let same:String = (snapshot.value! as? String) {
-                                        allgroups.append(same)
+                                        allgroups.append(same);
                                     }
-                                })
+                                });
                             }
                         }
                     }
-                })
+                });
             }
             else {
-                let alertController = UIAlertController(title: "Error", message: "The max character limit for group descriptions is 30.", preferredStyle: .alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                alertController.addAction(defaultAction)
-                self.present(alertController, animated: true, completion: nil)
+                let alertController = UIAlertController(title: "Error", message: "The max character limit for group descriptions is 30.", preferredStyle: .alert);
+                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil);
+                alertController.addAction(defaultAction);
+                self.present(alertController, animated: true, completion: nil);
             }
         }
         else {
-            let alertController = UIAlertController(title: "Error", message: "Please fill out all the required fields.", preferredStyle: .alert)
-            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            alertController.addAction(defaultAction)
-            self.present(alertController, animated: true, completion: nil)
+            let alertController = UIAlertController(title: "Error", message: "Please fill out all the required fields.", preferredStyle: .alert);
+            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil);
+            alertController.addAction(defaultAction);
+            self.present(alertController, animated: true, completion: nil);
         }
     }
     
@@ -207,16 +200,13 @@ class CreateGroupController: UIViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround()
-        ref = FIRDatabase.database().reference()
-        
-//        groupDescription.backgroundColor = UIColor(red: 67, green: 176, blue: 103, alpha: 1).withAlphaComponent(0.6)
-//        
+        super.viewDidLoad();
+        self.hideKeyboardWhenTappedAround();
+        ref = FIRDatabase.database().reference();
     }
     
     override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        super.didReceiveMemoryWarning();
         // Dispose of any resources that can be recreated.
     }
 }

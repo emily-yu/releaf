@@ -20,29 +20,28 @@ class SignUpController: UIViewController{
     @IBOutlet var passwordField: UITextField!
     
     @IBAction func loginController(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let ivc = storyboard.instantiateViewController(withIdentifier: "login")
-        ivc.modalPresentationStyle = .custom
-        ivc.modalTransitionStyle = .crossDissolve
-        self.present(ivc, animated: true, completion: { _ in })
+        let storyboard = UIStoryboard(name: "Main", bundle: nil);
+        let ivc = storyboard.instantiateViewController(withIdentifier: "login");
+        ivc.modalPresentationStyle = .custom;
+        ivc.modalTransitionStyle = .crossDissolve;
+        self.present(ivc, animated: true, completion: { _ in });
     }
 
     @IBAction func createAccount(_ sender: Any) {
-        self.ref = FIRDatabase.database().reference()
+        self.ref = FIRDatabase.database().reference();
         if emailField.text! == "" || passwordField.text! == "" {
-            let alertController = UIAlertController(title: "Error", message: "Please enter your email and password", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Error", message: "Please enter your email and password", preferredStyle: .alert);
             
-            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            alertController.addAction(defaultAction)
+            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil);
+            alertController.addAction(defaultAction);
             
-            present(alertController, animated: true, completion: nil)
-            
-        } else {
+            present(alertController, animated: true, completion: nil);
+        }
+        else {
             FIRAuth.auth()?.createUser(withEmail: emailField.text!, password: passwordField.text!) { (user, error) in
                 
                 if error == nil {
-                    userID  = FIRAuth.auth()!.currentUser!.uid
-                    // set user details
+                    userID  = FIRAuth.auth()!.currentUser!.uid;
                     self.ref.child("users").child((user?.uid)!).setValue([
                         "firsasdfadsftName": self.firstNameField.text!,
                         "school": self.lastNameField.text!,
@@ -60,36 +59,21 @@ class SignUpController: UIViewController{
                             "0" : "init",
                         ],
                         "base64string": "default"
-                    ])
+                    ]);
                     
-                    // append, then transfer to array
-                self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                        for index in 0...snapshot.childrenCount {
-                            self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-                                if let same:Int = (snapshot.value! as? Int) {
-                                    myposts.append(same)
-                                self.ref.child("post").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-                                    let int = snapshot.value!
-                                    myPostsText.append(int as! String)
-                                    });
-                                }
-                            });
-                        }
-                    }
-                    
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let ivc = storyboard.instantiateViewController(withIdentifier: "Home")
-                    ivc.modalPresentationStyle = .custom
-                    ivc.modalTransitionStyle = .crossDissolve
-                    self.present(ivc, animated: true, completion: { _ in })
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil);
+                    let ivc = storyboard.instantiateViewController(withIdentifier: "Home");
+                    ivc.modalPresentationStyle = .custom;
+                    ivc.modalTransitionStyle = .crossDissolve;
+                    self.present(ivc, animated: true, completion: { _ in });
 
                 }
                 else {
-                    let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
-                    let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                    alertController.addAction(defaultAction)
+                    let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert);
+                    let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil);
+                    alertController.addAction(defaultAction);
                     
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(alertController, animated: true, completion: nil);
                 }
             }
         }
@@ -102,20 +86,20 @@ class SignUpController: UIViewController{
         // Do any additional setup after loading the view, typically from a nib.
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height));
-        firstNameField.leftView = paddingView
-        firstNameField.leftViewMode = UITextFieldViewMode.always
+        firstNameField.leftView = paddingView;
+        firstNameField.leftViewMode = UITextFieldViewMode.always;
         
         let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height));
-        lastNameField.leftView = paddingView2
-        lastNameField.leftViewMode = UITextFieldViewMode.always
+        lastNameField.leftView = paddingView2;
+        lastNameField.leftViewMode = UITextFieldViewMode.always;
         
         let paddingView3 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height));
-        emailField.leftView = paddingView3
-        emailField.leftViewMode = UITextFieldViewMode.always
+        emailField.leftView = paddingView3;
+        emailField.leftViewMode = UITextFieldViewMode.always;
         
         let paddingView4 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.firstNameField.frame.height));
-        passwordField.leftView = paddingView4
-        passwordField.leftViewMode = UITextFieldViewMode.always
+        passwordField.leftView = paddingView4;
+        passwordField.leftViewMode = UITextFieldViewMode.always;
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -129,7 +113,7 @@ class SignUpController: UIViewController{
     }
     
     override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        super.didReceiveMemoryWarning();
         // Dispose of any resources that can be recreated.
     }
     

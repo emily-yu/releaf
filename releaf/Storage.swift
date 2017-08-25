@@ -11,6 +11,9 @@ import Foundation
 // Current user's unique string identifier
 var userID = "";
 
+// Current post's UID's
+var uid = [String]();
+
 // Notification images (ref: RecentActivityController)
 var notifImage = [String]();
 

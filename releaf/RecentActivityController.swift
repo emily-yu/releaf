@@ -16,10 +16,10 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
     @IBOutlet var tableView: UITableView!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad();
         
-        ref = FIRDatabase.database().reference()
-        loadData()
+        ref = FIRDatabase.database().reference();
+        loadData();
         
         let cellReuseIdentifier = "cell"
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
@@ -31,19 +31,19 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("notification").observeSingleEvent(of: .value, with: { snapshot in
             let childCount = Int(snapshot.childrenCount - 1);
             if (childCount != notifImage.count) {
-                notifImage.removeAll()
-                notifText.removeAll()
-                notifUser.removeAll()
+                notifImage.removeAll();
+                notifText.removeAll();
+                notifUser.removeAll();
                 for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
                     guard let restDict = rest.value as? [String: Any] else { continue }
                     let action = restDict["action"] as? String
                     let post = restDict["post"] as? Int
                     let user = restDict["user"] as? String
-                    notifImage.append(action!)
-                    notifText.append(post!)
-                    notifUser.append(user!)
+                    notifImage.append(action!);
+                    notifText.append(post!);
+                    notifUser.append(user!);
                 }
-                self.tableView.reloadData()
+                self.tableView.reloadData();
             }
         });
     }
@@ -57,22 +57,19 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell:NotificationCell? = tableView.dequeueReusableCell(withIdentifier: "NotificationCell") as? NotificationCell;
         
-        if(cell == nil) {
-            cell = NotificationCell(style:UITableViewCellStyle.default, reuseIdentifier: "NotificationCell")
+        if (cell == nil) {
+            cell = NotificationCell(style:UITableViewCellStyle.default, reuseIdentifier: "NotificationCell");
             cell?.selectionStyle = UITableViewCellSelectionStyle.none
         }
         
         self.ref.child("users").child(notifUser[indexPath.row]).child("firsasdfadsftName").observeSingleEvent(of: .value, with: { (snapshot) in
             if let same: String = (snapshot.value! as? String) {
-                print(same)
-                print(currentIndex)
-                print(notifText)
                 switch(notifImage[indexPath.row]) {
                     case "hug":
                         self.ref.child("post").child(String(notifText[indexPath.row])).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             if var same2: String = (snapshot.value! as? String) {
                                 if (same2.characters.count > 25) {
-                                    same2 = "\(same2.substring(to: same2.index(same2.startIndex, offsetBy: 25)))..."
+                                    same2 = "\(same2.substring(to: same2.index(same2.startIndex, offsetBy: 25)))...";
                                 }
                                 cell?.detail?.text = "\(same) has given you a hug for your post, \(same2)";
                             }
@@ -82,7 +79,7 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
                         self.ref.child("post").child(String(notifText[indexPath.row])).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             if var same2: String = (snapshot.value! as? String) {
                                 if (same2.characters.count > 25) {
-                                    same2 = "\(same2.substring(to: same2.index(same2.startIndex, offsetBy: 25)))..."
+                                    same2 = "\(same2.substring(to: same2.index(same2.startIndex, offsetBy: 25)))...";
                                 }
                                 cell?.detail?.text = "\(same) has liked your reply in response to the post, \(same2)";
                             }
@@ -92,14 +89,14 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
                         self.ref.child("post").child(String(notifText[indexPath.row])).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             if var same2: String = (snapshot.value! as? String) {
                                 if (same2.characters.count > 25) {
-                                    same2 = "\(same2.substring(to: same2.index(same2.startIndex, offsetBy: 25)))..."
+                                    same2 = "\(same2.substring(to: same2.index(same2.startIndex, offsetBy: 25)))...";
                                 }
                                 cell?.detail?.text = "\(same) has responded 'me too' to your post, \(same2)";
                             }
                         }
                         break;
                     default:
-                        print("Something bad happened and I don't know what but whatever!")
+                        print("Something bad happened and I don't know what but whatever!");
                         break;
                 }
             }
@@ -110,10 +107,10 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
                 if (same != "default") {
                     let dataDecoded:Data = Data(base64Encoded: same, options: .ignoreUnknownCharacters)!
                     let image = UIImage(data: dataDecoded)!
-                    cell?.profileImage?.image = image
+                    cell?.profileImage?.image = image;
                 }
                 else {
-                    cell?.profileImage?.image = #imageLiteral(resourceName: "guy")
+                    cell?.profileImage?.image = #imageLiteral(resourceName: "guy");
                 }
                 
             }
@@ -124,21 +121,14 @@ class NotificationController: UIViewController, UITableViewDelegate,UITableViewD
     
     // method to run when table view cell is tapped
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("You tapped cell number \(indexPath.row).")
-        tableView.deselectRow(at: indexPath, animated: true)
-        
+        tableView.deselectRow(at: indexPath, animated: true);
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) in
-            print("SAME")
-            print(notifText[indexPath.row])
-            print(notifText)
-            
             self.deleteFunction(index: indexPath.row);
-        })
-        deleteAction.backgroundColor = UIColor(red:0.94, green:0.41, blue:0.31, alpha:1.0)
+        });
+        deleteAction.backgroundColor = UIColor(red:0.94, green:0.41, blue:0.31, alpha:1.0);
         return [deleteAction]
     }
 

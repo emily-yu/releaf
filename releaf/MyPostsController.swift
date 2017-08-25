@@ -131,8 +131,8 @@ class MyPostsTableViewCell: UITableViewCell {
 class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDataSource {
     
     var ref: FIRDatabaseReference!
-    var dataText:[String] = [] // store reply text
-    var dataLikes:[Int] = [] // store likes
+    var currentReplyText:[String] = [] // store reply text
+    var currentReplyLikes:[Int] = [] // store likes
     
     @IBOutlet var postText: UITextView!
     @IBOutlet var postReplies: UITableView!
@@ -305,10 +305,10 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
             for index in 0...(snapshot.childrenCount - 1) {             // get how many replies there are
                 // appends all the text in post replies to 'replies' array
                 self.ref.child("post").child(String(clickedIndex)).child("reply").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-                        self.dataText.append(snapshot.value! as! String)
+                        self.currentReplyText.append(snapshot.value! as! String)
                 })
                 self.ref.child("post").child(String(clickedIndex)).child("reply").child(String(index)).child("likes").observeSingleEvent(of: .value, with: { (snapshot) in
-                        self.dataLikes.append(snapshot.value! as! Int)
+                        self.currentReplyLikes.append(snapshot.value! as! Int)
                         self.tableView.reloadData()
                 })
             }
@@ -323,7 +323,7 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
     
     // number of rows in table view
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataLikes.count
+        return currentReplyLikes.count
     }
     
     func calculateHeight(inString:String) -> CGFloat
@@ -344,7 +344,7 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let height:CGFloat = calculateHeight(inString: String(dataText[indexPath.row]))
+        let height:CGFloat = calculateHeight(inString: String(currentReplyText[indexPath.row]))
         return height + 40.0
     }
     
@@ -358,11 +358,11 @@ class PostDetailsController: UIViewController, UITableViewDelegate,UITableViewDa
         }
         
         cell?.numberLikes?.sizeToFit()
-        cell?.numberLikes?.text = String(dataLikes[indexPath.row])
+        cell?.numberLikes?.text = String(currentReplyLikes[indexPath.row])
         cell?.numberLikes?.numberOfLines = 0
         
         cell?.replyText?.sizeToFit()
-        cell?.replyText?.text = String(dataText[indexPath.row])
+        cell?.replyText?.text = String(currentReplyText[indexPath.row])
         cell?.replyText?.numberOfLines = 0
         
         return cell!

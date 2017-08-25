@@ -30,90 +30,63 @@ class LoginController: UIViewController {
         if self.usernameField.text == "" || self.passwordField.text == "" {
             
             //Alert to tell the user that there was an error because they didn't fill anything in the textfields because they didn't fill anything in
+            let alertController = UIAlertController(title: "Error", message: "Please enter an email and password.", preferredStyle: .alert);
             
-            let alertController = UIAlertController(title: "Error", message: "Please enter an email and password.", preferredStyle: .alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil);
+            alertController.addAction(defaultAction);
             
-            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            alertController.addAction(defaultAction)
-            
-            self.present(alertController, animated: true, completion: nil)
-            
-            
-            
-        } else {
+            self.present(alertController, animated: true, completion: nil);
+        }
+        else {
             
             FIRAuth.auth()?.signIn(withEmail: self.usernameField.text!, password: self.passwordField.text!) { (user, error) in
-                
                 if error == nil {
+                    userID  = FIRAuth.auth()!.currentUser!.uid;
                     
-                    userID  = FIRAuth.auth()!.currentUser!.uid
-                    // set groups array
-                    self.ref = FIRDatabase.database().reference()
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil);
+                    let ivc = storyboard.instantiateViewController(withIdentifier: "Home");
+                    ivc.modalPresentationStyle = .custom;
+                    ivc.modalTransitionStyle = .crossDissolve;
+                    self.present(ivc, animated: true, completion: { _ in });
                     
-                    // append all the posts to myposts, then transfer to array
-                self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("myPosts").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                        // get how many posts you have
-                        for index in 0...snapshot.childrenCount { // NULL WHEN NO POSTS - NULL ON
-                            
-                            self.ref.child("users").child(userID).child("myPosts").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-                                if var same:Int = (snapshot.value! as? Int) {
-                                    myposts.append(same)
-                                        self.ref.child("post").child(String(index)).child("text").observeSingleEvent(of: .value, with: { (snapshot) in
-                                            let int = snapshot.value!
-                                            myPostsText.append(int as! String)
-                                        })
-//                                    }
-                                }
-                            })
-                        }
-                    }
-
+                }
+                else {
+                    // Tells the user that there is an error and then gets firebase to tell them the error
+                    let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert);
                     
-                    var storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    var ivc = storyboard.instantiateViewController(withIdentifier: "Home")
-                    ivc.modalPresentationStyle = .custom
-                    ivc.modalTransitionStyle = .crossDissolve
-                    self.present(ivc, animated: true, completion: { _ in })
+                    let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil);
+                    alertController.addAction(defaultAction);
                     
-                } else {
-                    
-                    //Tells the user that there is an error and then gets firebase to tell them the error
-                    let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
-                    
-                    let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                    alertController.addAction(defaultAction)
-                    
-                    self.present(alertController, animated: true, completion: nil)
+                    self.present(alertController, animated: true, completion: nil);
                 }
             }
         }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "toSignUp"){
-            if let tabVC = segue.destination as? UIViewController{
-                tabVC.modalPresentationStyle = .custom
-                tabVC.modalTransitionStyle = .crossDissolve
-                print("called")
+        if (segue.identifier == "toSignUp") {
+            if let tabVC = segue.destination as? UIViewController {
+                tabVC.modalPresentationStyle = .custom;
+                tabVC.modalTransitionStyle = .crossDissolve;
             }
         }
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround()
+        super.viewDidLoad();
+        self.hideKeyboardWhenTappedAround();
         
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.login.frame.height))
-        login.leftView = paddingView
-        login.leftViewMode = UITextFieldViewMode.always
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.login.frame.height));
+        login.leftView = paddingView;
+        login.leftViewMode = UITextFieldViewMode.always;
         
-        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.login.frame.height))
-        password.leftView = paddingView2
-        password.leftViewMode = UITextFieldViewMode.always
+        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.login.frame.height));
+        password.leftView = paddingView2;
+        password.leftViewMode = UITextFieldViewMode.always;
     }
     
     override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        super.didReceiveMemoryWarning();
         // Dispose of any resources that can be recreated.
     }
 }

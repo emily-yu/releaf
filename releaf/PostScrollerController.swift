@@ -20,14 +20,14 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         ref.child("post").child(String(currentIndex)).child("reply").observeSingleEvent(of: .value, with: { snapshot in
             for rest in snapshot.children.allObjects as! [FIRDataSnapshot] {
                 guard let restDict = rest.value as? [String: Any] else { continue }
-                let action = restDict["text"] as? String
-                let like = restDict["likes"] as? Int
+                let action = restDict["text"] as? String;
+                let like = restDict["likes"] as? Int;
                 if (rest.key != "0") {
-                    replies.append(action!)
+                    replies.append(action!);
                     leaves.append(like!);
                 }
             }
-            self.tableView.reloadData()
+            self.tableView.reloadData();
         });
         ref.child("post").child(String(currentIndex)).child("text").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             self.staticPostText.text = String(describing: snapshot.value!);
@@ -35,29 +35,28 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     }
     
     @IBAction func nextPost_isPressed(_ sender: Any) {
-        ref = FIRDatabase.database().reference()
+        ref = FIRDatabase.database().reference();
         ref.child("post").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-            // post index to address
-            let randomNum = arc4random_uniform(UInt32(snapshot.childrenCount)) // range is 0 to 99
-            currentIndex = Int(randomNum) // set currentIndex to be this value
+            let randomNum = arc4random_uniform(UInt32(snapshot.childrenCount));
+            currentIndex = Int(randomNum);
         
-            replies.removeAll()
-            leaves.removeAll()
-            uid.removeAll() // idk
+            replies.removeAll();
+            leaves.removeAll();
+            uid.removeAll();
             
-            self.tableView.reloadData()
-            self.loadData()
-//            self.tableView.reloadData()
+            self.tableView.reloadData();
+            self.loadData();
         }
     }
+    
     @IBOutlet var tableView: UITableView!
     @IBAction func meToo_isPressed(_ sender: Any) {
         // checks me toos
-        ref = FIRDatabase.database().reference()
+        ref = FIRDatabase.database().reference();
         self.ref.child("post").child(String(currentIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(snapshot.childrenCount - 1) {
                 self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-                    if var same:String = (snapshot.value! as? String) {
+                    if let same : String = (snapshot.value! as? String) {
                         if checkmetoos.contains(FIRAuth.auth()!.currentUser!.uid) { // exists
 
                             // unliking and liking posts
@@ -74,7 +73,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                     else { // can't subtract
                                         let alertController = UIAlertController(title: "Error", message: "You can't remove your reaction from this post.", preferredStyle: .alert);
                                         let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil);
-                                        alertController.addAction(defaultAction)
+                                        alertController.addAction(defaultAction);
                                         self.present(alertController, animated: true, completion: nil);
                                     }
                                 }
@@ -86,13 +85,12 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                 let originalPoster = snapshot.value
                                 self.ref.child("users").child(originalPoster as! String).child("notification").observeSingleEvent(of: .value, with: { (snapshot) in
                                     if let int = (snapshot.value) {
-                                        print(int)
                                         let same = (String((int as AnyObject).count)) as String!
                                         self.ref.child("users").child(originalPoster as! String).child("notification").child(same!).setValue([
                                             "action" : "me too",
                                             "post"   : currentIndex,
                                             "user"   : userID,
-                                        ] as NSDictionary)
+                                        ] as NSDictionary);
                                     }
                                 });
                             }
@@ -104,11 +102,10 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                 print(checkmetoos)
                                 checkmetoos.append(userID)
                                 self.ref.child("post").child(String(currentIndex)).child("metoo").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                                    self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(snapshot.childrenCount)).setValue(userID) // set value
-                                    //                                    }
+                                    self.ref.child("post").child(String(currentIndex)).child("metoo").child(String(snapshot.childrenCount)).setValue(userID);
                                 }
                                 self.ref.child("users").child(userID).child("favorites").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                                    self.ref.child("users").child(userID).child("favorites").child(String(snapshot.childrenCount)).setValue(currentIndex) // set value
+                                    self.ref.child("users").child(userID).child("favorites").child(String(snapshot.childrenCount)).setValue(currentIndex);
                                 }
                                 self.tableView.reloadData();
                             });
@@ -124,29 +121,27 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     }
     
     @IBAction func hugs_isPressed(_ sender: Any) {
-        // checks me toos
-        ref = FIRDatabase.database().reference()
+        ref = FIRDatabase.database().reference();
         self.ref.child("post").child(String(currentIndex)).child("hugs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(snapshot.childrenCount - 1) {
                 self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(index)).observeSingleEvent(of: .value, with: { (snapshot) in
-                    if var same:String = (snapshot.value! as? String) {
+                    if let same:String = (snapshot.value! as? String) {
                         if checkhugs.contains(FIRAuth.auth()!.currentUser!.uid) {
                             // unliking and liking posts
                             self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                                 if let int = snapshot.value {
-                                    let same: Int = int as! Int
-                                    if (same > 0){ // revealpoints greater than 0
-                                        // if user revealpoints are greater than 0...
-                                        let alertController = UIAlertController(title: "Error", message: "You've already reacted to this reply.", preferredStyle: .alert)
-                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                                        alertController.addAction(defaultAction)
-                                        self.present(alertController, animated: true, completion: nil)
+                                    let same: Int = int as! Int;
+                                    if (same > 0){
+                                        let alertController = UIAlertController(title: "Error", message: "You've already reacted to this reply.", preferredStyle: .alert);
+                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil);
+                                        alertController.addAction(defaultAction);
+                                        self.present(alertController, animated: true, completion: nil);
                                     }
-                                    else { // can't subtract
-                                        let alertController = UIAlertController(title: "Error", message: "You can't unlike this post.", preferredStyle: .alert)
-                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                                        alertController.addAction(defaultAction)
-                                        self.present(alertController, animated: true, completion: nil)
+                                    else {
+                                        let alertController = UIAlertController(title: "Error", message: "You can't unlike this post.", preferredStyle: .alert);
+                                        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil);
+                                        alertController.addAction(defaultAction);
+                                        self.present(alertController, animated: true, completion: nil);
                                     }
                                 }
                             }
@@ -173,28 +168,26 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                                 appFunctions().incrementPoints();
                                 checkhugs.append(userID)
                                 self.ref.child("post").child(String(currentIndex)).child("hugs").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
- 
-                                self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(snapshot.childrenCount)).setValue(userID)
+                                    self.ref.child("post").child(String(currentIndex)).child("hugs").child(String(snapshot.childrenCount)).setValue(userID);
                                 }
-                                self.tableView.reloadData()
+                                self.tableView.reloadData();
                             });
                             let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in });
-                            alert.addAction(cancel)
-                            alert.addAction(submitAction)
-                            self.present(alert, animated: true, completion: nil)
+                            alert.addAction(cancel);
+                            alert.addAction(submitAction);
+                            self.present(alert, animated: true, completion: nil);
                         }
                     }
                 });
             }
         }
-
     }
     
     // revealing user identities
     @IBAction func userReveal(_ sender: Any) {
         // Alert Prompt
         
-        let alert = UIAlertController(title: "Reveal User", message: "You are about to use one impact point to see the user of this post.",preferredStyle: .alert)
+        let alert = UIAlertController(title: "Reveal User", message: "You are about to use one impact point to see the user of this post.",preferredStyle: .alert);
         let submitAction = UIAlertAction(title: "Confirm", style: .default, handler: { (action) -> Void in
             var indexPath: IndexPath!
             if let button = sender as? UIButton {
@@ -210,23 +203,20 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                         self.ref.child("users").child(userID).child("revealPoints").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
                             if let int = snapshot.value{
                                 if (int as! Int > 0) {
-                                    let same = (int as! Int)-1;// subtract one reveal point
-                                    self.ref.child("users").child(userID).child("revealPoints").setValue(same) // set new value
+                                    let same = (int as! Int) - 1;
+                                    self.ref.child("users").child(userID).child("revealPoints").setValue(same);
                                     
                                     // retrieve first name
                                     self.ref.child("users").child(newstring).child("firsasdfadsftName").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                                        if let int = snapshot.value{
-                                            let first = int as! String // first name
-                                            
-                                            // retrieve last name
+                                        if let int = snapshot.value {
+                                            let first = int as! String;
                                             self.ref.child("users").child(newstring).child("lastName").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
-                                                if let int = snapshot.value{
+                                                if let int = snapshot.value {
                                                     let last = int as! String
                                                     cell.username.text = first + " " + last;
                                                 }
                                             }
                                         }
-                                    
                                     }
                                 }
                                 else {
@@ -280,9 +270,9 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround()
-        Reachability.registerListener()
+        super.viewDidLoad();
+        self.hideKeyboardWhenTappedAround();
+        Reachability.registerListener();
         
         // Not first load
         if (replies.count > 0) {
@@ -296,17 +286,17 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
         }
     
         // set up the tableView
-        let cellReuseIdentifier = "cell"
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+        let cellReuseIdentifier = "cell";
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier);
+        self.tableView.delegate = self;
+        self.tableView.dataSource = self;
         
     }
     
     // Determine whether the user has already liked the post
     func checkUIDArray(replyNumber:Int) {
         var uidArray: [String] = [];
-        ref = FIRDatabase.database().reference()
+        ref = FIRDatabase.database().reference();
         ref.child("post").child(String(currentIndex)).child("reply").child(String(replyNumber)).child("uid").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot) in
             for index in 0...(snapshot.childrenCount - 1) {
                 
@@ -347,12 +337,12 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
                             });
                             
                             let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in });
-                            alertController.addAction(cancel)
-                            alertController.addAction(submitAction)
-                            self.present(alertController, animated: true, completion: nil)
+                            alertController.addAction(cancel);
+                            alertController.addAction(submitAction);
+                            self.present(alertController, animated: true, completion: nil);
                         }
                     }
-                })
+                });
             }
         }
     }
@@ -366,8 +356,8 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell : PromptTableViewCell? = self.tableView.dequeueReusableCell(withIdentifier: "PromptTableViewCell") as? PromptTableViewCell
         if (cell == nil) {
-            cell = PromptTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "PromptTableViewCell")
-            cell?.selectionStyle = UITableViewCellSelectionStyle.none
+            cell = PromptTableViewCell(style:UITableViewCellStyle.default, reuseIdentifier: "PromptTableViewCell");
+            cell?.selectionStyle = UITableViewCellSelectionStyle.none;
         }
         
         cell?.prompt?.sizeToFit();
@@ -397,7 +387,7 @@ class PostsController: UIViewController, UITableViewDelegate,UITableViewDataSour
             let height:CGFloat = calculateHeight(inString: String(replies[indexPath.row]))
             return height + 20.0
         }
-        return 44
+        return 44;
     }
 
     
@@ -432,12 +422,12 @@ class PromptTableViewCell: UITableViewCell {
 
 extension UIViewController {
     func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard));
+        tap.cancelsTouchesInView = false;
+        view.addGestureRecognizer(tap);
     }
     
     func dismissKeyboard() {
-        view.endEditing(true)
+        view.endEditing(true);
     }
 }
