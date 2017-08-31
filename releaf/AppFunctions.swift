@@ -15,7 +15,8 @@ class appFunctions {
     var tempParameter = 0;
     var ref = FIRDatabase.database().reference();
     
-    /* Retrieve singular bits of data from Firebase
+    /** 
+     * Retrieve singular bits of data from Firebase
      * @param {String} path - Path to retrieve data from
      * @param {Any} type - Data cast type to return
      * @returns {Any}
@@ -24,7 +25,8 @@ class appFunctions {
         return 0;
     };
     
-    /* Retrieve array of data from Firebase
+    /**
+     * Retrieve array of data from Firebase
      * @param {String} parentPath - Path to retrieve data from
      * @param {Any} type - Data cast type to return
      * @returns {Any}
@@ -33,7 +35,8 @@ class appFunctions {
         return [0];
     };
     
-    /* Navigation through tab controller with transition
+    /**
+     * Navigation through tab controller with transition
      * @param {Int} index - Index of tab to navigate to
      * @param {String} sIdentifier - Identifier of segue triggering navigation
      * @param {UIStoryboardSegue} segue - Segue triggering navigation
@@ -48,7 +51,8 @@ class appFunctions {
         }
     };
     
-    /* Creates and appends new instance of object referenced in Firebase
+    /**
+     * Creates and appends new instance of object referenced in Firebase
      * @param {String} path - Path of collection of objects
      */
     func createNew() {
