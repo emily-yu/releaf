@@ -105,6 +105,7 @@ class GroupViewController: UIViewController, UITableViewDelegate,UITableViewData
         imageView.image = chosenImage;
         let imageData: Data! = UIImageJPEGRepresentation(chosenImage, 0.1)
         
+        
         let base64String = (imageData as NSData).base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0));
         self.ref.child("users").child(FIRAuth.auth()!.currentUser!.uid).child("base64string").setValue(base64String);
         dismiss(animated: true, completion: nil);
